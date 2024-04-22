@@ -10,27 +10,27 @@ const globalVariablesSchema = new mongoose.Schema(
     },
     tempUrlActiveDays: {
       type: Number,
-      required: true
+      default: 10,
     },
     silverUrlActiveDays: {
       type: Number,
-      required: true
+      default: 10,
     },
     goldUrlActiveDays: {
       type: Number,
-      required: true
+      default: 10,
     },
     platinumUrlActiveDays: {
       type: Number,
-      required: true
+      default: 10,
     },
     reportExpirationDays: {
       type: Number,
-      required: true
+      default: 10,
     },
     maxReportRecords: {
       type: Number,
-      required: true
+      default: 10,
     },
     generateReportDisabled: {
       type: Boolean,

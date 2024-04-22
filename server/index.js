@@ -10,7 +10,8 @@ const dotenv = require("dotenv");
 //Routes
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
-const guestRoutes = require("./routes/Guest")
+const guestRoutes = require("./routes/Guest");
+const adminRoutes = require("./routes/Admin");
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ cloudinaryConnect();
 app.use("/api/auth", userRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/guest", guestRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", (req, res) => {
     return res.json({
