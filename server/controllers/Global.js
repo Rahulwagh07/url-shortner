@@ -51,7 +51,6 @@ exports.getGlobalVariables = async (req, res) => {
 
         // Update the document with the new fields
         const updatedGlobalVariablesData = await Global.findByIdAndUpdate(globalDocument._id, updatedFields, { new: true });
-        console.log("Updated values", updatedGlobalVariablesData);
 
         return res.status(200).json({
             success: true,
@@ -72,8 +71,6 @@ exports.getGlobalVariables = async (req, res) => {
 exports.deleteSelectedDomains = async (req, res) => {
     try {
         const selectedDomains  = req.body;
-        console.log("reqbody", req.body)
-        console.log("Sleectedomean", selectedDomains)
         const updatedGlobalVariablesData = await Global.findOneAndUpdate({}, {
             $pull: { blockedDomains: { $in: selectedDomains } }
         }, { new: true });
@@ -108,6 +105,28 @@ exports.deleteSelectedWords = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Failed to delete selected blocked words',
+            error: error.message,
+        });
+    }
+};
+
+exports.addBlockedDomainsWords = async (req, res) => {
+    try {
+        const { type, value } = req.body;
+        if (type === 'domain') {
+            await Global.findOneAndUpdate({}, { $push: { blockedDomains: value } });
+        } else if (type === 'word') {
+            await Global.findOneAndUpdate({}, { $push: { blockedWords: value } });
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'domain/word added successfully',
+        });
+    } catch (error) {
+        console.error('Error adding blocked domain/word:', error);
+        return res.status(500).json({
+            success: false,
+            message: `Failed to add new blocked domains/words`,
             error: error.message,
         });
     }

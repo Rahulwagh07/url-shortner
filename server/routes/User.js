@@ -11,4 +11,12 @@ router.post("/login", login)
 router.post("/signup", signup)
 router.post("/sendotp", sendotp)
 
+const {
+  createShortenedUrl,
+} = require("../controllers/Url");
+const { auth, isUser } = require("../middlewares/auth");
+
+//Routes for Authrized user
+router.post("/create-shortened-url", auth, isUser, createShortenedUrl);
+
 module.exports = router

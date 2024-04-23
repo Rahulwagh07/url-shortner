@@ -4,15 +4,12 @@ const panelSchema = new mongoose.Schema(
   {
     optionName: {
       type: String,
-      required: true
     },
     optionIcon: {
       type: String,
-      required: true
     },
     redirectionUrl: {
       type: String,
-      required: true
     },
   }, 
   { timestamps: true }

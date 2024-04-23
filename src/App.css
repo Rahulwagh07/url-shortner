@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ 
+html, body {
+  overflow-x: hidden;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #afb2bf;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #000814;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #afb2bf;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+*:active::-webkit-scrollbar-thumb,
+*:focus::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+/* Hide default styling of details/summary */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+  
+.box-shadow{
+  box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px;
+ 
+}
+.section_bg{
+  background-color: rgba(247, 248, 252, 1);
+  
+}
+.border-brand{
+  border-color: rgb(102, 116, 204);
+  border-width: 1px;
+}
+ 
+.form-style {
+  @apply rounded-lg  p-3 text-[16px] leading-[24px] text-black shadow-white-50 placeholder:text-richblack-400 focus:outline-none
+  focus:bg-transparent active:bg-transparent;
+}
+@layer utilities {
+  .shadow-white-50 {
+    box-shadow: rgba(255, 255, 255, 0.5) 0px 1px 0px 0px;
+  }
+}

@@ -12,10 +12,6 @@ const categorySchema = new mongoose.Schema(
       required: true,
       unique: true
     },
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
   },
   { timestamps: true }
 );
