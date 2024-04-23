@@ -3,7 +3,6 @@ import { setLoading, setToken } from "../../slices/authSlice"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiConnector"
 import { endpoints } from "../apis"
-import { ACCOUNT_TYPE } from "../../utils/constants"
 
 const {
     SENDOTP_API,
@@ -37,10 +36,12 @@ const {
 
   export function signUp(
     accountType,
-    username,
+    firstName,
+    lastName,
     email,
     country,
     password,
+    confirmPassword,
     otp,
     navigate
   ) {
@@ -50,10 +51,12 @@ const {
       try {
         const response = await apiConnector("POST", SIGNUP_API, {
           accountType,
-          username,
+          firstName,
+          lastName,
           email,
           country,
           password,
+          confirmPassword,
           otp,
         })
   

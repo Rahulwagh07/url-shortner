@@ -25,19 +25,23 @@ function VerifyEmail() {
     e.preventDefault();
     const {
       accountType,
-      username,
+      firstName,
+      lastName,
       email,
       country,
       password,
+      confirmPassword,
     } = signupData;
 
     dispatch(
       signUp(
         accountType,
-        username,
+        firstName,
+        lastName,
         email,
         country,
         password,
+        confirmPassword,
         otp,
         navigate
       )
@@ -45,16 +49,16 @@ function VerifyEmail() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)]  grid place-items-center ">
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-8 lg:px-8">
       {loading ? (
         <div>
           <div className="spinner"></div>
         </div>
       ) : (
-        <div className="max-w-[500px] sm:px-12  p-16 shadow-lg sm:border-t border-sky-500">
-          <h1 className="text-black font-semibold text-[1.875rem] leading-[2.375rem]">
-            Verify Email
-          </h1>
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+           Verify Email
+        </h2>
           <p className="text-[1.125rem] leading-[1.625rem] my-4 text-black">
             A verification code has been sent to you. Enter the code below
           </p>
@@ -80,7 +84,10 @@ function VerifyEmail() {
             />
             <button
               type="submit"
-              className="w-full bg-blue-150 py-[12px] px-[12px] rounded-[8px] mt-6 font-medium text-white-25"
+              className="flex mt-8 w-full justify-center rounded-md bg-indigo-600 px-3 
+              py-1.5 text-sm font-semibold leading-6 text-white shadow-sm
+               hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
+               focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Verify Email
             </button>

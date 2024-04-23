@@ -27,7 +27,7 @@ export default function ProfileDropdown() {
       {open && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute top-[118%] right-0 z-[1000] overflow-hidden section_bg rounded-md shadow-lg  text-pure-greys-600"
+          className="absolute top-[118%] right-0 z-[1000] overflow-hidden section_bg rounded-md shadow-lg  text-gray-600"
           ref={ref}
         > 
         <Link to={`${ user?.accountType === "User" ? "/dashboard/" : "/admin/dashboard"}`} onClick={() => setOpen(false)}>

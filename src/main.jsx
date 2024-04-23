@@ -29,6 +29,7 @@ import PanelOptions from "./components/Dashbord/PanelOptions"
 import Settings from "./components/Dashbord/Settings/Settings"
 import ManageUrl from "./components/Dashbord/User/ManageUrl"
 import Category from "./pages/Category"
+import Demo from "./pages/Demo"
  
 const store = configureStore({
   reducer: rootReducer,
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/",
-        element: <OpenRoute><Home/></OpenRoute>,
+        element: <Home/>,
       },
       {
         path: "/login",
@@ -111,7 +112,11 @@ const router = createBrowserRouter([
         ]
       },
     ]
-  }
+  },
+  {
+    path: "/demo",
+    element: <Demo/>,
+  },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

@@ -62,7 +62,7 @@ details > summary::-webkit-details-marker {
 }
  
 .form-style {
-  @apply rounded-lg  p-3 text-[16px] leading-[24px] text-black shadow-white-50 placeholder:text-richblack-400 focus:outline-none
+  @apply rounded-lg  p-3 text-[16px] leading-[24px] text-black shadow-white-50 placeholder:text-black focus:outline-none
   focus:bg-transparent active:bg-transparent;
 }
 @layer utilities {
