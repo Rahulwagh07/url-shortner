@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/",
-        element: <OpenRoute><Home/></OpenRoute>,
+        element: <Home/>,
       },
       {
         path: "/login",
@@ -111,7 +111,7 @@ const router = createBrowserRouter([
         ]
       },
     ]
-  }
+  },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

@@ -66,21 +66,21 @@ function PanelOptions() {
                     value={newOptionName}
                     onChange={(e) => setNewOptionName(e.target.value)}
                     placeholder="Option Name"
-                    className="px-4 py-2 border border-pure-greys-300 rounded mr-2"
+                    className="px-4 py-2 border border-gray-300 rounded mr-2"
                 />
                 <input
                     type="text"
                     value={newOptionIcon}
                     onChange={(e) => setNewOptionIcon(e.target.value)}
                     placeholder="Option Icon"
-                    className="px-4 py-2 border border-pure-greys-300 rounded mr-2"
+                    className="px-4 py-2 border border-gray-300 rounded mr-2"
                 />
                 <input
                     type="text"
                     value={newRedirectionUrl}
                     onChange={(e) => setNewRedirectionUrl(e.target.value)}
                     placeholder="Redirection URL"
-                    className="px-4 py-2 border border-pure-greys-300 rounded mr-2"
+                    className="px-4 py-2 border border-gray-300 rounded mr-2"
                 />
                 <button onClick={handleAddPanelOption} className="px-4 py-2 bg-black text-white-25 rounded">Add</button>
             </div>

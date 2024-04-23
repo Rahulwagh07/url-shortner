@@ -97,7 +97,7 @@ function GlobalVariables() {
                                         name={key}
                                         value={value}
                                         onChange={handleChange}
-                                        className="border border-pure-greys-300 rounded-md px-2 py-1 ml-2"
+                                        className="border border-gray-300 rounded-md px-2 py-1 ml-2"
                                     />
                                 }
                             </div>

@@ -9,18 +9,22 @@ require("dotenv").config();
 exports.signup = async (req, res) => {
 	try {
 		const {
-			username,
+			firstName,
+			lastName,
 			email,
 			password,
+			confirmPassword,
 			accountType,
-            country,
+            // country,
 			otp,
 		} = req.body;
 		
 		if (
-			!username ||
+			!firstName ||
+			!lastName ||
 			!email ||
 			!password ||
+			!confirmPassword ||
 			!otp
 		) {
 			return res.status(403).send({
@@ -29,6 +33,14 @@ exports.signup = async (req, res) => {
 			});
 		}
 	
+		if (password !== confirmPassword) {
+			return res.status(400).json({
+				success: false,
+				message:
+					"Password and Confirm Password do not match. Please try again.",
+			});
+		}
+
 		// Check if user already exists
 		const existingUser = await User.findOne({ email });
 		if (existingUser) {
@@ -55,9 +67,10 @@ exports.signup = async (req, res) => {
 		const hashedPassword = await bcrypt.hash(password, 10);
 
 		const user = await User.create({
-			username,
+			firstName,
+			lastName,
 			email,
-            country: country,
+            // country: country,
 			password: hashedPassword,
 			accountType: accountType,
 		});

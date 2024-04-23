@@ -112,7 +112,7 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
                         value={newBlockedDomain}
                         onChange={(e) => setNewBlockedDomain(e.target.value)}
                         placeholder="Enter a new domain"
-                        className="border border-pure-greys-300 rounded-md px-2 py-1 mr-2"
+                        className="border border-gray-300 rounded-md px-2 py-1 mr-2"
                     />
                     <button
                         onClick={handleAddBlockedDomain}
@@ -151,7 +151,7 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
                         value={newBlockedWord}
                         onChange={(e) => setNewBlockedWord(e.target.value)}
                         placeholder="Enter a new word"
-                        className="border border-pure-greys-300 rounded-md px-2 py-1 mr-2"
+                        className="border border-gray-300 rounded-md px-2 py-1 mr-2"
                     />
                     <button
                         onClick={handleAddBlockedWord}
