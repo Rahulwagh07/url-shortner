@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL
+const BASE_URL = "https://urls-backend.onrender.com/api"
 
 //Auth endpoints
 export const endpoints = {
