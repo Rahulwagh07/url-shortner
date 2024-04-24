@@ -74,7 +74,7 @@ function Navbar() {
           </div>
         )}
         {/* Large Screen */}
-      <div className='flex items-center sm:hidden  lg:flex md:flex  gap-12'>
+      <div className='flex items-center sm:hidden xs:hidden lg:flex md:flex  gap-12'>
         {NavbarLinks.map((link, index) => (
             <li key={index} className='py-5 leading-5 flex gap-1 items-center hover:text-[#6674CC] transition-all duration-150 cursor-pointer'>
               <Link
@@ -85,7 +85,7 @@ function Navbar() {
             </li>
           ))}
         </div>
-        <div className='sm:hidden md:flex'>
+        <div className='sm:hidden xs:hidden md:flex'>
         {token === null ? (
           <Link to="/login">
             <button className=" border border-blue-150 rounded-md text-white-25 bg-blue-700 px-6 py-1">
