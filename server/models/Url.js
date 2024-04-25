@@ -6,9 +6,6 @@ const urlSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    domain:{
-      type: String,
-    },
     urlName: {
       type: String,
       default: 'tiny'
@@ -16,7 +13,7 @@ const urlSchema = new mongoose.Schema(
     description: {
       type: String
     },
-    urlCode: {
+    shortUrl: {
       type: String,
       minlength: 5,
       maxlength: 16
@@ -24,7 +21,6 @@ const urlSchema = new mongoose.Schema(
     tier: {
       type: String,
       enum: ['silver', 'gold', 'platinum'],
-      required: true
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,

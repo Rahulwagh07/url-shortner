@@ -1,6 +1,4 @@
-const BASE_URL = "https://urls-backend.onrender.com/api"
-
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL || "https://urls-backend.onrender.com/api"
 
 //Auth endpoints
 export const endpoints = {
@@ -18,6 +16,10 @@ GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
 export const guestEndPoints = {
     CREATE_TEMP_SHORT_URL_API: BASE_URL + "/guest/tempShortUrl",
     GET_TEMP_SHORT_URL_API: BASE_URL + "/guest",
+}
+//URL specific endpoints for auth user
+export const urlEndPoints = {
+  CREATE_SHORT_URL_API: BASE_URL + "/auth/create-shortened-url"
 }
 
 //Global Variables Endpoints

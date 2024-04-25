@@ -1,8 +1,9 @@
 import React from 'react'
+import CreateUrlForm from '../../HomePage/CreateUrlForm'
 
 function ManageUrl() {
   return (
-    <div>ManageUrl</div>
+    <div><CreateUrlForm/></div>
   )
 }
 
