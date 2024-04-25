@@ -3,6 +3,9 @@ import { apiConnector } from '../../services/apiConnector';
 import { guestEndPoints } from '../../services/apis';
 import { toast } from 'react-hot-toast';
 import { MdContentCopy } from "react-icons/md";
+import { FaLink } from "react-icons/fa6";
+import Spinner from '../common/Spinner';
+ 
 
 const {
      CREATE_TEMP_SHORT_URL_API,
@@ -11,24 +14,24 @@ const {
 const ShortenUrlForm = () => {
   const [baseUrl, setBaseUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const toastId = toast.loading("Creating..")
+    setLoading(true)
     try {
       const response = await apiConnector('POST', CREATE_TEMP_SHORT_URL_API,  { baseUrl });
       if(response.data.success){
         setShortUrl(response.data.shortUrl);
-        toast.success("ShortUrl Created")
-        toast.dismiss(toastId)
         setBaseUrl("")
       }
       if(response.data.invalidUrl){
-        toast.dismiss(toastId)
+        
         toast.error("Url is not valid")
-      }
+      } 
+      setLoading(false)
     } catch (error) {
-      toast.dismiss(toastId)
+      setLoading(false)
       toast.error("Failed to create a short URL..")
     }
   };
@@ -38,27 +41,30 @@ const ShortenUrlForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto my-8 p-6 bg-gray-100 rounded-md shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Shorten URL</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="p-8 pb-16 mx-auto flex flex-col gap-3 sm:w-11/12 xs:w-full  md:w-10/12 rounded-md shadow-md">
+      <h2 className="text-lg font-semibold mb-4 flex items-center gap-4"> 
+      <span><FaLink size={24} className='text-green-400'/></span>
+      <span className='text-lg text-black'>Shorten a long URL</span>
+      </h2>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
           type="text"
-          placeholder="Enter Long URL"
-          className="w-full p-2 mb-4 border rounded-md"
+          placeholder="Enter a long link here"
+          className="px-2 py-3 mb-4 border border-indigo-300 rounded-md"
           required
           value={baseUrl}
           onChange={(e) => setBaseUrl(e.target.value)}
         />
         <button
           type="submit"
-          className="bg-blue-150 text-white-25 py-2 px-4 rounded-md"
+          className="bg-blue-150 px-2 py-3 flex items-center justify-center text-white-25 rounded-md"
         >
-          Shorten URL
+          {loading ? <Spinner/> : <span>Shorten Url</span>}
         </button>
       </form>
       {shortUrl && (
         <div className="mt-4 flex items-center space-x-2">
-          <a href={shortUrl} target='_blank' className="text-blue-200 font-medium">{shortUrl}</a>
+          <a href={shortUrl} target='_blank' className="w-full p-2 text-blue-800">{shortUrl}</a>
           <button
             className="py-2 px-4 rounded-md"
             onClick={handleCopy}

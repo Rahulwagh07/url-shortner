@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, Link} from 'react-router-dom'
 import { login } from '../services/operations/authAPI'
 import { ACCOUNT_TYPE } from '../utils/constants'
+import Spinner from '../components/common/Spinner'
 
 function Login() {
   const navigate  = useNavigate()
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -22,8 +24,12 @@ function Login() {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
-            const { accountType } = await login(email, password, dispatch);
+            const { accountType, success } = await login(email, password, dispatch);
+            if(!success){
+              return
+            }
             if (accountType === ACCOUNT_TYPE.ADMIN) {
                 navigate("/admin/dashboard")
             }
@@ -33,6 +39,8 @@ function Login() {
         } catch (error) {
             navigate("/login")
             console.log("Login Error", error)
+        } finally{
+          setLoading(false)
         }
     }
   return (
@@ -99,7 +107,7 @@ function Login() {
                hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
                focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+             {loading ? <Spinner/> : <span>Sign in</span>}
             </button>
           </div>
         </form>

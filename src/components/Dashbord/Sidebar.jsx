@@ -32,7 +32,7 @@ export default function Sidebar() {
             )
           })}
         </div>
-        <div className="flex flex-col mb-12">
+        {/* <div className="flex flex-col mb-12">
           <SidebarLink
             link={{ name: "Settings", path: "/admin/dashboard/settings" }}
             iconName="VscSettingsGear"
@@ -46,7 +46,7 @@ export default function Sidebar() {
               <span >Logout</span>
             </div>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   )

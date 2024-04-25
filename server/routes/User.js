@@ -17,6 +17,6 @@ const {
 const { auth, isUser } = require("../middlewares/auth");
 
 //Routes for Authrized user
-router.post("/create-shortened-url", auth, isUser, createShortenedUrl);
+router.post("/create-shortened-url", auth, createShortenedUrl);
 
 module.exports = router

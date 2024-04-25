@@ -77,7 +77,6 @@ const {
   export const login = async (email, password, dispatch) => {
     let success = false;
     let accountType;
-    const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
     try {
       const response = await apiConnector("POST", LOGIN_API, {
@@ -89,7 +88,7 @@ const {
         throw new Error(response.data.message);
       }
     
-      toast.success("Login Successful");
+      toast.success("Logged in");
       dispatch(setToken(response.data.token));
       dispatch(setUser(response.data.user));
       localStorage.setItem(
@@ -98,13 +97,14 @@ const {
       );
       localStorage.setItem("token", JSON.stringify(response.data.token));
       accountType = response.data.user.accountType;
+      success = true
        
     } catch (error) {
+      success = false
       toast.error("Login Failed");
     }
     dispatch(setLoading(false));
-    toast.dismiss(toastId);
-    return { accountType }; 
+    return { accountType, success }; 
   };
 
 

@@ -38,20 +38,13 @@ export const sidebarLinks = [
   },
   {
     id: 6,
-    name: "Create New",
-    path: "/dashboard",
-    type: ACCOUNT_TYPE.USER,
-    icon: "VscMortarBoard",
-  },
-  {
-    id: 7,
     name: "Manage Urls",
     path: "/dashboard/manage-urls",
     type: ACCOUNT_TYPE.USER,
     icon: "VscHistory",
   },
   {
-    id: 8,
+    id: 7,
     name: "Category",
     path: "/admin/dashboard/category",
     type: ACCOUNT_TYPE.ADMIN,

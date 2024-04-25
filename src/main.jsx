@@ -41,10 +41,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage/>,
     children: [
       {
-        path: "/:shortUrl",
-        element: <ShortUrlRedirect/>,
-      },
-      {
         path: "/",
         element: <Home/>,
       },
@@ -111,6 +107,10 @@ const router = createBrowserRouter([
         ]
       },
     ]
+  },
+  {
+    path: "/:shortUrl",
+    element: <ShortUrlRedirect/>,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(

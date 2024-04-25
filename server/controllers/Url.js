@@ -2,14 +2,25 @@ const express = require("express");
 const shortid = require("shortid");
 const TempUrl = require("../models/TempUrl");
 const { isUrl } = require('check-valid-url');
-const BaseUrl = "http://localhost:5173";
 const Url = require('../models/Url');
 const Global = require('../models/Global');
+const dotenv = require("dotenv");
+dotenv.config();
 
+const BaseUrl = process.env.FRONTEND_BASE_URL;
 
 exports.shortUrl = async (req, res) => {
-    const { baseUrl, urlCode } = req.body;
+    const { baseUrl} = req.body;
     try {
+        //check is already created
+        const isExistingBaseurl = await TempUrl.findOne({ baseUrl: baseUrl }) || await TempUrl.findOne({ baseUrl: baseUrl });
+        if(isExistingBaseurl){
+            return res.status(200).json({
+                success: true,
+                message: "Short URL created successfully",
+                shortUrl: `${BaseUrl}/${isExistingBaseurl.shortUrl}`,
+            });
+        }
         const isValidUrl = isUrl(baseUrl);
         if (isValidUrl) {
             let shortId;
@@ -17,7 +28,7 @@ exports.shortUrl = async (req, res) => {
 
             while (!isUnique) {
                 shortId = shortid.generate();
-                const existingUrl = await TempUrl.findOne({ shortUrl: shortId });
+                const existingUrl = await TempUrl.findOne({ shortUrl: shortId }) && await Url.findOne({ shortUrl: shortId });
                 if (!existingUrl) {
                     isUnique = true;
                 }
@@ -49,7 +60,7 @@ exports.shortUrl = async (req, res) => {
 exports.getShortUrl = async (req, res) => {
     try {
         const shortUrl = req.params.shortUrl;
-        const entry = await TempUrl.findOne({ shortUrl });
+        const entry = await TempUrl.findOne({ shortUrl }) || await Url.findOne({ shortUrl: shortUrl });
         if (entry) {
             return res.status(200).json({
                 success: true,
@@ -74,7 +85,7 @@ exports.getShortUrl = async (req, res) => {
 
 exports.createShortenedUrl = async (req, res) => {
     try {
-        const { baseUrl, urlName, description, customCharacters, tier, domain } = req.body;
+        const { baseUrl, urlName, description, customCharacters, tier, category} = req.body;
 
         // Check is blocked
         const globalVariables = await Global.findOne({});
@@ -91,7 +102,7 @@ exports.createShortenedUrl = async (req, res) => {
         }
 
         // Check if custom chars are already taken
-        const existingUrl = await Url.findOne({ urlCode: customCharacters });
+        const existingUrl = await Url.findOne({ shortUrl: customCharacters });
         if (existingUrl) {
             return res.status(400).json({ error: 'Custom characters are already taken.' });
         }
@@ -112,11 +123,10 @@ exports.createShortenedUrl = async (req, res) => {
         const shortUrl = new Url({
             baseUrl,
             urlName: urlName || 'tiny2',
-            domain,
             description,
-            urlCode: customCharacters,
+            shortUrl: customCharacters,
             tier,
-            category:"6627836d4a04ad576b46d720",
+            category: category || "6627836d4a04ad576b46d720", //default short url category
             creator: req.user.id,
             expirationDate
         });
