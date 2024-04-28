@@ -12,6 +12,7 @@ const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 const guestRoutes = require("./routes/Guest");
 const adminRoutes = require("./routes/Admin");
+const manageUrlRoutes = require("./routes/Urls");
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/api/auth", userRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/guest", guestRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api", manageUrlRoutes);
 
 app.get("/", (req, res) => {
     return res.json({
