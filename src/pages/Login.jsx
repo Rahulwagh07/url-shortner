@@ -34,7 +34,7 @@ function Login() {
                 navigate("/admin/dashboard")
             }
             else{
-                navigate("/dashboard")
+                navigate("/dashboard/manage-urls")
             }
         } catch (error) {
             navigate("/login")

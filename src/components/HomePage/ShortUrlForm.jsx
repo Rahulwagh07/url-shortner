@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 import { MdContentCopy } from "react-icons/md";
 import { FaLink } from "react-icons/fa6";
 import Spinner from '../common/Spinner';
- 
+import { SiTplink } from "react-icons/si";
 
 const {
      CREATE_TEMP_SHORT_URL_API,
@@ -63,14 +63,19 @@ const ShortenUrlForm = () => {
         </button>
       </form>
       {shortUrl && (
-        <div className="mt-4 flex items-center space-x-2">
-          <a href={shortUrl} target='_blank' className="w-full p-2 text-blue-800">{shortUrl}</a>
-          <button
-            className="py-2 px-4 rounded-md"
-            onClick={handleCopy}
-          >
-            <MdContentCopy/>
+        <div className="mt-4 flex flex-col gap-4">
+        <div className='flex items-center gap-2'> 
+          <span className='text-red-500'><SiTplink/></span> 
+          <h3 className='text-semibold'>Shorted Url</h3>
+        </div>
+        <div> <a href={shortUrl} target='_blank' 
+               className="w-full border border-slate-400 py-2 px-3 
+               rounded-md text-green-400">{shortUrl}
+               </a>
+          <button className="py-2 px-4 rounded-md" onClick={handleCopy}>
+            <MdContentCopy />
           </button>
+        </div>
         </div>
       )}
     </div>
