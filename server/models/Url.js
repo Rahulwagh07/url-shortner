@@ -15,12 +15,10 @@ const urlSchema = new mongoose.Schema(
     },
     shortUrl: {
       type: String,
-      minlength: 5,
-      maxlength: 16
     },
     tier: {
       type: String,
-      enum: ['silver', 'gold', 'platinum'],
+      enum: ['silver', 'gold', 'platinum', 'temp'],
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
@@ -56,7 +54,6 @@ const urlSchema = new mongoose.Schema(
     },
     expirationDate: {
       type: Date,
-      required: true
     },
   },
   { timestamps: true }

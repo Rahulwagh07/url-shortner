@@ -81,63 +81,120 @@ exports.getShortUrl = async (req, res) => {
     }
 };
 
- 
-
 exports.createShortenedUrl = async (req, res) => {
     try {
-        const { baseUrl, urlName, description, customCharacters, tier, category} = req.body;
-
-        // Check is blocked
+      const { baseUrl, urlName, description, customCharacters, tier, category } = req.body;
+      if (!baseUrl || !tier) {
+        return res.status(403).send({
+          success: false,
+          message: "baseurl and tier are required",
+        });
+      }
+  
+      // Check if the base URL already exists
+      const isExistingBaseUrl = await TempUrl.findOne({ baseUrl }) || await Url.findOne({ baseUrl });
+      if (isExistingBaseUrl) {
+        return res.status(200).json({
+          success: true,
+          message: "Short URL created successfully",
+          shortUrl: `${BaseUrl}/${isExistingBaseUrl.shortUrl}`,
+        });
+      }
+  
+      const isValidUrl = isUrl(baseUrl);
+      if (isValidUrl) {
+        // Check if the domain is blocked
         const globalVariables = await Global.findOne({});
         if (globalVariables.blockedDomains.includes(new URL(baseUrl).hostname)) {
-            return res.status(400).json({ error: 'Source URL is blocked.' });
+          const isDomainBlocked = true;
+          return res.status(200).json({
+            success: false,
+            isDomainBlocked: isDomainBlocked,
+            message: "Source URL is blocked.",
+          });
         }
-        const blockedWords = globalVariables.blockedWords;
-        if (blockedWords.some(word => customCharacters.includes(word))) {
-            return res.status(400).json({ error: 'Custom characters contain blocked words.' });
+  
+        let shortId;
+        if (customCharacters) {
+          const blockedWords = globalVariables.blockedWords;
+          if (blockedWords.some(word => customCharacters.includes(word))) {
+            const isBlockedWord = true;
+            return res.status(200).json({
+              success: false,
+              isBlockedWord: isBlockedWord,
+              message: "Custom characters contain blocked words.",
+            });
+          }
+  
+          // Check if custom characters are already taken
+          const existingUrl = await Url.findOne({ shortUrl: customCharacters });
+          if (existingUrl) {
+            const customCharAlreadyExist = true;
+            return res.status(200).json({
+              success: false,
+              customCharAlreadyExist: customCharAlreadyExist,
+              message: "Custom characters are already taken.",
+            });
+          }
+          shortId = customCharacters;
+        } else {
+          let isUnique = false;
+          while (!isUnique) {
+            shortId = shortid.generate();
+            const existingUrl = await TempUrl.findOne({ shortUrl: shortId }) && await Url.findOne({ shortUrl: shortId });
+            if (!existingUrl) {
+              isUnique = true;
+            }
+          }
         }
-        // Check if custom characters length is valid- to do->> move it to frontend
-        if (customCharacters.length < 5 || customCharacters.length > 16) {
-            return res.status(400).json({ error: 'Custom characters length must be between 5 and 16 characters.' });
-        }
-
-        // Check if custom chars are already taken
-        const existingUrl = await Url.findOne({ shortUrl: customCharacters });
-        if (existingUrl) {
-            return res.status(400).json({ error: 'Custom characters are already taken.' });
-        }
-
-        // Calculate expiration date based on basis of tier
+  
+        // Calculate expiration date based on tier
         let expirationDate;
         switch (tier) {
-            case 'silver':
-                expirationDate = new Date(Date.now() + globalVariables.silverUrlActiveDays * 24 * 60 * 60 * 1000);
-                break;
-            case 'gold':
-                expirationDate = new Date(Date.now() + globalVariables.goldUrlActiveDays * 24 * 60 * 60 * 1000);
-                break;
-            case 'platinum':
-                expirationDate = new Date(Date.now() + globalVariables.platinumUrlActiveDays * 24 * 60 * 60 * 1000);
-                break;
+          case 'silver':
+            expirationDate = new Date(Date.now() + globalVariables.silverUrlActiveDays * 24 * 60 * 60 * 1000);
+            break;
+          case 'gold':
+            expirationDate = new Date(Date.now() + globalVariables.goldUrlActiveDays * 24 * 60 * 60 * 1000);
+            break;
+          case 'platinum':
+            expirationDate = new Date(Date.now() + globalVariables.platinumUrlActiveDays * 24 * 60 * 60 * 1000);
+            break;
+          case 'temp':
+            expirationDate = new Date(Date.now() + globalVariables.tempUrlActiveDays * 24 * 60 * 60 * 1000);
+            break;
         }
+  
         const shortUrl = new Url({
-            baseUrl,
-            urlName: urlName || 'tiny2',
-            description,
-            shortUrl: customCharacters,
-            tier,
-            category: category || "6627836d4a04ad576b46d720", //default short url category
-            creator: req.user.id,
-            expirationDate
+          baseUrl,
+          urlName: urlName || 'tiny2',
+          description: description || '',
+          shortUrl: shortId,
+          tier,
+          category: category || "6627836d4a04ad576b46d720", // Default short URL category
+          creator: req.user.id,
+          expirationDate,
         });
         await shortUrl.save();
-
+  
         return res.status(201).json({
-            message: 'Short URL created successfully', shortUrl });
+            success: true,
+            message: "Short URL created successfully",
+            shortUrl: `${BaseUrl}/${shortId}`,
+        });
+      } else {
+        const isValidUrl = true;
+        return res.status(200).json({
+            success: false, 
+            isValidUrl: isValidUrl,
+            message: "url is invalid" 
+        });
+      }
     } catch (err) {
-        console.error(err.message);
-        return res.status(500).send('Server Error');
+      console.error(err.message);
+      return res.status(500).json({
+        success: false,
+        message: "server error" 
+        });
     }
-};
- 
-
+  };

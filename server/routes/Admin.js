@@ -12,7 +12,7 @@ const {
   const { auth, isAdmin } = require("../middlewares/auth")
 
   //Global var routes
-  router.get("/get-global-variables", auth, isAdmin, getGlobalVariables)
+  router.get("/get-global-variables", auth, getGlobalVariables)
   router.put("/update-global-variables", auth, isAdmin, updateGlobalVariables)  
   router.delete("/delete-blocked-domains", auth, isAdmin, deleteSelectedDomains)  
   router.delete("/delete-blocked-words", auth, isAdmin, deleteSelectedWords)  
