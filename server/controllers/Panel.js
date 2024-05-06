@@ -1,41 +1,49 @@
-const Panel = require('../models/Panel');
+const prisma = require('../config/prismaClient');
 
 exports.addPanelOption = async (req, res) => {
     try {
         const { optionName, optionIcon, redirectionUrl } = req.body;
-        const newPanelOption = new Panel({
-            optionName,
-            optionIcon,
-            redirectionUrl,
+        const newPanelOption = await prisma.panel.create({
+            data: {
+                optionName,
+                optionIcon,
+                redirectionUrl,
+            }
         });
-        const savedOption = await newPanelOption.save();
-        res.status(201).json(savedOption);
+
+        return res.status(201).json(newPanelOption);
     } catch (error) {
         console.error('Error adding panel option:', error);
-        res.status(500).json({ error: 'Failed to add panel option' });
+        return res.status(500).json({ error: 'Failed to add panel option' });
     }
 };
 
 exports.deletePanelOption = async (req, res) => {
     try {
         const { id } = req.params;
-        const deletedOption = await Panel.findByIdAndDelete(id);
+        const deletedOption = await prisma.panel.delete({
+            where: {
+                id: parseInt(id)
+            }
+        });
+
         if (!deletedOption) {
             return res.status(404).json({ error: 'Panel option not found' });
         }
-        res.status(200).json({ message: 'Panel option deleted successfully' });
+
+        return res.status(200).json({ message: 'Panel option deleted successfully' });
     } catch (error) {
         console.error('Error deleting panel option:', error);
-        res.status(500).json({ error: 'Failed to delete panel option' });
+        return res.status(500).json({ error: 'Failed to delete panel option' });
     }
 };
 
 exports.getAllPanelOptions = async (req, res) => {
     try {
-        const panelOptions = await Panel.find();
-        res.status(200).json(panelOptions);
+        const panelOptions = await prisma.panel.findMany();
+        return res.status(200).json(panelOptions);
     } catch (error) {
         console.error('Error fetching panel options:', error);
-        res.status(500).json({ error: 'Failed to fetch panel options' });
+        return res.status(500).json({ error: 'Failed to fetch panel options' });
     }
 };

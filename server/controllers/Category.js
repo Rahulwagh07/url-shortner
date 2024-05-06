@@ -1,24 +1,35 @@
-const Category = require('../models/Category');
+const prisma = require('../config/prismaClient')
 
 exports.createCategory = async (req, res) => {
     try {
         const { name, shortCode } = req.body;
-        const existingCategory = await Category.findOne({ $or: [{ name }, { shortCode }] });
+        const existingCategory = await prisma.category.findFirst({
+            where: {
+                OR: [
+                    { name: name },
+                    { shortCode: shortCode }
+                ]
+            }
+        });
+
         if (existingCategory) {
             return res.status(400).json({ error: 'Category already exists.' });
         }
-        const newCategory = new Category({
-            name,
-            shortCode
+ 
+        const newCategory = await prisma.category.create({
+            data: {
+                name,
+                shortCode
+            }
         });
-        await newCategory.save();
 
         return res.status(201).json({
-             message: 'Category created successfully', 
-             category: newCategory 
+            message: 'Category created successfully',
+            category: newCategory
         });
     } catch (err) {
-        console.error(err.message);
+        console.error(err);
         return res.status(500).send('Server Error');
     }
 };
+
