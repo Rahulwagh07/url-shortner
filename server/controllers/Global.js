@@ -1,22 +1,29 @@
-const Global = require('../models/Global');
- 
+const prisma = require('../config/prismaClient')
 exports.getGlobalVariables = async (req, res) => {
     try {
-      const globalVariables = await Global.findOne();
-      return res.status(200).json({
-        success: true,
-        message: "Global variable fetched",
-        data: globalVariables,
-      })
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      })
-    }
-  }
+        const globalVariables = await prisma.global.findFirst();
+        const blockedWords = await prisma.blockedWord.findMany();
+        const blockedDomains = await prisma.blockedDomain.findMany();
+      
+        if(blockedWords || blockedDomains){
+            globalVariables.blockedWords = blockedWords.map(word => word.word);
+            globalVariables.blockedDomains = blockedDomains.map(domain => domain.domain);
+        }
 
-  exports.updateGlobalVariables = async (req, res) => {
+        return res.status(200).json({
+            success: true,
+            message: "Global variables fetched",
+            data: globalVariables,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+ 
+exports.updateGlobalVariables = async (req, res) => {
     try {
         const {
             tempUrlActiveDays,
@@ -30,27 +37,35 @@ exports.getGlobalVariables = async (req, res) => {
             pauseGeneratedReportDisabled,
         } = req.body;
 
-        // Assuming there is only one document for Global schema
-        const globalDocument = await Global.findOne();
+        const parsedTempUrlActiveDays = parseInt(tempUrlActiveDays);
+        const parsedSilverUrlActiveDays = parseInt(silverUrlActiveDays);
+        const parsedGoldUrlActiveDays = parseInt(goldUrlActiveDays);
+        const parsedPlatinumUrlActiveDays = parseInt(platinumUrlActiveDays);
+        const parsedReportExpirationDays = parseInt(reportExpirationDays);
+        const parsedMaxReportRecords = parseInt(maxReportRecords);
+
+        const globalDocument = await prisma.global.findFirst();
         if (!globalDocument) {
-            throw new Error("Global document not found");
+            return res.status(404).json({
+                success: false,
+                message: "Global document not found",
+            });
         }
 
-        // Construct the updated fields
-        const updatedFields = {
-            tempUrlActiveDays,
-            silverUrlActiveDays,
-            goldUrlActiveDays,
-            platinumUrlActiveDays,
-            reportExpirationDays,
-            maxReportRecords,
-            generateReportDisabled,
-            generatedReportDisabled,
-            pauseGeneratedReportDisabled,
-        };
-
-        // Update the document with the new fields
-        const updatedGlobalVariablesData = await Global.findByIdAndUpdate(globalDocument._id, updatedFields, { new: true });
+        const updatedGlobalVariablesData = await prisma.global.update({
+            where: { id: globalDocument.id },
+            data: {
+                tempUrlActiveDays: parsedTempUrlActiveDays,
+                silverUrlActiveDays: parsedSilverUrlActiveDays,
+                goldUrlActiveDays: parsedGoldUrlActiveDays,
+                platinumUrlActiveDays: parsedPlatinumUrlActiveDays,
+                reportExpirationDays: parsedReportExpirationDays,
+                maxReportRecords: parsedMaxReportRecords,
+                generateReportDisabled,
+                generatedReportDisabled,
+                pauseGeneratedReportDisabled,
+            },
+        });
 
         return res.status(200).json({
             success: true,
@@ -67,17 +82,21 @@ exports.getGlobalVariables = async (req, res) => {
     }
 };
 
-
 exports.deleteSelectedDomains = async (req, res) => {
     try {
-        const selectedDomains  = req.body;
-        const updatedGlobalVariablesData = await Global.findOneAndUpdate({}, {
-            $pull: { blockedDomains: { $in: selectedDomains } }
-        }, { new: true });
+        const selectedDomains = req.body;
+
+        await prisma.blockedDomain.deleteMany({
+            where: {
+                domain: {
+                    in: selectedDomains
+                }
+            }
+        });
+
         return res.status(200).json({
             success: true,
             message: 'Selected blocked domains deleted successfully',
-            data: updatedGlobalVariablesData,
         });
     } catch (error) {
         console.error('Error deleting selected blocked domains:', error);
@@ -91,14 +110,20 @@ exports.deleteSelectedDomains = async (req, res) => {
 
 exports.deleteSelectedWords = async (req, res) => {
     try {
-        const  selectedWords  = req.body;
-        const updatedGlobalVariablesData = await Global.findOneAndUpdate({}, {
-            $pull: { blockedWords: { $in: selectedWords } }
-        }, { new: true });
+        const selectedWords = req.body;
+
+        // Delete selected blocked words
+        await prisma.blockedWord.deleteMany({
+            where: {
+                word: {
+                    in: selectedWords
+                }
+            }
+        });
+
         return res.status(200).json({
             success: true,
             message: 'Selected blocked words deleted successfully',
-            data: updatedGlobalVariablesData,
         });
     } catch (error) {
         console.error('Error deleting selected blocked words:', error);
@@ -110,25 +135,36 @@ exports.deleteSelectedWords = async (req, res) => {
     }
 };
 
+
 exports.addBlockedDomainsWords = async (req, res) => {
     try {
         const { type, value } = req.body;
         if (type === 'domain') {
-            await Global.findOneAndUpdate({}, { $push: { blockedDomains: value } });
-        } else if (type === 'word') {
-            await Global.findOneAndUpdate({}, { $push: { blockedWords: value } });
+            await prisma.blockedDomain.create({
+                data: {
+                    domain: value
+                }
+            });
+        } else {
+            await prisma.blockedWord.create({
+                data: {
+                    word: value
+                }
+            });
         }
+
         return res.status(200).json({
             success: true,
-            message: 'domain/word added successfully',
+            message: `${type} added successfully`,
         });
     } catch (error) {
         console.error('Error adding blocked domain/word:', error);
         return res.status(500).json({
             success: false,
-            message: `Failed to add new blocked domains/words`,
-            error: error.message,
+            message: `Failed to add new blocked ${type}s`,
+            error: error.message
         });
     }
 };
+
 
