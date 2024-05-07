@@ -112,3 +112,16 @@ model Visit {
   urlId     Int
   createdAt DateTime @default(now())
 }
+
+// model Visit {
+//   id Int @id @default(autoincrement())
+//   country String?
+//   count Int
+//   url Url @relation(fields: [urlId], references: [id])
+//   urlId Int
+//   user User? @relation(fields: [userId], references: [id])
+//   userId Int?
+//   userAgent String?
+//   ipAddress String?
+//   createdAt DateTime @default(now())
+// }

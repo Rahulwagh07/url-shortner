@@ -5,16 +5,20 @@ const router = express.Router()
 
 const { auth, isAdmin } = require("../middlewares/auth")
 
-// const {
-//     getAllUrl,
-//     suspendUrl,
-//     deleteUrl,
-//     deleteBulkUrls,
-// } = require("../controllers/Manage-url")
+const {
+    getAllUrl,
+    suspendUrl,
+    deleteUrl,
+    deleteBulkUrls,
+    activateUrl,
+    updateShortenedUrl,
+} = require("../controllers/Manage-url")
 
-// router.get("/urls", auth, getAllUrl);
-// router.put("/suspend/:urlId", auth, suspendUrl);
-// router.delete("/delete/:urlId", auth, deleteUrl);
-// router.delete("/bulk-delete", auth, deleteBulkUrls);
+router.get("/urls", auth, getAllUrl);
+router.put("/suspend/:urlId", auth, suspendUrl);
+router.delete("/delete/:urlId", auth, deleteUrl);
+router.delete("/bulk-delete", auth, deleteBulkUrls);
+router.put("/activate/:urlId", auth, activateUrl);
+router.put("/edit/:urlId", auth, updateShortenedUrl);
 
 module.exports = router

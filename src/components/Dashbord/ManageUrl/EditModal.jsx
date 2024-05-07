@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
-import { apiConnector } from '../../services/apiConnector';
-import { urlEndPoints } from '../../services/apis';
+import { apiConnector } from '../../../services/apiConnector';
+import { manageUrlEndpoints } from '../../../services/apis';
 import { toast } from 'react-hot-toast';
-import { MdContentCopy } from "react-icons/md";
 import { FaLink } from "react-icons/fa6";
-import Spinner from '../common/Spinner';
+import Spinner from '../../common/Spinner';
 import { useSelector } from 'react-redux';
 import { IoMdClose } from "react-icons/io";
-import { SiTplink } from "react-icons/si";
 
-const { CREATE_SHORT_URL_API } = urlEndPoints;
-const CreateUrlForm = ({setIsOpen, tempUrlActiveDays, 
-    goldUrlActiveDays, silverUrlActiveDays, platinumUrlActiveDays}) => {
-  
+const {
+    EDIT_URL_API,
+} = manageUrlEndpoints
+
+const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, platinumUrlActiveDays}) => {
   const { token } = useSelector((state) => state.auth)
-  const [baseUrl, setBaseUrl] = useState('');
-  const [urlName, setUrlName] = useState('');
-  const [description, setDescription] = useState('');
-  const [customCharacters, setCustomCharacters] = useState('');
+  const [baseUrl, setBaseUrl] = useState(url.baseUrl);
+  const [urlName, setUrlName] = useState(url.urlName);
+  const [description, setDescription] = useState(url.description);
+  const [customCharacters, setCustomCharacters] = useState(url.shortUrl);
   const [tier, setTier] = useState('');
-  const [shortUrl, setShortUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const urlId = url.id;
+  console.log("urlId", urlId)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await apiConnector('POST', CREATE_SHORT_URL_API, {
+      const response = await apiConnector('PUT', `${EDIT_URL_API}/${urlId}`, {
         baseUrl,
         urlName,
         description,
@@ -41,12 +41,8 @@ const CreateUrlForm = ({setIsOpen, tempUrlActiveDays,
       const { isBlockedWord, isDomainBlocked, customCharAlreadyExist, isValidUrl } = response.data;
       console.log( isBlockedWord, isDomainBlocked, customCharAlreadyExist, isValidUrl )
       if (response.data.success) {
-        setShortUrl(response.data.shortUrl);
-        setBaseUrl("");
-        setUrlName("");
-        setDescription("");
-        setTier("");
-        setLoading(false);
+        toast.success("Url Updated")
+        setEditModal(false);
         return;
       }
       if (isBlockedWord) {
@@ -72,21 +68,18 @@ const CreateUrlForm = ({setIsOpen, tempUrlActiveDays,
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      toast.error("Failed to create a short URL..");
+      toast.error("Failed to update a short URL..");
     }
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(shortUrl);
-    toast.success("Copied");
-  };
-
   return (
-    <div className="p-8 pb-16 bg-gray-100 mx-auto flex flex-col gap-3 sm:w-11/12 xs:w-full md:w-10/12 rounded-md shadow-md">
+    <div className="p-8 pb-16 bg-gray-100 mx-auto flex flex-col 
+      gap-3 sm:w-11/12 xs:w-full md:w-10/12 rounded-md shadow-md">
       <h2 className="text-lg relative font-semibold mb-4 flex items-center gap-4">
         <span><FaLink size={24} className='text-green-400' /></span>
-        <span className='text-lg text-black'>Shorten a long URL</span>
-        <IoMdClose onClick={() => setIsOpen(false)} size={24} className='absolute cursor-pointer right-2 top-1'/>
+        <span className='text-lg text-black'>Update Your URl</span>
+        <IoMdClose onClick={() => setEditModal(false)} size={24} 
+        className='absolute cursor-pointer right-2 top-1'/>
       </h2>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
@@ -101,7 +94,8 @@ const CreateUrlForm = ({setIsOpen, tempUrlActiveDays,
         <input
           type="text"
           placeholder="url name (optional)"
-          className="px-2 py-2 w-full border border-green-500 rounded-md focus:outline-none focus:border-blue-500"
+          className="px-2 py-2 w-full border border-green-500 rounded-md 
+          focus:outline-none focus:border-blue-500"
           value={urlName}
           onChange={(e) => setUrlName(e.target.value)}
           maxLength={15}
@@ -135,7 +129,7 @@ const CreateUrlForm = ({setIsOpen, tempUrlActiveDays,
           onChange={(e) => setDescription(e.target.value)}
           maxLength={250}
         />
-         {description.length > 0 && (
+         {description?.length > 0 && (
           <span className="absolute top-0 right-1 text-xs"> {description.length}/250</span>
         )}
         </div>
@@ -155,27 +149,11 @@ const CreateUrlForm = ({setIsOpen, tempUrlActiveDays,
           type="submit"
           className="bg-blue-150 px-2 py-2 flex items-center justify-center text-white-25 rounded-md"
         >
-          {loading ? <Spinner /> : <span>Shorten Url</span>}
+          {loading ? <Spinner /> : <span>Update</span>}
         </button>
       </form>
-      {shortUrl && (
-        <div className="mt-4 flex flex-col gap-4">
-        <div className='flex items-center gap-2'> 
-          <span className='text-red-500'><SiTplink/></span> 
-          <h3 className='text-semibold'>Shorted Url</h3>
-        </div>
-        <div> <a href={shortUrl} target='_blank' 
-               className="w-full border border-slate-400 py-2 px-3 
-               rounded-md text-green-400">{shortUrl}
-               </a>
-          <button className="py-2 px-4 rounded-md" onClick={handleCopy}>
-            <MdContentCopy />
-          </button>
-        </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default CreateUrlForm;
+export default EditModal;

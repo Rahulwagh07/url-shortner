@@ -3,6 +3,7 @@ const prisma = require('../config/prismaClient')
 exports.createCategory = async (req, res) => {
     try {
         const { name, shortCode } = req.body;
+       
         const existingCategory = await prisma.category.findFirst({
             where: {
                 OR: [
@@ -24,6 +25,7 @@ exports.createCategory = async (req, res) => {
         });
 
         return res.status(201).json({
+            success:true,
             message: 'Category created successfully',
             category: newCategory
         });
