@@ -39,12 +39,14 @@ export const panelOptionsEndpoints = {
 }
 
 export const manageUrlEndpoints = {
-//   router.get("/urls", auth, getAllUrl);
-// router.put("/suspend/:urlId", auth, suspendUrl);
-// router.delete("/delete/:urlId", auth, deleteUrl);
-// router.delete("/bulk-delete", auth, deleteBulkUrls);
-GET_ALL_URLS_API: BASE_URL + "/urls",
-SUSPEND_URL_API: BASE_URL + "/suspend",
-DELETE_URL_API: BASE_URL + "/delete",
-DELETE_BULK_URLS_API: BASE_URL + "/bulk-delete",
+  GET_ALL_URLS_API: BASE_URL + "/urls",
+  SUSPEND_URL_API: BASE_URL + "/suspend",
+  DELETE_URL_API: BASE_URL + "/delete",
+  DELETE_BULK_URLS_API: BASE_URL + "/bulk-delete",
+  ACTIVATE_URL_API: BASE_URL + "/activate",
+  EDIT_URL_API: BASE_URL + "/edit",
+}
+
+export const categoryEndpoints = {
+  CREATE_CATEGORY_API: BASE_URL + "/admin/createCategory"
 }

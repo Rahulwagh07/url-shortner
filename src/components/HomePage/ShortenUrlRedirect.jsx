@@ -4,7 +4,7 @@ import { apiConnector } from '../../services/apiConnector';
 import { guestEndPoints } from '../../services/apis';
 import { toast } from "react-hot-toast"
 import Spinner from '../common/Spinner';
-import AdComponent from '../common/AdComponent';
+// import AdComponent from '../common/AdComponent';
 
 const { GET_TEMP_SHORT_URL_API, } = guestEndPoints;
 
@@ -59,8 +59,8 @@ export default function ShortUrlRedirect() {
       <div className='flex items-center justify-center mt-20'><Spinner/></div>
     ) : (
       <div className='bg-gray-100'>
-        <div className='md:w-7/12 lg:w-5/12 flex items-center justify-center mx-auto'><AdComponent/></div>
-        {iframeCompatible ? (
+        {/* <div className='md:w-7/12 lg:w-5/12 flex items-center justify-center mx-auto'><AdComponent/></div> */}
+         {iframeCompatible ? (
           <iframe src={url} title="iframe" className='w-full h-[800px] '  allowFullScreen></iframe>
         ) : (
            <div className='flex flex-col items-center gap-4 justify-center'>

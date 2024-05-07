@@ -28,7 +28,6 @@ import URLManagement from "./components/Dashbord/URLManagement"
 import PanelOptions from "./components/Dashbord/PanelOptions"
 import Settings from "./components/Dashbord/Settings/Settings"
 import ManageUrl from "./components/Dashbord/User/ManageUrl"
-import Category from "./pages/Category"
 import Demo from "./pages/Demo"
  
 const store = configureStore({
@@ -85,10 +84,6 @@ const router = createBrowserRouter([
           {
             path: "/admin/dashboard/panel-options",
             element: <PanelOptions/>,
-          },
-          {
-            path: "/admin/dashboard/category",
-            element: <Category/>,
           },
           {
             path: "/admin/dashboard/settings",

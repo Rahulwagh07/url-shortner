@@ -13,6 +13,7 @@ const profileRoutes = require("./routes/Profile");
 const guestRoutes = require("./routes/Guest");
 const adminRoutes = require("./routes/Admin");
 const manageUrlRoutes = require("./routes/Urls");
+const path = require('path');
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ const PORT = process.env.PORT || 4000;
 // Database connect
 database.connect();
 
+//serve the uploded images statically
+app.use('/api/uploads', express.static(path.join(__dirname, 'controllers/uploads')));
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
