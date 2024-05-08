@@ -15,9 +15,6 @@ export default {
       white: "#FFFFFF",
       black: "#000",
       transparent: "#ffffff00",
-      white:{
-        25: "#F4F4F3",
-      },
       blue: {
         50: "#eff6ff",
         100: "#dbeafe",

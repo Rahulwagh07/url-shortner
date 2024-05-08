@@ -16,7 +16,7 @@ function HeroSection() {
         </h3>
         <p>Secure link management to protect your data <br /> from unauthorized sharing.</p>
         {/* <div className='flex gap-4'>
-          <Link to='/login' className='bg-black text-white-25 p-2 px-4'>
+          <Link to='/login' className='bg-black text-white p-2 px-4'>
             Explore now
           </Link>
           <Link to='/signup' className='bg-[#f9fafb] border text-gray-900 border-black p-2 px-6'>

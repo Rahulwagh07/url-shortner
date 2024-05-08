@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
-const prisma = require("../config/prismaClient")
+const prisma = require("../config/prismaClient");
 const { isUrl } = require('check-valid-url');
 
 const BaseUrl = process.env.FRONTEND_BASE_URL;
@@ -10,18 +10,19 @@ exports.deleteBulkUrls = async (req, res) => {
     const userId = req.user.id;
     const { urlIds } = req.body;
     const deletedUrls = await Url.deleteMany({ _id: { $in: urlIds }, creator: userId });
- 
+
     return res.status(200).json({ 
-        sucess:true,
-        message: `${deletedUrls.deletedCount} URLs deleted successfully` });
+      success: true,
+      message: `${deletedUrls.deletedCount} URLs deleted successfully` 
+    });
   } catch (error) {
     console.error('Error deleting URLs:', error);
     return res.status(500).json({ 
-        success:false,
-        message: 'Internal server error' });
+      success: false,
+      message: 'Internal server error' 
+    });
   }
 };
- 
 
 exports.getAllUrl = async (req, res) => {
   try {
@@ -29,46 +30,47 @@ exports.getAllUrl = async (req, res) => {
     const userUrls = await prisma.url.findMany({ where: { creatorId: userId } });
 
     return res.status(200).json({ 
-        success: true,
-        data: userUrls 
+      success: true,
+      data: userUrls 
     });
   } catch (error) {
     console.error('Error fetching URLs:', error);
     return res.status(500).json({
-        success: false, 
-        message: 'Internal server error' });
+      success: false, 
+      message: 'Internal server error' 
+    });
   }
 };
 
 exports.suspendUrl = async (req, res) => {
-    try {
-      const userId = req.user.id;
-      const { urlId } = req.params;
-      const url = await prisma.url.findFirst({ where: { id: Number(urlId), creatorId: userId } });
-  
-      if (!url) {
-        return res.status(404).json({
-            success:false,
-            message: 'URL not found' 
-        });
-      }
-      await prisma.url.update({ 
-        where: { id: Number(urlId) },
-        data: { status: 'suspended' }
-      });
-  
-      return res.status(200).json({
-        success:true,
-        message: 'URL suspended successfully' 
-       });
-    } catch (error) {
-      console.error('Error suspending URL:', error);
-      return res.status(500).json({ 
-        success:false,
-        message: 'Internal server error' 
+  try {
+    const userId = req.user.id;
+    const { urlId } = req.params;
+    const url = await prisma.url.findFirst({ where: { id: Number(urlId), creatorId: userId } });
+
+    if (!url) {
+      return res.status(404).json({
+        success: false,
+        message: 'URL not found' 
       });
     }
-  };
+    await prisma.url.update({ 
+      where: { id: Number(urlId) },
+      data: { status: 'suspended' }
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'URL suspended successfully' 
+    });
+  } catch (error) {
+    console.error('Error suspending URL:', error);
+    return res.status(500).json({ 
+      success: false,
+      message: 'Internal server error' 
+    });
+  }
+};
 
 exports.activateUrl = async (req, res) => {
   try {
@@ -99,8 +101,8 @@ exports.activateUrl = async (req, res) => {
       message: 'Internal server error' 
     });
   }
-};  
- 
+};
+
 exports.deleteUrl = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -109,19 +111,20 @@ exports.deleteUrl = async (req, res) => {
 
     if (!url) {
       return res.status(404).json({ 
-        success:false,
+        success: false,
         message: 'URL not found' 
       });
     }
     await prisma.url.delete({ where: { id: Number(urlId) } });
     return res.status(200).json({ 
-        success:true,
-        message: 'URL deleted successfully' });
+      success: true,
+      message: 'URL deleted successfully' 
+    });
   } catch (error) {
     console.error('Error deleting URL:', error);
     return res.status(500).json({ 
-        success:false,
-        message: 'Internal server error' 
+      success: false,
+      message: 'Internal server error' 
     });
   }
 };
@@ -131,15 +134,17 @@ exports.deleteBulkUrls = async (req, res) => {
     const userId = req.user.id;
     const { urlIds } = req.body;
     const deletedUrls = await prisma.url.deleteMany({ where: { id: { in: urlIds }, creatorId: userId } });
- 
+
     return res.status(200).json({ 
-        success:true,
-        message: `${deletedUrls.count} URLs deleted successfully` });
+      success: true,
+      message: `${deletedUrls.count} URLs deleted successfully` 
+    });
   } catch (error) {
     console.error('Error deleting URLs:', error);
     return res.status(500).json({ 
-        success:false,
-        message: 'Internal server error' });
+      success: false,
+      message: 'Internal server error' 
+    });
   }
 };
 
@@ -148,7 +153,7 @@ exports.updateShortenedUrl = async (req, res) => {
     const { urlId } = req.params;
     const { baseUrl, urlName, description, customCharacters, tier, category } = req.body;
 
-    const url = await prisma.url.findFirst({ where: { id: Number(urlId)} });
+    const url = await prisma.url.findFirst({ where: { id: Number(urlId) } });
     // Validation for custom chars
     if (customCharacters) {
       const blockedWords = await prisma.blockedWord.findMany();
@@ -219,7 +224,7 @@ exports.updateShortenedUrl = async (req, res) => {
         category: {
           connect: { id: category || url.categoryId },
         },
-        expirationDate: expirationDate || url.expirationDate,  
+        expirationDate: expirationDate || url.expirationDate,
       },
     });
 

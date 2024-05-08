@@ -141,20 +141,20 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
         />
         <button
           onClick={handleSortChange}
-          className="px-4 py-2 bg-blue-500 text-white-25 rounded-md hover:bg-blue-600"
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
           Sort by Name
         </button>
         <button
           onClick={handleSelectAll}
-          className="px-4 py-2 bg-gray-500 text-white-25 rounded-md hover:bg-gray-600"
+          className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
         >
           {selectedUrls.length === urls.length ? 'Deselect All' : 'Select All'}
         </button>
         <button
           onClick={handleBulkDelete}
           disabled={selectedUrls.length === 0}
-          className={`px-4 py-2 bg-red-500 text-white-25 rounded-md hover:bg-red-600 ${
+          className={`px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 ${
             selectedUrls.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
@@ -197,7 +197,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
                 >
                   {url.description.slice(0, 8)}...
                   <div className="absolute left-0 top-full mt-2 bg-red-400 
-                  text-white-25-25 px-4 py-2 rounded-md opacity-0 invisible 
+                  text-white-25 px-4 py-2 rounded-md opacity-0 invisible 
                   group-hover:visible group-hover:opacity-100 transition duration-100 z-10">
                     {url.description}
                   </div>
@@ -226,7 +226,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
               <td className="px-4 py-2">
                 <div className=' flex items-center justify-center gap-2'><button
                     onClick={() => url.status === 'suspended' ? handleActivate(url.id) : handleSuspend(url.id)}
-                    className={`px-2 py-1 text-white-25 rounded-md ${
+                    className={`px-2 py-1 text-white rounded-md ${
                         url.status === 'suspended'
                         ? 'bg-yellow-500 hover:bg-yellow-600'
                         : 'bg-gray-400'

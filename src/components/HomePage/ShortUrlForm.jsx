@@ -57,7 +57,7 @@ const ShortenUrlForm = () => {
         />
         <button
           type="submit"
-          className="bg-blue-150 px-2 py-3 flex items-center justify-center text-white-25 rounded-md"
+          className="bg-blue-150 px-2 py-3 flex items-center justify-center text-white rounded-md"
         >
           {loading ? <Spinner/> : <span>Shorten Url</span>}
         </button>
