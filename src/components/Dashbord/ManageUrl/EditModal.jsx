@@ -147,7 +147,7 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
         </select>
         <button
           type="submit"
-          className="bg-blue-150 px-2 py-2 flex items-center justify-center text-white-25 rounded-md"
+          className="bg-blue-150 px-2 py-2 flex items-center justify-center text-white rounded-md"
         >
           {loading ? <Spinner /> : <span>Update</span>}
         </button>

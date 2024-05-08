@@ -38,17 +38,12 @@ function ManageUrl() {
       <div className='text-start'>
       <button
         onClick={openModal}
-        className="border rounded-md text-white-25 bg-black px-6 py-1"
+        className="border rounded-md text-white bg-black px-6 py-1"
       >
         Short Url
       </button>
       </div>
-      <UrlList
-        // tempUrlActiveDays={globalVariables.tempUrlActiveDays}
-        // goldUrlActiveDays={globalVariables.goldUrlActiveDays}
-        // silverUrlActiveDays={globalVariables.silverUrlActiveDays}
-        // platinumUrlActiveDays={globalVariables.platinumUrlActiveDays}
-      />
+      <UrlList/>
       
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">

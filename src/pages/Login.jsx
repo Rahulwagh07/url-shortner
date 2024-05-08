@@ -1,48 +1,48 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate, Link} from 'react-router-dom'
-import { login } from '../services/operations/authAPI'
-import { ACCOUNT_TYPE } from '../utils/constants'
-import Spinner from '../components/common/Spinner'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { login } from '../services/operations/authAPI';
+import { ACCOUNT_TYPE } from '../utils/constants';
+import Spinner from '../components/common/Spinner';
 
 function Login() {
-  const navigate  = useNavigate()
-    const dispatch = useDispatch()
-    const [loading, setLoading] = useState(false)
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-    })
-    const { email, password } = formData;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = formData;
 
-    const handleOnChange = ( e) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            [e.target.name]:e.target.value,
-        }))
-    }
+  const handleOnChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    const handleOnSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true)
-        try {
-            const { accountType, success } = await login(email, password, dispatch);
-            if(!success){
-              return
-            }
-            if (accountType === ACCOUNT_TYPE.ADMIN) {
-                navigate("/admin/dashboard")
-            }
-            else{
-                navigate("/dashboard/manage-urls")
-            }
-        } catch (error) {
-            navigate("/login")
-            console.log("Login Error", error)
-        } finally{
-          setLoading(false)
-        }
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const { accountType, success } = await login(email, password, dispatch);
+      if (!success) {
+        return;
+      }
+      if (accountType === ACCOUNT_TYPE.ADMIN) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard/manage-urls");
+      }
+    } catch (error) {
+      navigate("/login");
+      console.log("Login Error", error);
+    } finally {
+      setLoading(false);
     }
+  };
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -52,7 +52,7 @@ function Login() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6"  onSubmit={handleOnSubmit}>
+        <form className="space-y-6" onSubmit={handleOnSubmit}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
@@ -107,7 +107,7 @@ function Login() {
                hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
                focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-             {loading ? <Spinner/> : <span>Sign in</span>}
+              {loading ? <Spinner /> : <span>Sign in</span>}
             </button>
           </div>
         </form>
@@ -120,9 +120,7 @@ function Login() {
         </p>
       </div>
     </div>
-    
-  )
+  );
 }
 
-export default Login
- 
+export default Login;

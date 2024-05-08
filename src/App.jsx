@@ -5,8 +5,8 @@ import Navbar from "./components/common/Navbar";
 function App() {
   return (
     <div className="flex min-h-screen w-screen flex-col">
-          <Navbar/>
-         <Outlet/>
+      <Navbar/>
+      <Outlet/>
     </div>
   );
 }

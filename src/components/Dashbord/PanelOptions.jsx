@@ -6,61 +6,59 @@ import { useSelector } from 'react-redux';
 import { toast } from "react-hot-toast";
 import AddPanel from './AddPanel';
 import Category from './Category';
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const { GET_PANEL_OPTIONS_API, DELETE_PANEL_OPTIONS_API } = panelOptionsEndpoints;
 
 function PanelOptions() {
-    const { token } = useSelector((state) => state.auth);
-    const [panelOptions, setPanelOptions] = useState([]);
-     
-    const fetchPanelOptions = async () => {
-        try {
-            const response = await apiConnector("GET", GET_PANEL_OPTIONS_API, null, { Authorization: `Bearer ${token}` });
-            setPanelOptions(response.data);
-        } catch (error) {
-            toast.error("Failed to fetch panel options");
-            console.error('Error fetching panel options:', error);
-        }
-    };
+  const { token } = useSelector((state) => state.auth);
+  const [panelOptions, setPanelOptions] = useState([]);
+   
+  const fetchPanelOptions = async () => {
+    try {
+      const response = await apiConnector("GET", GET_PANEL_OPTIONS_API, null, { Authorization: `Bearer ${token}` });
+      setPanelOptions(response.data);
+    } catch (error) {
+      toast.error("Failed to fetch panel options");
+      console.error('Error fetching panel options:', error);
+    }
+  };
 
-    useEffect(() => {
-        fetchPanelOptions();
-    }, []);
+  useEffect(() => {
+    fetchPanelOptions();
+  }, []);
 
-    const handleDeletePanelOption = async (id) => {
-        try {
-            await apiConnector("DELETE", `${DELETE_PANEL_OPTIONS_API}/${id}`, null, { Authorization: `Bearer ${token}` });
-            setPanelOptions(panelOptions.filter(option => option.id !== id));
-            toast.success("Panel option deleted successfully");
-        } catch (error) {
-            toast.error("Failed to delete panel option");
-            console.error('Error deleting panel option:', error);
-        }
-    };
+  const handleDeletePanelOption = async (id) => {
+    try {
+      await apiConnector("DELETE", `${DELETE_PANEL_OPTIONS_API}/${id}`, null, { Authorization: `Bearer ${token}` });
+      setPanelOptions(panelOptions.filter(option => option.id !== id));
+      toast.success("Panel option deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete panel option");
+      console.error('Error deleting panel option:', error);
+    }
+  };
 
-return (
-<div className="container mx-auto p-4">
-    <AddPanel />
-    <h2 className="text-2xl font-semibold mb-4">Panel Options</h2>
-    <ul>
-      {panelOptions.map(option => (
-        <li key={option.id} className="flex justify-between border-b py-2">
-          <span className='mr-4'>{option.optionName}</span>
-          <span className='mr-16'>{option.redirectionUrl}</span>
-          <a href={`${BASE_URL}${option.optionIcon}`} 
-          className='text-blue-500'>See image
-          </a>
-          <button onClick={() => handleDeletePanelOption(option.id)} 
-          className="text-red-500 hover:text-red-600">
+  return (
+    <div className="container mx-auto p-4">
+      <AddPanel />
+      <h2 className="text-2xl font-semibold mb-4">Panel Options</h2>
+      <ul>
+        {panelOptions.map(option => (
+          <li key={option.id} className="flex justify-between border-b py-2">
+            <span className='mr-4'>{option.optionName}</span>
+            <span className='mr-16'>{option.redirectionUrl}</span>
+            <a href={`${BASE_URL}${option.optionIcon}`} className='text-blue-500'>See image</a>
+            <button onClick={() => handleDeletePanelOption(option.id)} className="text-red-500 hover:text-red-600">
               <FaTrash />
-          </button>
-        </li>
-      ))}
-    </ul>
-    <Category />
-</div>
-);
+            </button>
+          </li>
+        ))}
+      </ul>
+      <Category />
+    </div>
+  );
 }
 
 export default PanelOptions;

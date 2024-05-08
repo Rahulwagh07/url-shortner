@@ -66,7 +66,7 @@ export default function ShortUrlRedirect() {
            <div className='flex flex-col items-center gap-4 justify-center'>
            <h3 className='text-lg text-slate-500 font-semibold'>Url is not campatible to load in iframe</h3>
            <h4 className='text-lg text-slate-500 font-semibold'>Go to original url</h4>
-           <a href={url} target='_blank' className='py-2 px-3 bg-blue-150 rounded-md text-white-25'>{url}</a>
+           <a href={url} target='_blank' className='py-2 px-3 bg-blue-150 rounded-md text-white'>{url}</a>
            </div>
         )}
       </div>

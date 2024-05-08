@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
-const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const { cloudinaryConnect } = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 
@@ -16,11 +14,7 @@ const manageUrlRoutes = require("./routes/Urls");
 const path = require('path');
 
 dotenv.config();
-
 const PORT = process.env.PORT || 4000;
-
-// Database connect
-database.connect();
 
 //serve the uploded images statically
 app.use('/api/uploads', express.static(path.join(__dirname, 'controllers/uploads')));
@@ -40,9 +34,6 @@ app.use(
       tempFileDir:"/tmp",
     })
 );
-
-// Cloudinary connection
-cloudinaryConnect();
 
 app.use("/api/auth", userRoutes);
 app.use("/api/profile", profileRoutes);
