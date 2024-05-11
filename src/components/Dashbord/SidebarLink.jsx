@@ -14,14 +14,14 @@ export default function SidebarLink({ link, iconName }) {
       className={`relative px-8 py-2 sm:py-1 text-sm font-medium ${
         matchRoute(link.path)
           ? "bg-black text-white"
-          : "bg-opacity-0 text-white"
+          : "bg-opacity-0 text-black"
       } transition-all duration-200`}
     >
       <div className="flex items-center gap-x-2">
         <Icon className={` text-lg ${
         matchRoute(link.path)
-          ? "text-white"
-          : "bg-opacity-0 text-black"
+          ? "text-sky-400"
+          : "bg-opacity-0 text-sky-400"
       }`} />
         <span>{link.name}</span>
       </div>

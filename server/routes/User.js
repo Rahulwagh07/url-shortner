@@ -7,6 +7,11 @@ const {
   sendotp,
 } = require("../controllers/Auth")
 
+const {
+  resetPasswordToken,
+  resetPassword,
+} = require("../controllers/ResetPassword")
+
 router.post("/login", login)
 router.post("/signup", signup)
 router.post("/sendotp", sendotp)
@@ -18,5 +23,8 @@ const { auth, isUser } = require("../middlewares/auth");
 
 //Routes for Authrized user
 router.post("/create-shortened-url", auth, createShortenedUrl);
+
+router.post("/reset-password-token", resetPasswordToken)
+router.post("/reset-password", resetPassword)
 
 module.exports = router

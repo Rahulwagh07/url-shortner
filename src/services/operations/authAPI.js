@@ -8,6 +8,8 @@ const {
     SENDOTP_API,
     SIGNUP_API,
     LOGIN_API,
+    RESETPASSTOKEN_API,
+    RESETPASSWORD_API,
   } = endpoints
 
   export function sendOtp(email, navigate) {
@@ -39,7 +41,7 @@ const {
     firstName,
     lastName,
     email,
-    country,
+    // country,
     password,
     confirmPassword,
     otp,
@@ -54,7 +56,7 @@ const {
           firstName,
           lastName,
           email,
-          country,
+          // country,
           password,
           confirmPassword,
           otp,
@@ -119,3 +121,44 @@ const {
     }
   }
   
+  export function getPasswordResetToken(email, setEmailSent) {
+    return async (dispatch) => {
+      dispatch(setLoading(true))
+      try {
+        const response = await apiConnector("POST", RESETPASSTOKEN_API, {
+          email,
+        })
+        if (!response.data.success) {
+          throw new Error(response.data.message)
+        }
+
+        toast.success("Reset Email Sent")
+        setEmailSent(true)
+      } catch (error) {
+        toast.error("Failed To Send Reset Email")
+      }
+      dispatch(setLoading(false))
+    }
+  }
+
+  export function resetPassword(password, confirmPassword, token, navigate) {
+    return async (dispatch) => {
+      dispatch(setLoading(true))
+      try {
+        const response = await apiConnector("POST", RESETPASSWORD_API, {
+          password,
+          confirmPassword,
+          token,
+        })
+        if (!response.data.success) {
+          throw new Error(response.data.message)
+        }
+
+        toast.success("Password Reset Successfully")
+        navigate("/login")
+      } catch (error) {
+        toast.error("Failed To Reset Password")
+      }
+      dispatch(setLoading(false))
+    }
+  }

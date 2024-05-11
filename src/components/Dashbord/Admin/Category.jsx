@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { categoryEndpoints } from '../../services/apis';
-import { apiConnector } from '../../services/apiConnector';
+import { categoryEndpoints } from '../../../services/apis';
+import { apiConnector } from '../../../services/apiConnector';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import Spinner from '../common/Spinner';
+import Spinner from '../../common/Spinner';
 
 const { CREATE_CATEGORY_API } = categoryEndpoints;
 
@@ -33,9 +33,10 @@ function Category() {
   };
 
   return (
-    <div className='container mx-auto max-w-md mt-8'>
-      <h2 className="text-2xl font-bold mb-4">Create Category</h2>
-      <form onSubmit={handleSubmit}>
+    <div className='container mx-auto w-full mt-8'>
+      <h2 className="text-2xl font-bold mb-4 text-sky-400">Create Category</h2>
+      <form onSubmit={handleSubmit}
+      className='flex gap-1'>
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-1" htmlFor="name">
             Name:
@@ -62,12 +63,14 @@ function Category() {
             required
           />
         </div>
+        <div className='flex justify-center items-center mt-2'>
         <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded-md focus:outline-none"
         >
           {loading ? <Spinner /> : "Create Category"}
         </button>
+        </div>
       </form>
     </div>
   );

@@ -108,6 +108,7 @@ exports.getShortUrl = async (req, res) => {
 exports.createShortenedUrl = async (req, res) => {
   try {
     const { baseUrl, urlName, description, customCharacters, tier, category } = req.body;
+    console.log(req.body)
     if (!baseUrl || !tier) {
       return res.status(403).send({
         success: false,

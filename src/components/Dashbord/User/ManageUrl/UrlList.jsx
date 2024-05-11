@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { apiConnector } from '../../../services/apiConnector';
-import { manageUrlEndpoints } from '../../../services/apis';
+import { apiConnector } from '../../../../services/apiConnector';
+import { manageUrlEndpoints } from '../../../../services/apis';
 import { useSelector } from 'react-redux';
-import Spinner from '../../common/Spinner';
+import Spinner from '../../../common/Spinner';
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import EditModal from './EditModal';
-const BASE_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
+import { FRONTEND_URL } from '../../../../utils/helper';
+
+const BASE_URL = FRONTEND_URL;
 
 const {
     GET_ALL_URLS_API,
@@ -36,7 +38,6 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
       const response = await apiConnector("GET", GET_ALL_URLS_API, null, {
         Authorization: `Bearer ${token}`,
     });
-    console.log("fetchurl res", response)
       setUrls(response.data.data);
     } catch (error) {
       console.error('Error fetching URLs:', error);
