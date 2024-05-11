@@ -21,14 +21,16 @@ import Dashboard from "./pages/Dashboard"
 import OpenRoute from "./components/auth/OpenRoute"
 import PrivateRoute from "./components/auth/PrivateRoute"
 import ShortUrlRedirect from "./components/HomePage/ShortenUrlRedirect"
-import GlobalVariables from "./components/Dashbord/GlobalVariables"
-import UserManagement from "./components/Dashbord/UserManagement"
+import GlobalVariables from "./components/Dashbord/Admin/GlobalVariables.jsx"
+import UserManagement from "./components/Dashbord/Admin/UserManagement.jsx"
 import Reports from "./components/Dashbord/Reports"
-import URLManagement from "./components/Dashbord/URLManagement"
-import PanelOptions from "./components/Dashbord/PanelOptions"
+import URLManagement from "./components/Dashbord/Admin/URLManagement.jsx"
+import PanelOptions from "./components/Dashbord/Admin/PanelOptions.jsx"
 import Settings from "./components/Dashbord/Settings/Settings"
-import ManageUrl from "./components/Dashbord/User/ManageUrl"
+import ManageUrl from "./components/Dashbord/User/ManageUrl/index.jsx"
 import Demo from "./pages/Demo"
+import ForgotPassword from "./pages/ForgotPassword.jsx"
+import UpdatePassword from "./pages/UpdatePassword.jsx"
  
 const store = configureStore({
   reducer: rootReducer,
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
       {
         path: "/verify-email",
         element: <OpenRoute><VerifyEmail/></OpenRoute>,
+      },
+      {
+        path: "/forgot-password",
+        element: <OpenRoute><ForgotPassword/></OpenRoute>,
+      },
+      {
+        path: "/update-password/:id",
+        element: <OpenRoute><UpdatePassword/></OpenRoute>,
       },
       {
         path: "/admin/dashboard",

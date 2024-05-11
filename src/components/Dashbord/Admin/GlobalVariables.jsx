@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { apiConnector } from '../../services/apiConnector';
-import { globalVariablesEndpoints } from "../../services/apis";
+import { apiConnector } from '../../../services/apiConnector';
+import { globalVariablesEndpoints } from "../../../services/apis";
 import { useSelector } from 'react-redux';
 import { toast } from "react-hot-toast";
 import BlockedFields from './BlockedFields';
+import Spinner from '../../common/Spinner';
 
 const {
     GET_GLOBAL_VARIABLE_API,
@@ -16,12 +17,14 @@ function GlobalVariables() {
   const [originalGlobalVariables, setOriginalGlobalVariables] = useState(null);
   const [blockedDomains, setBlockedDomains] = useState(null);
   const [blockedWords, setBlockedWords] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchGlobalVariables();
   }, []);
 
   const fetchGlobalVariables = async () => {
+    setLoading(true)
     try {
       const response = await apiConnector("GET", GET_GLOBAL_VARIABLE_API, null, {
         Authorization: `Bearer ${token}`,
@@ -29,9 +32,8 @@ function GlobalVariables() {
       const data = response.data.data;
       setBlockedDomains(data?.blockedDomains);
       setBlockedWords(data?.blockedWords);
-      // Filter out _id, spam words, and blocked domain
       const filteredData = Object.keys(data)
-        .filter(key => key !== '_id' && key !== 'blockedDomains' && key !== 'blockedWords'
+        .filter(key => key !== 'id' && key !== 'blockedDomains' && key !== 'blockedWords'
           && key !== '__v' && key !== 'createdAt' && key !== 'updatedAt')
         .reduce((obj, key) => {
           obj[key] = data[key];
@@ -43,6 +45,7 @@ function GlobalVariables() {
       toast.error("Failed to fetch the global variable");
       console.error('Error fetching global variables:', error);
     }
+    setLoading(false)
   };
 
   const handleChange = (e) => {
@@ -55,6 +58,7 @@ function GlobalVariables() {
   };
 
   const handleUpdateGlobalVariables = async () => {
+    setLoading(true)
     try {
       const updatedValuesArray = Object.values(globalVariables);
       const originalValuesArray = Object.values(originalGlobalVariables);
@@ -73,6 +77,7 @@ function GlobalVariables() {
     } catch (error) {
       console.error('Error updating global variables:', error);
     }
+    setLoading(false)
   };
 
   return (
@@ -107,7 +112,7 @@ function GlobalVariables() {
             onClick={handleUpdateGlobalVariables}
             className="bg-black text-white rounded-md px-4 py-2"
           >
-            Update
+          {loading ? <div className='flex items-center justify-center'><Spinner/></div> : "update"}
           </button>
           <BlockedFields
             blockedDomains={blockedDomains} blockedWords={blockedWords}
@@ -115,7 +120,7 @@ function GlobalVariables() {
           />
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className='flex items-center justify-center'><Spinner/></div>
       )}
     </div>
   );

@@ -10,7 +10,7 @@ function HeroSection() {
       <div className='flex lg:mx-14 w-full mt-16 xs:mt-6'>
         <ShortenUrlForm/>
       </div>
-      <div className='flex flex-col lg:mx-14 items-center lg:items-start gap-8 mt-16'>
+      <div className='flex flex-col lg:mx-14 items-center lg:items-start gap-8 mt-16 xs:p-2'>
         <h3 className='text-5xl text-black font-bold'>
           Organize your links <br className='mb-2' /> and track their <br className='mb-2' /> performance
         </h3>

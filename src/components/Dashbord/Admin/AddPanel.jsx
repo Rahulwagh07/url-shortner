@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { apiConnector } from '../../services/apiConnector';
-import { panelOptionsEndpoints } from '../../services/apis';
+import { apiConnector } from '../../../services/apiConnector';
+import { panelOptionsEndpoints } from '../../../services/apis';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import Spinner from '../common/Spinner';
+import Spinner from '../../common/Spinner';
 
 const { ADD_PANEL_OPTIONS_API } = panelOptionsEndpoints;
 
@@ -59,8 +59,10 @@ function AddPanel() {
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-2xl font-semibold mb-4">Add Panel Option</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-2 xs:grid-cols-1 gap-2 w-6/12">
+      <h2 className="text-2xl text-sky-400 font-semibold mb-4">Add Panel Option</h2>
+      <form onSubmit={handleSubmit} className="grid grid-cols-4 xs:grid-cols-1 gap-2 full">
+        <div>
+        <label className='font-semibold'>Name</label>
         <input
           type="text"
           value={newOptionName}
@@ -69,6 +71,9 @@ function AddPanel() {
           className="px-4 py-2 border border-gray-300 rounded mr-2"
           required
         />
+        </div>
+        <div>
+        <label className='font-semibold'>Url</label>
         <input
           type="text"
           value={newRedirectionUrl}
@@ -77,13 +82,15 @@ function AddPanel() {
           className="px-4 py-2 border border-gray-300 rounded mr-2"
           required
         />
-        <div className="flex items-center px-4 py-4 rounded-md border border-gray-300 font-semibold">
+        </div>
+        <div>
+        <label className='font-semibold'>Select icon</label>
+        <div className="flex items-center px-4 py-1 rounded-md border border-gray-300 font-semibold">
           <div className="flex items-center gap-x-2">
             {previewSource && (
               <img src={previewSource} alt="img" className="aspect-square w-[78px] rounded-full object-cover" />
             )}
-            <div className="space-y-2">
-              <p>Select Icon</p>
+          <div className="flex gap-1 items-center">
               <div className="flex flex-row gap-3">
                 <input
                   type="file"
@@ -95,7 +102,7 @@ function AddPanel() {
                 <button
                   onClick={() => document.querySelector('input[type="file"]').click()}
                   disabled={loading}
-                  className="cursor-pointer rounded-md bg-gray-700 py-2 px-5 font-semibold text-gray-50"
+                  className="cursor-pointer rounded-md bg-gray-700 py-1 px-5 font-semibold text-gray-50"
                 >
                   Select
                 </button>
@@ -103,9 +110,10 @@ function AddPanel() {
             </div>
           </div>
         </div>
+        </div>
         <div className="flex items-center justify-center">
-          <button type="submit" disabled={loading} className="px-4 py-2 bg-blue-500 text-white rounded">
-            {loading ? <Spinner /> : 'Add'}
+          <button type="submit" disabled={loading} className="px-4 py-2 mt-5 bg-blue-500 text-white rounded">
+            {loading ? <Spinner /> : 'Add Panel'}
           </button>
         </div>
       </form>

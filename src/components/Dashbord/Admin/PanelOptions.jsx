@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { apiConnector } from '../../services/apiConnector';
-import { panelOptionsEndpoints } from "../../services/apis";
+import { apiConnector } from '../../../services/apiConnector';
+import { panelOptionsEndpoints } from "../../../services/apis";
 import { FaTrash } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { toast } from "react-hot-toast";
 import AddPanel from './AddPanel';
 import Category from './Category';
+import { BACKEND_URL } from '../../../utils/helper';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = BACKEND_URL;
 
 const { GET_PANEL_OPTIONS_API, DELETE_PANEL_OPTIONS_API } = panelOptionsEndpoints;
 
@@ -43,7 +44,7 @@ function PanelOptions() {
   return (
     <div className="container mx-auto p-4">
       <AddPanel />
-      <h2 className="text-2xl font-semibold mb-4">Panel Options</h2>
+      <h2 className="text-2xl text-sky-400 font-semibold mt-2 mb-2">Panel Options</h2>
       <ul>
         {panelOptions.map(option => (
           <li key={option.id} className="flex justify-between border-b py-2">

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtp, signUp } from "../services/operations/authAPI";
-import { useNavigate } from "react-router-dom";
 
 function VerifyEmail() {
   const [otp, setOtp] = useState("");
@@ -28,7 +27,6 @@ function VerifyEmail() {
       firstName,
       lastName,
       email,
-      country,
       password,
       confirmPassword,
     } = signupData;
@@ -39,7 +37,6 @@ function VerifyEmail() {
         firstName,
         lastName,
         email,
-        country,
         password,
         confirmPassword,
         otp,
@@ -50,12 +47,7 @@ function VerifyEmail() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-8 lg:px-8">
-      {loading ? (
-        <div>
-          <div className="spinner"></div>
-        </div>
-      ) : (
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
            Verify Email
         </h2>
@@ -107,7 +99,6 @@ function VerifyEmail() {
             </button>
           </div>
         </div>
-      )}
     </div>
   );
 }

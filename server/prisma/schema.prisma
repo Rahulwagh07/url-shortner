@@ -29,6 +29,7 @@ model User {
   password    String
   accountType String   @default("User")
   token       String?
+  resetPasswordExpires DateTime?
   urls        Url[]    @relation("UserToUrl")
   createdAt   DateTime @default(now())
 }

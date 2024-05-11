@@ -19,6 +19,7 @@ CREATE TABLE `User` (
     `password` VARCHAR(191) NOT NULL,
     `accountType` VARCHAR(191) NOT NULL DEFAULT 'User',
     `token` VARCHAR(191) NULL,
+    `resetPasswordExpires` DATETIME(3) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `User_email_key`(`email`),

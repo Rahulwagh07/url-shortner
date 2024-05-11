@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import CreateUrlForm from '../../HomePage/CreateUrlForm';
-import { apiConnector } from '../../../services/apiConnector';
-import { globalVariablesEndpoints } from '../../../services/apis';
+import CreateUrlForm from '../../../HomePage/CreateUrlForm';
+import { apiConnector } from '../../../../services/apiConnector';
+import { globalVariablesEndpoints } from '../../../../services/apis';
 import { useSelector } from 'react-redux';
-import UrlList from '../ManageUrl/UrlList';
+import UrlList from './UrlList';
 
 const {
   GET_GLOBAL_VARIABLE_API,
