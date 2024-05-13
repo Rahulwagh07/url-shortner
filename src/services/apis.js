@@ -20,6 +20,7 @@ GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
 export const guestEndPoints = {
     CREATE_TEMP_SHORT_URL_API: BASE_URL + "/guest/tempShortUrl",
     GET_TEMP_SHORT_URL_API: BASE_URL + "/guest",
+    TRACK_VISITOR_DATA_API: BASE_URL + "/guest/visit",
 }
 //URL specific endpoints for auth user
 export const urlEndPoints = {

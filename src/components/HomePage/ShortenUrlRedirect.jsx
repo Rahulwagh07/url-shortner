@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiConnector } from '../../services/apiConnector';
 import { guestEndPoints } from '../../services/apis';
-import { toast } from "react-hot-toast"
+import { toast } from "react-hot-toast";
 import Spinner from '../common/Spinner';
-// import AdComponent from '../common/AdComponent';
+import Cookies from 'js-cookie';
 
-const { GET_TEMP_SHORT_URL_API, } = guestEndPoints;
+const { GET_TEMP_SHORT_URL_API,TRACK_VISITOR_DATA_API } = guestEndPoints;
 
 export default function ShortUrlRedirect() {
   const { shortUrl } = useParams();
@@ -20,6 +20,22 @@ export default function ShortUrlRedirect() {
       const response = await apiConnector("GET", `${GET_TEMP_SHORT_URL_API}/${shortUrl}`);
       if (response.data.success) {
         setUrl(response.data.baseUrl);
+        setLoading(false);
+        let uniqueVisitorId = Cookies.get('uniqueVisitorId');
+        if (!uniqueVisitorId) {
+          uniqueVisitorId = await generateUniqueVisitorId();
+          Cookies.set('uniqueVisitorId', uniqueVisitorId, { expires: 365 }); 
+        }
+        try {
+          const userLanguage = navigator.language || navigator.userLanguage;
+          await apiConnector("POST", TRACK_VISITOR_DATA_API, {
+            url: response.data.baseUrl,
+            country: userLanguage,
+            uniqueVisitorId,
+          });
+        } catch (error) {
+          console.error('Error recording visit:', error);
+        }
       }
     } catch (error) {
       toast.error("Not a valid url");
@@ -32,7 +48,7 @@ export default function ShortUrlRedirect() {
     if (shortUrl) {
       redirect();
     }
-  }, [shortUrl]);
+  }, []);
 
   useEffect(() => {
     if (url) {
@@ -50,27 +66,53 @@ export default function ShortUrlRedirect() {
       };
       xhr.send();
     }
-  }, [url]);
+  }, []);
+
+  const generateUniqueVisitorId = async () => {
+    const userAgent = navigator.userAgent;
+    const language = navigator.language;
+    const platform = navigator.platform;
+    const hardwareConcurrency = navigator.hardwareConcurrency;
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
+    const pixelRatio = window.devicePixelRatio;
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const plugins = Array.from(navigator.plugins)
+      .map((plugin) => `${plugin.name}:${plugin.description}`)
+      .join(';');
+
+    const fingerprint = `${userAgent}|${language}|${platform}|${hardwareConcurrency}|${screenWidth}x${screenHeight}|${pixelRatio}|${timezone}|${plugins}`;
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(fingerprint));
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+
+    return hashHex;
+  };
 
   return (
     <>
-    <nav className='h-[40px] bg-blue-500'>Panel</nav>
-    {loading ? (
-      <div className='flex items-center justify-center mt-20'><Spinner/></div>
-    ) : (
-      <div className='bg-gray-100'>
-        {/* <div className='md:w-7/12 lg:w-5/12 flex items-center justify-center mx-auto'><AdComponent/></div> */}
-         {iframeCompatible ? (
-          <iframe src={url} title="iframe" className='w-full h-[800px] '  allowFullScreen></iframe>
-        ) : (
-           <div className='flex flex-col items-center gap-4 justify-center'>
-           <h3 className='text-lg text-slate-500 font-semibold'>Url is not campatible to load in iframe</h3>
-           <h4 className='text-lg text-slate-500 font-semibold'>Go to original url</h4>
-           <a href={url} target='_blank' className='py-2 px-3 bg-blue-150 rounded-md text-white'>{url}</a>
-           </div>
-        )}
-      </div>
-    )}
-  </>
+      <nav className='h-[40px] bg-blue-500'>Panel</nav>
+      {loading ? (
+        <div className='flex items-center justify-center mt-20'>
+          <Spinner />
+        </div>
+      ) : (
+        <div className='bg-gray-100'>
+          {/* <div className='md:w-7/12 lg:w-5/12 flex items-center justify-center mx-auto'><AdComponent/></div> */}
+          {iframeCompatible ? (
+            <iframe src={url} title="iframe" className='w-full h-[800px]' allowFullScreen></iframe>
+          ) : (
+            <div className='flex flex-col items-center gap-4 justify-center'>
+              <h3 className='text-lg text-slate-500 font-semibold'>Url is not compatible to load in iframe</h3>
+              <h4 className='text-lg text-slate-500 font-semibold'>Go to original url</h4>
+              <a href={url} target='_blank' rel="noreferrer" className='py-2 px-3 bg-blue-150 rounded-md text-white'>
+                {url}
+              </a>
+            </div>
+          )}
+        </div>
+      )}
+    </>
   );
 }
