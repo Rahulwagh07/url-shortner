@@ -81,7 +81,8 @@ exports.getShortUrl = async (req, res) => {
       }
     }) || await prisma.url.findFirst({
       where: {
-        shortUrl: shortUrl
+        shortUrl: shortUrl,
+        status: "active",
       }
     });
 

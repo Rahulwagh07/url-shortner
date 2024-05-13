@@ -55,3 +55,7 @@ export const manageUrlEndpoints = {
 export const categoryEndpoints = {
   CREATE_CATEGORY_API: BASE_URL + "/admin/createCategory"
 }
+
+export const reportsEndpoints = {
+  GENERATE_REPORT_API: BASE_URL + "/auth/generate-report"
+}
