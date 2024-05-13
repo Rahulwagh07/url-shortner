@@ -43,5 +43,12 @@ export const sidebarLinks = [
     type: ACCOUNT_TYPE.USER,
     icon: "VscHistory",
   },
+  {
+    id: 7,
+    name: "Reports",
+    path: "/dashboard/reports",
+    type: ACCOUNT_TYPE.USER,
+    icon: "VscHistory",
+  },
 ];
 
