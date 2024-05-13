@@ -4,7 +4,6 @@ exports.trackVisitorData = async (req, res) => {
   const { url, country, uniqueVisitorId } = req.body;
   try {
     let returningVisitor = 0;
-    console.log(typeof(returningVisitor))
     const urlRecord = await prisma.url.findFirst({
       where: { baseUrl: url },
     });
@@ -34,7 +33,7 @@ exports.trackVisitorData = async (req, res) => {
       const existingCountry = await prisma.country.findFirst({
         where: {
           visitId : exisitngVisit.id,
-          country: country,
+          name: country,
         }
       })
       if(existingCountry){
@@ -76,7 +75,6 @@ exports.trackVisitorData = async (req, res) => {
         message: "existing visitor, updated"
       })
     } else{
-      console.log("Existing Visitot hai")
       returningVisitor = exisitngVisit.returningVisitor;
       if(!existingVisitor.isReturningVisitor){
         await prisma.visitor.update({

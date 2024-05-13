@@ -21,10 +21,16 @@ const {
 } = require("../controllers/Url");
 const { auth, isUser } = require("../middlewares/auth");
 
+const {
+  generateReport,
+} = require("../controllers/Reports");
+
 //Routes for Authrized user
 router.post("/create-shortened-url", auth, createShortenedUrl);
 
 router.post("/reset-password-token", resetPasswordToken)
 router.post("/reset-password", resetPassword)
+
+router.get("/generate-report", auth, generateReport)
 
 module.exports = router
