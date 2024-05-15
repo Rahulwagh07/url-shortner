@@ -41,23 +41,28 @@ const ShortenUrlForm = () => {
   };
 
   return (
-    <div className="p-8 pb-16 mx-auto flex flex-col gap-3 sm:w-11/12 xs:w-full  md:w-10/12 rounded-md shadow-md">
+    <div className="p-8 pb-16 mx-auto z-10 bg-white border border-gray-300 flex flex-col gap-3 sm:w-11/12 xs:w-full  md:w-10/12 rounded-md shadow-md">
       <h2 className="text-lg font-semibold mb-4 flex items-center gap-4"> 
       <span><FaLink size={24} className='text-green-400'/></span>
       <span className='text-lg text-black'>Shorten a long URL</span>
       </h2>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
-          type="text"
+          type="text"s
           placeholder="Enter a long link here"
-          className="px-2 py-3 mb-4 border border-indigo-300 rounded-md"
+          className="block w-full px-2 rounded-md border-0 py-3 text-gray-900 
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-indigo-300 sm:text-sm sm:leading-6"
           required
           value={baseUrl}
           onChange={(e) => setBaseUrl(e.target.value)}
         />
         <button
           type="submit"
-          className="bg-blue-150 px-2 py-3 flex items-center justify-center text-white rounded-md"
+          className="flex w-full justify-center rounded-md bg-indigo-600 px-2
+          py-3 text-sm font-semibold leading-6 text-white shadow-sm
+            hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
+            focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           {loading ? <Spinner/> : <span>Shorten Url</span>}
         </button>

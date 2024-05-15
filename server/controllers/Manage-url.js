@@ -24,14 +24,41 @@ exports.deleteBulkUrls = async (req, res) => {
   }
 };
 
-exports.getAllUrl = async (req, res) => {
+exports.getAllUrlOfUser = async (req, res) => {
   try {
     const userId = req.user.id;
-    const userUrls = await prisma.url.findMany({ where: { creatorId: userId } });
-
+    if(req.user.accountType === "Admin"){
+      return await getAllUrls(req, res);
+    }
+    const userUrls = await prisma.url.findMany({ 
+      where: { creatorId: userId },
+      include: {
+        creator: {
+          select: {
+            firstName: true,
+            lastName: true
+          }
+        }
+      }
+    });
+    const urlIds = userUrls.map(url => url.id);
+    const visits = await prisma.visit.findMany({ 
+      where: { urlId: { in: urlIds } },
+      include: {
+        visitor: true,
+        country: true
+      } 
+    });
+    const combinedData = userUrls.map(url => {
+      const urlVisits = visits.filter(visit => visit.urlId === url.id);
+      return {
+        ...url,
+        visits: urlVisits
+      };
+    });
     return res.status(200).json({ 
-      success: true,
-      data: userUrls 
+      success: true, 
+      data: combinedData 
     });
   } catch (error) {
     console.error('Error fetching URLs:', error);
@@ -41,6 +68,46 @@ exports.getAllUrl = async (req, res) => {
     });
   }
 };
+
+const getAllUrls = async (req, res) => {
+  try {
+    const allUrls = await prisma.url.findMany({ 
+      include: {
+        creator: {
+          select: {
+            firstName: true,
+            lastName: true
+          }
+        }
+      }
+    });
+    const urlIds = allUrls.map(url => url.id);
+    const allVisits = await prisma.visit.findMany({ 
+      include: {
+        visitor: true,
+        country: true
+      } 
+    });
+    const combinedData = allUrls.map(url => {
+      const urlVisits = allVisits.filter(visit => visit.urlId === url.id);
+      return {
+        ...url,
+        visits: urlVisits
+      };
+    });
+    return res.status(200).json({ 
+      success: true, 
+      data: combinedData 
+    });
+  } catch (error) {
+    console.error('Error fetching URLs:', error);
+    return res.status(500).json({
+      success: false, 
+      message: 'Internal server error' 
+    });
+  }
+};
+
 
 exports.suspendUrl = async (req, res) => {
   try {
@@ -153,7 +220,7 @@ exports.updateShortenedUrl = async (req, res) => {
     const { urlId } = req.params;
     const { baseUrl, urlName, description, customCharacters, tier, category } = req.body;
 
-    const url = await prisma.url.findFirst({ where: { id: Number(urlId) } });
+    const url = await prisma.url.findFirst({ where: { id: parseInt(urlId) } });
     // Validation for custom chars
     if (customCharacters) {
       const blockedWords = await prisma.blockedWord.findMany();
@@ -164,13 +231,13 @@ exports.updateShortenedUrl = async (req, res) => {
           message: "Custom characters contain blocked words.",
         });
       }
-      if (url.shortUrl === customCharacters) {
-        return res.status(200).json({
-          success: false,
-          customCharAlreadyExist: true,
-          message: "Custom characters are already taken.",
-        });
-      }
+      // if (url.shortUrl === customCharacters) {
+      //   return res.status(200).json({
+      //     success: false,
+      //     customCharAlreadyExist: true,
+      //     message: "Custom characters are already taken.",
+      //   });
+      // }
     }
 
     const isValidUrl = isUrl(baseUrl);

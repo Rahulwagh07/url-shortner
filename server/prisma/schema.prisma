@@ -122,3 +122,14 @@ model Visitor {
   uniqueVisitorId     String?
   isReturningVisitor Boolean @default(false)
 }
+
+model Device {
+  id          Int       @id @default(autoincrement()) 
+  userId      Int       @unique
+  mobile      Int?
+  tablet      Int?
+  desktop     Int?
+  eReader     Int?
+  unknown     Int?
+
+}

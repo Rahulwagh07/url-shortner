@@ -31,6 +31,7 @@ import ManageUrl from "./components/Dashbord/User/ManageUrl/index.jsx"
 import Demo from "./pages/Demo"
 import ForgotPassword from "./pages/ForgotPassword.jsx"
 import UpdatePassword from "./pages/UpdatePassword.jsx"
+import AdminReports from "./components/Dashbord/Admin/AdminReports.jsx"
  
 const store = configureStore({
   reducer: rootReducer,
@@ -85,11 +86,11 @@ const router = createBrowserRouter([
           },
           {
             path: "/admin/dashboard/reports",
-            element: <Reports/>,
+            element: <AdminReports/>,
           },
           {
             path: "/admin/dashboard/urls",
-            element: <URLManagement/>,
+            element: <ManageUrl/>,
           },
           {
             path: "/admin/dashboard/panel-options",

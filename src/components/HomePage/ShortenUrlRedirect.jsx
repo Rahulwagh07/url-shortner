@@ -27,10 +27,8 @@ export default function ShortUrlRedirect() {
           Cookies.set('uniqueVisitorId', uniqueVisitorId, { expires: 365 }); 
         }
         try {
-          const userLanguage = navigator.language || navigator.userLanguage;
           await apiConnector("POST", TRACK_VISITOR_DATA_API, {
             url: response.data.baseUrl,
-            country: userLanguage,
             uniqueVisitorId,
           });
         } catch (error) {
@@ -66,22 +64,18 @@ export default function ShortUrlRedirect() {
       };
       xhr.send();
     }
-  }, []);
+  }, [url]);
 
   const generateUniqueVisitorId = async () => {
     const userAgent = navigator.userAgent;
     const language = navigator.language;
-    const platform = navigator.platform;
     const hardwareConcurrency = navigator.hardwareConcurrency;
     const screenWidth = screen.width;
     const screenHeight = screen.height;
     const pixelRatio = window.devicePixelRatio;
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const plugins = Array.from(navigator.plugins)
-      .map((plugin) => `${plugin.name}:${plugin.description}`)
-      .join(';');
 
-    const fingerprint = `${userAgent}|${language}|${platform}|${hardwareConcurrency}|${screenWidth}x${screenHeight}|${pixelRatio}|${timezone}|${plugins}`;
+    const fingerprint = `${userAgent}|${language}|${hardwareConcurrency}|${screenWidth}x${screenHeight}|${pixelRatio}|${timezone}`;
 
     const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(fingerprint));
     const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -101,7 +95,7 @@ export default function ShortUrlRedirect() {
         <div className='bg-gray-100'>
           {/* <div className='md:w-7/12 lg:w-5/12 flex items-center justify-center mx-auto'><AdComponent/></div> */}
           {iframeCompatible ? (
-            <iframe src={url} title="iframe" className='w-full h-[800px]' allowFullScreen></iframe>
+            <iframe src={url} title="iframe" className='w-full min-h-screen' allowFullScreen></iframe>
           ) : (
             <div className='flex flex-col items-center gap-4 justify-center'>
               <h3 className='text-lg text-slate-500 font-semibold'>Url is not compatible to load in iframe</h3>

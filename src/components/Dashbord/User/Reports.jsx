@@ -60,7 +60,7 @@ const Reports = () => {
     <div className="flex flex-col items-center justify-center mt-14">
       {!reportGenerated ? (  
         <p className="text-lg font-bold mb-4 text-center">
-          Welcome! Click the button below to start your report generation.
+          Click the button below to start your report generation.
         </p>
       ) : null}
       {!reportGenerated ? (
