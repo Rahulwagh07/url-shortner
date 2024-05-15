@@ -7,6 +7,9 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import EditModal from './EditModal';
 import { FRONTEND_URL } from '../../../../utils/helper';
+import { formatDate } from '../../../../utils/FormatDate';
+import { ACCOUNT_TYPE } from '../../../../utils/constants';
+import ShowCounts from './ShowCounts';
 
 const BASE_URL = FRONTEND_URL;
 
@@ -24,20 +27,31 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
   const [sortOrder, setSortOrder] = useState('asc');
   const [filterText, setFilterText] = useState('');
   const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
   const [loading, setLoading] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [selectedUrlEdit, setSelectedUrlEdit] = useState();
+  const [showCountryViews, setShowCountryViews] = useState(null);
+  const [countryViewsData, setCountryViewsData] = useState([]);
+  const [selectedUrlId, setSelectedUrlId] = useState();
 
   useEffect(() => {
     fetchUrls();
   }, []);
+
+  const handleShowCountryViews = (urlId, countryViewsData) => {
+    setCountryViewsData(countryViewsData || []);
+    setShowCountryViews(urlId === showCountryViews ? null : urlId);
+    setSelectedUrlId(urlId)
+  };
 
   const fetchUrls = async () => {
     setLoading(true)
     try {
       const response = await apiConnector("GET", GET_ALL_URLS_API, null, {
         Authorization: `Bearer ${token}`,
-    });
+      });
+      console.log("Get all url api res", response.data.data)
       setUrls(response.data.data);
     } catch (error) {
       console.error('Error fetching URLs:', error);
@@ -130,7 +144,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
   });
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="mx-auto py-8 overflow-x-hidden">
       <div className="mb-4 flex space-x-4">
         <input
           type="text"
@@ -162,15 +176,23 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
           Delete Selected
         </button>
       </div>
-      <table className="w-full table-auto">
+      <table className="table-auto">
         <thead className='text-sky-400'>
           <tr className="bg-gray-200">
             <th className="pl-4 py-2">Select</th>
             <th className="px-4 py-2">Name</th>
             <th className="px-4 py-2">Base URL</th>
             <th className="px-4 py-2">Shortened URL</th>
-            <th className="px-4 py-2">Description</th>
-            {/* <th className="px-4 py-2">Visits</th> */}
+            {
+              user?.accountType === ACCOUNT_TYPE.ADMIN ? (
+                <th className="px-4 py-2">Creator</th>
+              ) : (
+                <th className="px-4 py-2">Description</th>
+              )
+            }
+            <th className="px-4 py-2">Created Date</th>
+            <th className="px-4 py-2">Expiray Date</th>
+            <th className="px-4 py-2">Visits</th>
             <th className="px-4 py-2">Status</th>
             <th className="px-4 py-2">Actions</th>
           </tr>
@@ -190,7 +212,11 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
               <td className="px-4 py-2">{url.urlName}</td>
               <td className="px-4 py-2">{url.baseUrl}</td>
               <td className="px-4 py-2">{BASE_URL + "/" + url.shortUrl}</td>
-              <td className="px-4 py-2 max-w-xs">
+              {
+              user?.accountType === ACCOUNT_TYPE.ADMIN ? (
+                <td className="px-4 py-2">{url.creator.firstName} {url.creator.lastName}</td>
+              ) : (
+                <td className="px-4 py-2 max-w-xs">
                 <div
                   className="truncate overflow-hidden hover:overflow-visible 
                   hover:whitespace-normal relative"
@@ -204,15 +230,13 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
                   </div>
                 </div>
               </td>
-              {/* <td className="px-4 py-2">
-                <a
-                  href="#"
-                  onClick={() => handleVisitDetails(url.id)}
-                  className="text-blue-500 hover:underline"
-                >
-                  {url.visits}
-                </a>
-              </td> */}
+              )
+             }
+              <td className="px-4 py-2">{formatDate(url.createdAt)}</td>
+              <td className="px-4 py-2">{formatDate(url.expirationDate)}</td>
+              <td className="px-4 py-2 cursor-pointer" onClick={() => handleShowCountryViews(url.id, url.visits[0]?.country || [])}>
+                {url.visits.length > 0 ? url.visits[0].totalClicks : 0}
+              </td>
               <td className="px-4 py-2">
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -258,6 +282,12 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
          />
          </div>
         </div>
+      )}
+
+      {showCountryViews === selectedUrlId && (
+        <ShowCounts
+        countryViewsData={countryViewsData} 
+        setShowCountryViews={setShowCountryViews} />
       )}
     </div>
 );

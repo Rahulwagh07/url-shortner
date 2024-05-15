@@ -80,8 +80,8 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
   };
 
   return (
-    <div className="p-8 pb-16 bg-gray-100 mx-auto flex flex-col 
-      gap-3 sm:w-11/12 xs:w-full md:w-10/12 rounded-md shadow-md">
+    <div className="p-8 pb-16 z-10 bg-white shadow-lg border border-gray-300 mx-auto flex flex-col 
+      gap-3 sm:w-11/12 xs:w-full md:w-10/12 rounded-md">
       <h2 className="text-lg relative font-semibold mb-4 flex items-center gap-4">
         <span><FaLink size={24} className='text-green-400' /></span>
         <span className='text-lg text-black'>Shorten a long URL</span>
@@ -92,7 +92,9 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
         <input
           type="text"
           placeholder="Enter a long link here"
-          className="px-2 py-2 border border-green-500 rounded-md"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-indigo-300 sm:text-sm sm:leading-6"
           required
           value={baseUrl}
           onChange={(e) => setBaseUrl(e.target.value)}
@@ -101,8 +103,9 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
           <input
             type="text"
             placeholder="url name (optional)"
-            className="px-2 py-2 w-full border border-green-500 rounded-md 
-              focus:outline-none focus:border-blue-500"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-indigo-300 sm:text-sm sm:leading-6"
             value={urlName}
             onChange={(e) => setUrlName(e.target.value)}
             maxLength={15}
@@ -116,7 +119,9 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
           <input
             type="text"
             placeholder="custom characters (optional)"
-            className={`px-2 py-2 w-full border border-green-500 rounded-md`}
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-indigo-300 sm:text-sm sm:leading-6"
             value={customCharacters}
             onChange={(e) => setCustomCharacters(e.target.value)}
             minLength={5}
@@ -131,7 +136,9 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
           <input
             type="text"
             placeholder="description (optional)"
-            className="px-2 py-2 border w-full border-green-500 rounded-md"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-indigo-300 sm:text-sm sm:leading-6"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             maxLength={250}
@@ -143,7 +150,9 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
         <select
           value={tier}
           onChange={(e) => setTier(e.target.value)}
-          className="px-2 py-2 border border-green-500 rounded-md"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-indigo-300 sm:text-sm sm:leading-6"
           required
         >
           <option value="" disabled hidden>Select Tier</option>
@@ -154,7 +163,10 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
         </select>
         <button
           type="submit"
-          className="bg-blue-150 px-2 py-2 flex items-center justify-center text-white rounded-md"
+          className="flex w-full justify-center rounded-md bg-indigo-600 px-3 
+          py-1.5 text-sm font-semibold leading-6 text-white shadow-sm
+            hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
+            focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           {loading ? <Spinner /> : <span>Shorten Url</span>}
         </button>

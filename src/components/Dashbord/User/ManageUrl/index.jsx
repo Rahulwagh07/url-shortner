@@ -4,6 +4,7 @@ import { apiConnector } from '../../../../services/apiConnector';
 import { globalVariablesEndpoints } from '../../../../services/apis';
 import { useSelector } from 'react-redux';
 import UrlList from './UrlList';
+import { ACCOUNT_TYPE } from '../../../../utils/constants';
 
 const {
   GET_GLOBAL_VARIABLE_API,
@@ -13,6 +14,7 @@ function ManageUrl() {
   const [isOpen, setIsOpen] = useState(false)
   const [globalVariables, setGlobalVariables] = useState()
   const { token } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.profile)
    
   const openModal = () => {
     setIsOpen(!isOpen);
@@ -35,14 +37,16 @@ function ManageUrl() {
  }, []);
   return (
     <div className='flex flex-col'>
-      <div className='text-start'>
-      <button
-        onClick={openModal}
-        className="border rounded-md text-white bg-black px-6 py-1"
-      >
-        Short Url
-      </button>
-      </div>
+      { user?.accountType === ACCOUNT_TYPE.USER  && 
+        <div className='text-start'>
+          <button
+            onClick={openModal}
+            className="border rounded-md text-white bg-black px-6 py-1"
+          >
+            Short Url
+          </button>
+        </div>
+      }
       <UrlList/>
       
       {isOpen && (
