@@ -36,5 +36,17 @@ const {
 
 router.post("/createCategory", auth, isAdmin, createCategory)
 
+//manage users
+const {
+  getAllUsers,
+  suspendUsers,
+  activateUsers,
+  deleteUsers,
+} = require("../controllers/ManageUser")
+
+router.get("/getAllUsers", auth, isAdmin, getAllUsers);
+router.put("/suspendUsers", auth, isAdmin, suspendUsers);
+router.put("/activateUsers", auth, isAdmin, activateUsers);
+router.delete("/deleteUsers", auth, isAdmin, deleteUsers);
 
 module.exports = router

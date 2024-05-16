@@ -2,6 +2,7 @@ const prisma = require("../config/prismaClient");
 const geoip = require('geoip-lite');
 const iso3311a2 = require('iso-3166-1-alpha-2');
 const useragent = require('useragent');
+var countries = require("i18n-iso-countries");
 
 exports.trackVisitorData = async (req, res) => {
   const { url, uniqueVisitorId } = req.body;
@@ -252,3 +253,166 @@ const getCountry = async (req) => {
   
   return country;
 }
+
+
+exports.getDeviceAnalyticsForUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userDevices = await prisma.device.findUnique({
+      where: {
+        userId: parseInt(userId), 
+      },
+    });
+
+    if (!userDevices) {
+      return res.status(404).json({ 
+        error: 'Device data not found for the user' 
+      });
+    }
+
+    const totalClicks = (userDevices.mobile || 0) + 
+                        (userDevices.tablet || 0) + 
+                        (userDevices.desktop || 0) + 
+                        (userDevices.eReader || 0) + 
+                        (userDevices.unknown || 0);
+
+    return res.status(200).json({ 
+      success: true, 
+      data: userDevices,
+      totalClicks: totalClicks
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+exports.getTotalDeviceAnalytics = async (req, res) => {
+  try {
+    const devices = await prisma.device.findMany();
+
+    if (!devices || devices.length === 0) {
+      return res.status(404).json({ 
+        error: 'Device data not found in the database' 
+      });
+    }
+    let totalMobile = 0;
+    let totalTablet = 0;
+    let totalDesktop = 0;
+    let totalEReader = 0;
+    let totalUnknown = 0;
+
+    devices.forEach(device => {
+      totalMobile += device.mobile || 0;
+      totalTablet += device.tablet || 0;
+      totalDesktop += device.desktop || 0;
+      totalEReader += device.eReader || 0;
+      totalUnknown += device.unknown || 0;
+    });
+
+    const totals = {
+      mobile: totalMobile,
+      tablet: totalTablet,
+      desktop: totalDesktop,
+      eReader: totalEReader,
+      unknown: totalUnknown
+    };
+
+    const totalClicks = totalMobile + totalTablet + totalDesktop + totalEReader + totalUnknown;
+    return res.status(200).json({ 
+      success: true, 
+      totalClicks: totalClicks,
+      totals: totals 
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+exports.getCountryAnalyticsForUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userUrls = await prisma.url.findMany({
+      where: {
+        creatorId: userId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    const urlIds = userUrls.map(url => url.id);
+    const visits = await prisma.visit.findMany({
+      where: {
+        urlId: {
+          in: urlIds,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    const visitIds = visits.map(visit => visit.id);
+
+    const countryCounts = await prisma.country.groupBy({
+      by: ['name'],
+      where: {
+        visitId: {
+          in: visitIds,
+        },
+      },
+      _sum: {
+        count: true,
+      },
+    });
+
+    const formattedCountryCounts = {};
+    countryCounts.forEach(country => {
+      const countryCode = countries.getAlpha2Code(country.name, 'en');
+      if (countryCode) {
+        formattedCountryCounts[countryCode] = country._sum.count;
+      }
+    });
+    
+    return res.status(200).json({
+      success:true,
+      data:formattedCountryCounts,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+ 
+exports.getCountryAnalyticsForAdmin = async (req, res) => {
+  try {
+    const countryCounts = await prisma.country.groupBy({
+      by: ['name'],
+      _sum: {
+        count: true,
+      },
+    });
+
+    const formattedCountryCounts = {};
+    countryCounts.forEach(country => {
+      const countryCode = countries.getAlpha2Code(country.name, 'en');
+      if (countryCode) {
+        formattedCountryCounts[countryCode] = country._sum.count;
+      }
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: formattedCountryCounts,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+

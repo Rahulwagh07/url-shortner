@@ -27,7 +27,6 @@ function ManageUrl() {
         });
         const data = response.data.data
         setGlobalVariables(data)
-        console.log("DATA", data)
     } catch (error) {
         console.error('Error fetching global variables:', error);
     }
