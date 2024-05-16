@@ -86,10 +86,13 @@ const {
         password,
       });
     
+      if(response.data.suspended){
+        toast.success("Your account is suspended by admin")
+        return
+      }
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
-    
       toast.success("Logged in");
       dispatch(setToken(response.data.token));
       dispatch(setUser(response.data.user));

@@ -22,7 +22,6 @@ import OpenRoute from "./components/auth/OpenRoute"
 import PrivateRoute from "./components/auth/PrivateRoute"
 import ShortUrlRedirect from "./components/HomePage/ShortenUrlRedirect"
 import GlobalVariables from "./components/Dashbord/Admin/GlobalVariables.jsx"
-import UserManagement from "./components/Dashbord/Admin/UserManagement.jsx"
 import Reports from "./components/Dashbord/User/Reports.jsx"
 import URLManagement from "./components/Dashbord/Admin/URLManagement.jsx"
 import PanelOptions from "./components/Dashbord/Admin/PanelOptions.jsx"
@@ -32,6 +31,8 @@ import Demo from "./pages/Demo"
 import ForgotPassword from "./pages/ForgotPassword.jsx"
 import UpdatePassword from "./pages/UpdatePassword.jsx"
 import AdminReports from "./components/Dashbord/Admin/AdminReports.jsx"
+import ManageUsers from "./components/Dashbord/Admin/ManageUsers.jsx"
+import Analytics from "./components/Dashbord/User/Analytics/index.jsx"
  
 const store = configureStore({
   reducer: rootReducer,
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/admin/dashboard/users",
-            element: <UserManagement/>,
+            element: <ManageUsers/>,
           },
           {
             path: "/admin/dashboard/reports",
@@ -118,6 +119,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/reports",
             element: <Reports/>,
+          },
+          {
+            path: "/dashboard/analytics",
+            element: <Analytics/>,
           },
         ]
       },

@@ -92,6 +92,14 @@ exports.login = async (req, res) => {
         });
       }
 
+      if(user.status === "suspended"){
+        return res.status(200).json({
+          success: false,
+          suspended: true,
+          message: `Your account is suspended by admin`,
+        });
+      }
+
       if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign(
           { email: user.email, id: user.id, accountType: user.accountType },

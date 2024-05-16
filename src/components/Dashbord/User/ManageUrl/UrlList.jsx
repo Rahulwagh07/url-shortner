@@ -51,7 +51,6 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
       const response = await apiConnector("GET", GET_ALL_URLS_API, null, {
         Authorization: `Bearer ${token}`,
       });
-      console.log("Get all url api res", response.data.data)
       setUrls(response.data.data);
     } catch (error) {
       console.error('Error fetching URLs:', error);
@@ -145,7 +144,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
 
   return (
     <div className="mx-auto py-8 overflow-x-hidden">
-      <div className="mb-4 flex space-x-4">
+      <div className="mb-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
         <input
           type="text"
           placeholder="Filter URLs by name"
@@ -154,6 +153,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
           className="px-4 py-2 border border-gray-300 rounded-md 
           focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+        <div className="flex flex-wrap gap-2 sm:flex-nowrap">
         <button
           onClick={handleSortChange}
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -175,6 +175,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
         >
           Delete Selected
         </button>
+        </div>
       </div>
       <table className="table-auto">
         <thead className='text-sky-400'>
@@ -200,8 +201,8 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
         <tbody>
          { loading ? <div className='flex items-center justify-center mt-4'><Spinner/></div> : <>
          {sortedUrls.map((url) => (
-            <tr key={url.id} className="border-b">
-              <td className="pl-4 py-2">
+            <tr key={url.id}>
+              <td className="pl-4 py-2 border">
                 <input
                   type="checkbox"
                   checked={selectedUrls.includes(url.id)}
@@ -209,14 +210,14 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
                   className="form-checkbox h-4 w-4 text-blue-500"
                 />
               </td>
-              <td className="px-4 py-2">{url.urlName}</td>
-              <td className="px-4 py-2">{url.baseUrl}</td>
-              <td className="px-4 py-2">{BASE_URL + "/" + url.shortUrl}</td>
+              <td className="px-4 py-2 border">{url.urlName}</td>
+              <td className="px-4 py-2 border">{url.baseUrl}</td>
+              <td className="px-4 py-2 border">{BASE_URL + "/" + url.shortUrl}</td>
               {
               user?.accountType === ACCOUNT_TYPE.ADMIN ? (
-                <td className="px-4 py-2">{url.creator.firstName} {url.creator.lastName}</td>
+                <td className="px-4 py-2 border">{url.creator.firstName} {url.creator.lastName}</td>
               ) : (
-                <td className="px-4 py-2 max-w-xs">
+                <td className="px-4 py-2 max-w-xs border">
                 <div
                   className="truncate overflow-hidden hover:overflow-visible 
                   hover:whitespace-normal relative"
@@ -232,24 +233,25 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
               </td>
               )
              }
-              <td className="px-4 py-2">{formatDate(url.createdAt)}</td>
-              <td className="px-4 py-2">{formatDate(url.expirationDate)}</td>
-              <td className="px-4 py-2 cursor-pointer" onClick={() => handleShowCountryViews(url.id, url.visits[0]?.country || [])}>
+              <td className="px-4 py-2 border">{formatDate(url.createdAt)}</td>
+              <td className="px-4 py-2 border">{formatDate(url.expirationDate)}</td>
+              <td className="px-4 py-2 cursor-pointer border" onClick={() => handleShowCountryViews(url.id, url.visits[0]?.country || [])}>
                 {url.visits.length > 0 ? url.visits[0].totalClicks : 0}
               </td>
-              <td className="px-4 py-2">
+              <td className="px-4 py-2 border">
                 <span
-                  className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                  className={`px-2 py-1 text-white rounded-full text-xs font-semibold ${
                     url.status === 'active'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
+                      ? 'bg-green-400'
+                      : 'bg-red-400'
                   }`}
                 >
                   {url.status}
                 </span>
               </td>
-              <td className="px-4 py-2">
-                <div className=' flex items-center justify-center gap-2'><button
+              <td className="px-4 py-2 border">
+                <div className=' flex items-center justify-center gap-2'>
+                <button
                     onClick={() => url.status === 'suspended' ? handleActivate(url.id) : handleSuspend(url.id)}
                     className={`px-2 py-1 text-white rounded-md ${
                         url.status === 'suspended'

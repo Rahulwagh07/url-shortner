@@ -59,3 +59,17 @@ export const categoryEndpoints = {
 export const reportsEndpoints = {
   GENERATE_REPORT_API: BASE_URL + "/auth/generate-report"
 }
+
+export const manageUserEndpoints = {
+  GET_ALL_USERS_API: BASE_URL + "/admin/getAllUsers",
+  SUSPEND_USERS_API: BASE_URL + "/admin/suspendUsers",
+  ACTIVATE_USERS_API: BASE_URL + "/admin/activateUsers",
+  DELETE_USERS_API : BASE_URL + "/admin/deleteUsers",
+}
+
+export const analyticsEndpoints = {
+  GET_TOTAL_ANALYTICES_API: BASE_URL + "/getTotalDeviceAnalytics",
+  GET_TOTAL_ANALYTICES_USER_API: BASE_URL + "/getDeviceAnalyticsForUser",
+  GET_TOTAL_COUNTRY_ANALYTICS_USER_API: BASE_URL + "/getCountryAnalyticsForUser",
+  GET_TOTAL_COUNTRY_ANALYTICS_ADMIN_API: BASE_URL + "/getCountryAnalyticsForAdmin",
+}
