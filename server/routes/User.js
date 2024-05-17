@@ -25,6 +25,14 @@ const {
   generateReport,
 } = require("../controllers/Reports");
 
+const {
+  initiateReportGeneration,
+  getReport,
+} = require("../controllers/NewReports")
+
+router.post("/initiateReportGeneration", auth, initiateReportGeneration);
+router.get("/getReport", auth, getReport);
+
 //Routes for Authrized user
 router.post("/create-shortened-url", auth, createShortenedUrl);
 

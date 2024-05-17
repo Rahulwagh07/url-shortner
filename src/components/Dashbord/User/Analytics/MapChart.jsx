@@ -33,9 +33,10 @@ function MapChart() {
   }, []);
 
   return (
-    <div className="border rounded-lg" style={{ margin: "auto", width: "600px", height: "500px" }}>
-       {loading ? <div className="flex items-center justify-center"><Spinner/></div> : 
-       <VectorMap
+    <div>
+       {loading ?  <></> : 
+      <div className="border rounded-lg" style={{ margin: "auto", width: "600px", height: "400px" }}>
+      <VectorMap
         map={worldMill}
         containerStyle={{
           width: "700px",
@@ -71,6 +72,7 @@ function MapChart() {
                     </div>`);
         }}
       />
+      </div>
        }
     </div>
   );

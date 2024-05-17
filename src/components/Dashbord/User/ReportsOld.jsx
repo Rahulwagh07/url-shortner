@@ -14,6 +14,7 @@ const Reports = () => {
   const [loading, setLoading] = useState(false);
   const reportGenerated = useSelector((state) => state.report.reportGenerated);  
   const [reportUrl, setReportUrl] = useState('');
+  const maxRecords = 9;
 
   useEffect(() => {
     const isReportGenerated = localStorage.getItem('reportGenerated');

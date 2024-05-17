@@ -132,5 +132,13 @@ model Device {
   desktop     Int?
   eReader     Int?
   unknown     Int?
+}
 
+model Report {
+  id          Int       @id @default(autoincrement()) 
+  userId      Int       @unique
+  reportUrl   String?
+  reportGenerated Boolean @default(false)
+  createdAt   DateTime  @default(now())
+  expiryDate  DateTime?
 }

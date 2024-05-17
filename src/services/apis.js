@@ -57,7 +57,9 @@ export const categoryEndpoints = {
 }
 
 export const reportsEndpoints = {
-  GENERATE_REPORT_API: BASE_URL + "/auth/generate-report"
+  GENERATE_REPORT_API: BASE_URL + "/auth/generate-report",
+  INIT_REPORT_GENERATION_API: BASE_URL + "/auth/initiateReportGeneration",
+  GET_REPORT_API: BASE_URL + "/auth/getReport",
 }
 
 export const manageUserEndpoints = {

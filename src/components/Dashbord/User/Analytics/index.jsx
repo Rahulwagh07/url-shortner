@@ -4,11 +4,13 @@ import MapChart from './MapChart'
  
 function Analytics() {
   return (
-    <div className='flex items-center justify-center'>
-      {/* <div className='flex items-center justify-center shadow-md z-10 w-[500px] bg-white border border-gray-100 p-4'>
+    <div className='flex xs:flex-col items-center gap-2 justify-center'>
+      <div className='flex items-center justify-center shadow-md bg-white border border-gray-300 p-4'>
       <PieChart/>
-      </div> */}
+      </div>
+      <div className='flex items-center justify-center shadow-md  bg-white border border-gray-300 p-4'>
       <MapChart/>
+      </div>
     </div>
   )
 }
