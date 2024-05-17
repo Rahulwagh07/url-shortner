@@ -14,6 +14,8 @@
   "dependencies": {
     "@prisma/client": "^5.14.0",
     "bcrypt": "^5.1.1",
+    "bull": "^4.12.4",
+    "bullmq": "^5.7.9",
     "check-valid-url": "^0.1.0",
     "cloudinary": "^2.1.0",
     "cookie-parser": "^1.4.6",
@@ -22,6 +24,7 @@
     "express": "^4.19.2",
     "geoip-lite": "^1.4.10",
     "i18n-iso-countries": "^7.11.2",
+    "ioredis": "^5.4.1",
     "iso-3166-1-alpha-2": "^1.0.2",
     "json2csv": "^6.0.0-alpha.2",
     "jsonwebtoken": "^9.0.2",

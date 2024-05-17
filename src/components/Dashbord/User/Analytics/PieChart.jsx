@@ -211,15 +211,15 @@ const PieChart = () => {
   };
 
   return (
-    <div className="flex mt-2">
+    <>
       {loading ? (
-        <Spinner />
+         <div className='flex items-center justify-center'><Spinner /></div>
       ) : (
         <>
           {chartOptions && <HighchartsReact highcharts={Highcharts} options={chartOptions} />}
         </>
       )}
-    </div>
+    </>
   );
 };
 
