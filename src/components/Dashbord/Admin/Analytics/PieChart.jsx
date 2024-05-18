@@ -6,7 +6,7 @@ import { analyticsEndpoints } from '../../../../services/apis';
 import { useSelector } from 'react-redux';
 import Spinner from '../../../common/Spinner';
 
-const { GET_TOTAL_ANALYTICES_USER_API } = analyticsEndpoints;
+const { GET_TOTAL_ANALYTICES_API } = analyticsEndpoints;
 
 const PieChart = () => {
   const { token } = useSelector((state) => state.auth);
@@ -18,7 +18,7 @@ const PieChart = () => {
   const fetchAnalytics = async () => {
     setLoading(true);
     try {
-      const res = await apiConnector('GET', GET_TOTAL_ANALYTICES_USER_API, null, {
+      const res = await apiConnector('GET', GET_TOTAL_ANALYTICES_API, null, {
         Authorization: `Bearer ${token}`,
       });
       setAnalytics(res.data.data);
@@ -163,7 +163,7 @@ const PieChart = () => {
                 ...prevOptions,
                 subtitle: {
                   useHTML: true,
-                  text: getLegend(this), // Passing 'this' to getLegend function
+                  text: getLegend(this), 
                   floating: true,
                   align: 'center',
                   verticalAlign: 'middle',

@@ -14,7 +14,7 @@ function ShowCounts({countryViewsData, setShowCountryViews}) {
   };
   return (
     <td className='inset-0 z-10 fixed flex items-center justify-center'>
-      <div className=" bg-white border relative border-gray-300 rounded-md shadow-lg p-6">
+      <div className=" bg-white border relative border-gray-300 rounded-md shadow-lg p-8">
       <IoCloseOutline onClick={() => setShowCountryViews(null)}
         size={24} className='absolute top-2 right-2 cursor-pointer'/>
         {countryViews.length === 0 ? (
@@ -36,9 +36,13 @@ function ShowCounts({countryViewsData, setShowCountryViews}) {
             </button>
           </div>
           <ul>
+            <div className='flex gap-2 mt-2'>
+            <span className='font-semibold text-green-400'>Country</span>: 
+            <span className='font-semibold text-green-400'>Users</span>
+            </div>
             {countryViews.map((countryView) => (
-              <li key={countryView.id}>
-                {countryView.name}: {countryView.count}
+              <li key={countryView.id} className='flex gap-2'>
+                <span className='font-semibold text-gray-700'> {countryView.name}</span>: <span> {countryView.count}</span>
               </li>
             ))}
           </ul>

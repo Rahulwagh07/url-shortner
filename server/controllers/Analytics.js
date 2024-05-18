@@ -323,7 +323,7 @@ exports.getTotalDeviceAnalytics = async (req, res) => {
     return res.status(200).json({ 
       success: true, 
       totalClicks: totalClicks,
-      totals: totals 
+      data: totals 
     });
   } catch (err) {
     console.error(err);
@@ -377,7 +377,7 @@ exports.getCountryAnalyticsForUser = async (req, res) => {
         formattedCountryCounts[countryCode] = country._sum.count;
       }
     });
-    
+
     return res.status(200).json({
       success:true,
       data:formattedCountryCounts,

@@ -6,7 +6,7 @@ exports.addPanelOption = async (req, res) => {
   try {
     const { optionName, redirectionUrl } = req.body;
     const imgfile = req.files.optionIcon;
-    const uploadDir = path.join(__dirname, 'uploads');
+    const uploadDir = path.join(__dirname, '../uploads');
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
     }

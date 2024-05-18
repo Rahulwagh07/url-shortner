@@ -58,40 +58,44 @@ function AddPanel() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-white border border-gray-300 shadow-sm rounded-md p-6 xs:p-2">
       <h2 className="text-2xl text-sky-400 font-semibold mb-4">Add Panel Option</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-4 xs:grid-cols-1 gap-2 full">
+      <form onSubmit={handleSubmit} className="flex gap-2 xs:flex-col ">
         <div>
-        <label className='font-semibold'>Name</label>
+        <label className="block text-sm font-medium leading-6 text-gray-900 mt-2">Name</label>
         <input
           type="text"
           value={newOptionName}
           onChange={(e) => setNewOptionName(e.target.value)}
           placeholder="Option Name"
-          className="px-4 py-2 border border-gray-300 rounded mr-2"
+          className="block w-[200px] xs:w-[80vw] rounded-md border-0 py-1.5 text-gray-900
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
           required
         />
         </div>
         <div>
-        <label className='font-semibold'>Url</label>
+        <label className="block text-sm font-medium leading-6 text-gray-900 mt-2">Url</label>
         <input
           type="text"
           value={newRedirectionUrl}
           onChange={(e) => setNewRedirectionUrl(e.target.value)}
           placeholder="Redirection URL"
-          className="px-4 py-2 border border-gray-300 rounded mr-2"
+          className="block w-[200px] xs:w-[80vw] rounded-md border-0 py-1.5 text-gray-900
+            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+            focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
           required
         />
         </div>
         <div>
-        <label className='font-semibold'>Select icon</label>
-        <div className="flex items-center px-4 py-1 rounded-md border border-gray-300 font-semibold">
+        <label className="block text-sm font-medium leading-6 text-gray-900 mt-2">Icon</label>
+        <div className="flex  xs:w-[80vw] items-center px-4 py-1 rounded-md border ring-1 ring-inset ring-gray-300 font-semibold">
           <div className="flex items-center gap-x-2">
             {previewSource && (
               <img src={previewSource} alt="img" className="aspect-square w-[78px] rounded-full object-cover" />
             )}
           <div className="flex gap-1 items-center">
-              <div className="flex flex-row gap-3">
+              <div className="flex flex-row gap-3 w-[200px]">
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -102,7 +106,7 @@ function AddPanel() {
                 <button
                   onClick={() => document.querySelector('input[type="file"]').click()}
                   disabled={loading}
-                  className="cursor-pointer rounded-md bg-gray-700 py-1 px-5 font-semibold text-gray-50"
+                  className="cursor-pointer rounded-md bg-gray-700 px-5 py-0.5 font-semibold text-gray-50"
                 >
                   Select
                 </button>
@@ -112,7 +116,9 @@ function AddPanel() {
         </div>
         </div>
         <div className="flex items-center justify-center">
-          <button type="submit" disabled={loading} className="px-4 py-2 mt-5 bg-blue-500 text-white rounded">
+          <button type="submit" disabled={loading}
+           className="bg-blue-500 mt-8 hover:bg-blue-400 text-white 
+              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
             {loading ? <Spinner /> : 'Add Panel'}
           </button>
         </div>

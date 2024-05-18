@@ -42,14 +42,15 @@ function PanelOptions() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <AddPanel />
-      <h2 className="text-2xl text-sky-400 font-semibold mt-2 mb-2">Panel Options</h2>
+    <div className="container mx-auto p-4 ">
+    <AddPanel />
+    <div className='bg-white  mt-8 border border-gray-300 shadow-sm rounded-md p-6'>
+    <h2 className="text-2xl text-sky-400 font-semibold mt-2 mb-2">Panel Options</h2>
       <ul>
         {panelOptions.map(option => (
-          <li key={option.id} className="flex justify-between border-b py-2">
+          <li key={option.id} className="flex xs:flex-col xs:items-start justify-between border-b py-2">
             <span className='mr-4'>{option.optionName}</span>
-            <span className='mr-16'>{option.redirectionUrl}</span>
+            <span className='mr-16 text-blue-150 font-semibold'>{option.redirectionUrl}</span>
             <a href={`${BASE_URL}${option.optionIcon}`} className='text-blue-500'>See image</a>
             <button onClick={() => handleDeletePanelOption(option.id)} className="text-red-500 hover:text-red-600">
               <FaTrash />
@@ -57,6 +58,7 @@ function PanelOptions() {
           </li>
         ))}
       </ul>
+    </div>
       <Category />
     </div>
   );
