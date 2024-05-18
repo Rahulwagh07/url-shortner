@@ -20,8 +20,7 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
   const [tier, setTier] = useState('');
   const [loading, setLoading] = useState(false);
   const urlId = url.id;
-  console.log("urlId", urlId)
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -149,17 +148,17 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
             required
             >
             <option value="" disabled hidden>Select Tier</option>
-            <option value="temp">Temporary: {tempUrlActiveDays}days</option>
-            <option value="silver">Silver: {silverUrlActiveDays}days</option>
-            <option value="gold">Gold: {goldUrlActiveDays}days</option>
-            <option value="platinum">Platinum: {platinumUrlActiveDays}days</option>
+            <option value="temp">Temporary: Link active for {tempUrlActiveDays} days</option>
+            <option value="silver">Silver: Link active for {silverUrlActiveDays} days</option>
+            <option value="gold">Gold: Link active for {goldUrlActiveDays} days</option>
+            <option value="platinum">Platinum: Link active for {platinumUrlActiveDays} days</option>
         </select>
         <button
           type="submit"
-          className="flex w-full justify-center rounded-md bg-indigo-600 px-3 
+          className="flex w-full justify-center rounded-md bg-blue-600 px-3 
               py-1.5 text-sm font-semibold leading-6 text-white shadow-sm
-               hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
-               focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+               hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 
+               focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
           {loading ? <Spinner /> : <span>Update</span>}
         </button>

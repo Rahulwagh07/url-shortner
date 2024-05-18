@@ -1,8 +1,8 @@
 import React from 'react'
 import PieChart from './PieChart'
 import MapChart from './MapChart'
- 
-function Analytics() {
+
+function AnalyticsAdmin() {
   return (
     <div className='flex items-center xs:flex-col justify-center gap-2'>
       <PieChart/>
@@ -11,4 +11,4 @@ function Analytics() {
   )
 }
 
-export default Analytics
+export default AnalyticsAdmin

@@ -59,10 +59,10 @@ const ShortenUrlForm = () => {
         />
         <button
           type="submit"
-          className="flex w-full justify-center rounded-md bg-indigo-600 px-2
+          className="flex w-full justify-center rounded-md bg-blue-500 px-2
           py-3 text-sm font-semibold leading-6 text-white shadow-sm
-            hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
-            focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 
+            focus-visible:outline-offset-2 focus-visible:outline-blue-500"
         >
           {loading ? <Spinner/> : <span>Shorten Url</span>}
         </button>

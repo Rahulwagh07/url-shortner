@@ -33,6 +33,7 @@ import UpdatePassword from "./pages/UpdatePassword.jsx"
 import AdminReports from "./components/Dashbord/Admin/AdminReports.jsx"
 import ManageUsers from "./components/Dashbord/Admin/ManageUsers.jsx"
 import Analytics from "./components/Dashbord/User/Analytics/index.jsx"
+import AnalyticsAdmin from "./components/Dashbord/Admin/Analytics/index.jsx"
  
 const store = configureStore({
   reducer: rootReducer,
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
           {
             path: "/admin/dashboard/settings",
             element: <Settings/>,
+          },
+          {
+            path: "/admin/dashboard/analytics",
+            element: <AnalyticsAdmin/>,
           },
         ]
       },

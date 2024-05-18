@@ -82,12 +82,14 @@ function GlobalVariables() {
 
   return (
     <div className='flex flex-col'>
-      {globalVariables ? (
-        <div className='flex flex-col'>
-          <div className='grid grid-cols-2'>
+    {globalVariables ? (
+      <div className='flex flex-col'>
+      <div className='bg-white border border-gray-300 shadow-sm rounded-md p-6'>
+      <h2 className="text-lg font-semibold mb-2 text-sky-400">Global Variables</h2>
+      <div className='grid grid-cols-2 xs:grid-cols-1 xs:place-content-center mx-auto'>
             {Object.entries(globalVariables).map(([key, value]) => (
-              <div key={key} className="flex items-center mb-2">
-                <label className="mr-2">{key}:</label>
+              <div key={key} className="flex flex-col">
+                <label className="block text-sm font-medium leading-6 text-gray-900 mt-2 uppercase">{key}</label>
                 {typeof value === 'boolean' ?
                   <input
                     type="checkbox"
@@ -102,26 +104,32 @@ function GlobalVariables() {
                     name={key}
                     value={value}
                     onChange={handleChange}
-                    className="border border-gray-300 rounded-md px-2 py-1 ml-2"
+                    className="block w-[200px] rounded-md border-0 py-1.5 text-gray-900
+                 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+                 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 }
               </div>
             ))}
           </div>
+          <div className='text-center mt-2'>
           <button
             onClick={handleUpdateGlobalVariables}
-            className="bg-black text-white rounded-md px-4 py-2"
+            className="bg-blue-500 hover:bg-blue-400  text-white 
+              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
           >
-          {loading ? <div className='flex items-center justify-center'><Spinner/></div> : "update"}
+          {loading ? <div className='flex items-center justify-center'><Spinner/></div> : "Update global variables"}
           </button>
-          <BlockedFields
-            blockedDomains={blockedDomains} blockedWords={blockedWords}
-            setBlockedDomains={setBlockedDomains} setBlockedWords={setBlockedWords}
-          />
-        </div>
-      ) : (
-        <div className='flex items-center justify-center'><Spinner/></div>
-      )}
+          </div>
+      </div> 
+        <BlockedFields
+          blockedDomains={blockedDomains} blockedWords={blockedWords}
+          setBlockedDomains={setBlockedDomains} setBlockedWords={setBlockedWords}
+        />
+      </div>
+    ) : (
+      <div className='flex items-center justify-center'><Spinner/></div>
+    )}
     </div>
   );
 }

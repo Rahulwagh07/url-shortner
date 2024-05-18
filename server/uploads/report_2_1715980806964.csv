@@ -1,0 +1,6 @@
+"baseUrl","urlName","shortUrl","tier"
+"https://google.com","Google","google","silver"
+"https://www.example.com/articles/how-to-learn-react-in-2024","Learn React 202","react2024","temp"
+"https://www.example.com/blog/top-10-travel-destinations-2024","Destinations","travel2024","gold"
+"https://www.example.com/health/mental-health-awareness-month","Mental Health","mentalhealth","platinum"
+"https://www.example.com/finance/personal-finance-tips-for-2024","Finance Tips","financetips","silver"

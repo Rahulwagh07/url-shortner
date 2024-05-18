@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { apiConnector } from '../../../../services/apiConnector';
 import { manageUrlEndpoints, reportsEndpoints } from '../../../../services/apis';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Spinner from '../../../common/Spinner';
 import { FRONTEND_URL } from '../../../../utils/helper';
 import { formatDate } from '../../../../utils/FormatDate';
 import { ACCOUNT_TYPE } from '../../../../utils/constants';
 import { BACKEND_URL } from '../../../../utils/helper';
+import { RxDownload } from "react-icons/rx";
 
 const BASE_URL = FRONTEND_URL;
 
@@ -119,23 +120,26 @@ const Reports = () => {
       </div>
     ) : (
       <div className="mx-auto flex flex-col justify-center">
-        <div className="mb-4 flex justify-between items-center">
+        <div className="mb-4 flex gap-2 mx-4 justify-between items-center">
           <input
             type="text"
             placeholder="Filter URLs by name"
             value={filterText}
             onChange={handleFilterChange}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="shadow appearance-none border rounded lg:w-[450px] py-2 px-3
+            text-gray-700 leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
           />
-          <div className="flex flex-wrap gap-2 sm:flex-nowrap">
+          <div className="flex items-start gap-3">
             <button
               onClick={handleSortChange}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              className="bg-blue-500 hover:bg-blue-400 flex gap-2 text-white 
+              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
             >
               Sort by Name
             </button>
             {globalVariables?.generateReportDisabled && (
-              <div className="px-4 py-2 bg-blue-500 text-white rounded-md">
+              <div className="bg-slate-500 hover:bg-slate-400 flex gap-2 text-white 
+              font-bold py-1 px-4 border-b-4 border-slate-700 hover:border-slate-500 rounded">
                 Report Generation is disabled for now
               </div>
             ) }
@@ -144,9 +148,10 @@ const Reports = () => {
               <a
                 href={`${BACKEND_URL}${report?.reportUrl}`}
                 download
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className="bg-green-500 flex items-center justify-center gap-2 hover:bg-green-400 text-white 
+              font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"
               >
-                Report is ready..Download
+              <span> Report is ready</span> <RxDownload className='font-bold'/>
               </a>
             ) : 
                 <div>
@@ -154,7 +159,8 @@ const Reports = () => {
               <button
               onClick={handleInitReportGeneration}
               disabled={generatingReport}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              className="bg-green-500 flex items-center justify-center gap-2 hover:bg-green-400 text-white 
+              font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"
             >
               {generatingReport ? 'Generating Report...' : `${selectedUrls.length < maxRecords ? "Download Now" : "Generate Report"}`}
             </button>}

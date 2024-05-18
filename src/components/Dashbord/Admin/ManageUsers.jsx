@@ -117,14 +117,14 @@ const ManageUsers = () => {
           placeholder="search by name email"
           value={filterText}
           onChange={handleFilterChange}
-          className="px-4 py-2 border border-gray-300 rounded-md 
-          focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto mb-2 sm:mb-0"
+          className="shadow appearance-none border rounded xs:w-full lg:w-[450px] py-2 px-3
+           text-gray-700 leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
         />
-        <div className="flex flex-wrap sm:flex-nowrap">
+        <div className="flex gap-2 xs:grid xs:grid-cols-2 xs:mt-2">
           <button
             onClick={handleSelectAll}
-            className="bg-gray-500 hover:bg-gray-700 text-white font-bold 
-            py-2 px-4 rounded mr-2 mb-2 sm:mb-0"
+            className="bg-gray-500 hover:bg-gray-400 flex gap-2 text-white 
+              font-bold py-1 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded"
           >
             {selectedUsers.length === filteredUsers.length
               ? 'Deselect All'
@@ -133,24 +133,24 @@ const ManageUsers = () => {
           <button
             onClick={handleSuspendUsers}
             disabled={selectedUsers.length === 0}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold 
-            py-2 px-4 rounded mr-2 disabled:opacity-50 disabled:cursor-not-allowed mb-2 sm:mb-0"
+            className="bg-blue-500 hover:bg-blue-400 text-white 
+              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
           >
             Suspend Users
           </button>
           <button
             onClick={handleActivateUsers}
             disabled={selectedUsers.length === 0}
-            className="bg-green-500 hover:bg-green-700 text-white 
-             font-bold py-2 px-4 rounded mr-2 disabled:opacity-50 disabled:cursor-not-allowed mb-2 sm:mb-0"
+            className="bg-green-500 hover:bg-green-400  text-white 
+              font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"
           >
             Activate Users
           </button>
           <button
             onClick={handleDeleteUsers}
             disabled={selectedUsers.length === 0}
-            className="bg-red-700 hover:bg-red-900 text-white 
-             font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed mb-2 sm:mb-0"
+            className="bg-red-500 hover:bg-red-400  text-white 
+              font-bold py-1 px-4 border-b-4 border-red-700 hover:border-red-500 rounded"
           >
             Delete Users
           </button>

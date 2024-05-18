@@ -5,25 +5,6 @@ const { isUrl } = require('check-valid-url');
 
 const BaseUrl = process.env.FRONTEND_BASE_URL;
 
-exports.deleteBulkUrls = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const { urlIds } = req.body;
-    const deletedUrls = await Url.deleteMany({ _id: { $in: urlIds }, creator: userId });
-
-    return res.status(200).json({ 
-      success: true,
-      message: `${deletedUrls.deletedCount} URLs deleted successfully` 
-    });
-  } catch (error) {
-    console.error('Error deleting URLs:', error);
-    return res.status(500).json({ 
-      success: false,
-      message: 'Internal server error' 
-    });
-  }
-};
-
 exports.getAllUrlOfUser = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -111,9 +92,12 @@ const getAllUrls = async (req, res) => {
 
 exports.suspendUrl = async (req, res) => {
   try {
-    const userId = req.user.id;
     const { urlId } = req.params;
-    const url = await prisma.url.findFirst({ where: { id: Number(urlId), creatorId: userId } });
+    const url = await prisma.url.findFirst({
+      where:{
+        id: parseInt(urlId),
+      }
+    });
 
     if (!url) {
       return res.status(404).json({
@@ -141,9 +125,12 @@ exports.suspendUrl = async (req, res) => {
 
 exports.activateUrl = async (req, res) => {
   try {
-    const userId = req.user.id;
     const { urlId } = req.params;
-    const url = await prisma.url.findFirst({ where: { id: Number(urlId), creatorId: userId } });
+    const url = await prisma.url.findFirst({
+      where:{
+        id: parseInt(urlId),
+      }
+    });
 
     if (!url) {
       return res.status(404).json({
@@ -172,9 +159,12 @@ exports.activateUrl = async (req, res) => {
 
 exports.deleteUrl = async (req, res) => {
   try {
-    const userId = req.user.id;
     const { urlId } = req.params;
-    const url = await prisma.url.findFirst({ where: { id: Number(urlId), creatorId: userId } });
+    const url = await prisma.url.findFirst({
+      where:{
+        id: parseInt(urlId),
+      }
+    });
 
     if (!url) {
       return res.status(404).json({ 
@@ -198,9 +188,14 @@ exports.deleteUrl = async (req, res) => {
 
 exports.deleteBulkUrls = async (req, res) => {
   try {
-    const userId = req.user.id;
     const { urlIds } = req.body;
-    const deletedUrls = await prisma.url.deleteMany({ where: { id: { in: urlIds }, creatorId: userId } });
+    const deletedUrls = await prisma.url.deleteMany({
+      where: {
+        id: {
+          in: urlIds
+        }
+      }
+    });
 
     return res.status(200).json({ 
       success: true,

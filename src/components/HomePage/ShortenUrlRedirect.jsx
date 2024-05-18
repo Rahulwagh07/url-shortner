@@ -92,18 +92,20 @@ export default function ShortUrlRedirect() {
           <Spinner />
         </div>
       ) : (
-        <div className='bg-gray-100'>
+        <div className=''>
           {/* <div className='md:w-7/12 lg:w-5/12 flex items-center justify-center mx-auto'><AdComponent/></div> */}
           {iframeCompatible ? (
             <iframe src={url} title="iframe" className='w-full min-h-screen' allowFullScreen></iframe>
           ) : (
-            <div className='flex flex-col items-center gap-4 justify-center'>
-              <h3 className='text-lg text-slate-500 font-semibold'>Url is not compatible to load in iframe</h3>
-              <h4 className='text-lg text-slate-500 font-semibold'>Go to original url</h4>
+          <div className='flex items-center justify-center mt-20'>
+          <div className='flex flex-col items-center gap-4 justify-center bg-white shadow-lg border border-gray-300 p-8'>
+              <h3 className='text-lg text-gray-700 font-semibold'>Url is not compatible to load in iframe</h3>
+              <h4 className='text-lg text-gray-700 font-semibold'>Go to original url</h4>
               <a href={url} target='_blank' rel="noreferrer" className='py-2 px-3 bg-blue-150 rounded-md text-white'>
                 {url}
               </a>
             </div>
+          </div>
           )}
         </div>
       )}

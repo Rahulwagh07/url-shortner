@@ -3,7 +3,6 @@ import { worldMill } from "@react-jvectormap/world";
 import React, { useState } from "react";
 import { analyticsEndpoints } from '../../../../services/apis';
 import { useSelector } from "react-redux";
-import Spinner from "../../../common/Spinner";
 import { useEffect } from "react";
 import { apiConnector } from "../../../../services/apiConnector";
 
@@ -33,8 +32,9 @@ function MapChart() {
   }, []);
 
   return (
-    <div>
-       {loading ?  <></> : 
+    <>
+    {!loading  && 
+    <div className="flex items-center justify-center shadow-md  bg-white border border-gray-300 p-4">
       <div className="border rounded-lg" style={{ margin: "auto", width: "600px", height: "400px" }}>
       <VectorMap
         map={worldMill}
@@ -60,21 +60,17 @@ function MapChart() {
         }}
         onRegionTipShow={(event, label, code) => {
           return label.html(`
-                  <div style="background-color: #ffffff; min-height: 50px; width: 125px; color:#020617;">
-                    <p>
-                    <b>
-                    ${label.html()}
-                    </b>
-                    </p>
-                    <p>
-                    ${countries[code] ? countries[code] : 0}
-                    </p>
-                    </div>`);
+            <div style="background-color: #ffffff; min-height: 50px; width: 125px; color:#020617;">
+              <p><b>${label.html()}</b>
+              </p>
+              <p>${countries[code] ? countries[code] : 0}</p>
+            </div>`);
         }}
       />
       </div>
-       }
     </div>
+       }
+    </>
   );
 }
 
