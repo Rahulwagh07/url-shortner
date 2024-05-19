@@ -16,7 +16,8 @@ exports.trackVisitorData = async (req, res) => {
     }
 
     const userId = urlRecord.creatorId;
-    const country = await getCountry(req);
+    const ipAddress = req.socket.remoteAddress;
+    const country = await getCountry(ipAddress);
     const userAgentString = req.headers['user-agent'];
     await handleDeviceType(userAgentString, userId)
     const existingVisit = await prisma.visit.findFirst({
@@ -244,9 +245,9 @@ const handleDeviceType = async (userAgentString, userId) => {
   }
 };
 
-const getCountry = async (req) => {
-  const ipAddress = req.socket.remoteAddress;
+const getCountry = async (ipAddress) => {
   const geo = geoip.lookup(ipAddress);
+  console.log("ip", ipAddress)
   let country = "Unknown";
   if (geo) {
     country = iso3311a2.getCountry(geo.country);
