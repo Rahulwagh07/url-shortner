@@ -127,11 +127,11 @@ model Visitor {
 model Device {
   id          Int       @id @default(autoincrement()) 
   userId      Int       @unique
-  mobile      Int?
-  tablet      Int?
-  desktop     Int?
-  eReader     Int?
-  unknown     Int?
+  mobile      Int?      @default(0)
+  tablet      Int?      @default(0)
+  desktop     Int?      @default(0)
+  eReader     Int?      @default(0)
+  unknown     Int?      @default(0)
 }
 
 model Report {

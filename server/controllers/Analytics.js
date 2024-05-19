@@ -228,18 +228,20 @@ const handleDeviceType = async (userAgentString, userId) => {
         [deviceType]: 1
       };
     }
-
+    console.log("dataToUpdateOrCreate", dataToUpdateOrCreate)
     if (existingDevice) {
-      await prisma.device.update({
+      const  res = await prisma.device.update({
         where: {
           userId: userId,
         },
         data: dataToUpdateOrCreate,
       });
+      console.log("ExistingDevi", res)
     } else {
-      await prisma.device.create({
+      const res = await prisma.device.create({
         data: dataToUpdateOrCreate,
       });
+      console.log("new", res)
     }
   } catch (error) {
     console.error('Error handling device type:', error);
