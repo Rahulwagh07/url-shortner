@@ -16,7 +16,7 @@ exports.trackVisitorData = async (req, res) => {
     }
 
     const userId = urlRecord.creatorId;
-    const ipAddress = req.socket.remoteAddress;
+    const ipAddress = await getClientIp(req);
     const country = await getCountry(ipAddress);
     const userAgentString = req.headers['user-agent'];
     await handleDeviceType(userAgentString, userId)
@@ -255,6 +255,15 @@ const getCountry = async (ipAddress) => {
   console.log("country", country)
   return country;
 }
+
+const getClientIp = (req) => {
+  const forwardedForIp = req.headers['x-forwarded-for'];
+  if (forwardedForIp) {
+    return forwardedForIp.split(',')[0];
+  }
+  return req.connection.remoteAddress;
+};
+
 
 
 exports.getDeviceAnalyticsForUser = async (req, res) => {
