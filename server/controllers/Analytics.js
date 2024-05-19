@@ -206,7 +206,7 @@ const handleDeviceType = async (userAgentString, userId) => {
   try {
     const parser = new UAParser(userAgentString);
     const result = parser.getResult();
-    let deviceType =  getDeviceType(result);
+    let deviceType = await getDeviceType(result);
     console.log("DeviceType", deviceType)
     const existingDevice = await prisma.device.findUnique({
       where: {
