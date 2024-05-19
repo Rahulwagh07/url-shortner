@@ -189,23 +189,25 @@ const handleExistingVisitor = async (existingVisit, urlRecord, country, returnin
   }
 };
 
+const getDeviceType = async(result) => {
+  if (result.device.type === 'ebook') {
+    return 'eReader';
+  } else if (result.device.type === 'mobile') {
+    return   'mobile';
+  } else if (result.device.type === 'tablet') {
+    return  'tablet';
+  } else if (result.device.type === 'smarttv' || result.device.type === 'wearable') {
+    return  'unknown';
+  } else {
+    return  'desktop';
+  }
+}
 const handleDeviceType = async (userAgentString, userId) => {
   try {
-    let deviceType = 'unknown';
     const parser = new UAParser(userAgentString);
     const result = parser.getResult();
-    if (result.device.type === 'ebook') {
-      deviceType = 'eReader';
-    } else if (result.device.type === 'mobile') {
-      deviceType =  'mobile';
-    } else if (result.device.type === 'tablet') {
-      deviceType =  'tablet';
-    } else if (result.device.type === 'smarttv' || result.device.type === 'wearable') {
-      deviceType =  'unknown';
-    } else {
-      deviceType = 'desktop';
-    }
-    
+    let deviceType =  getDeviceType(result);
+    console.log("DeviceType", deviceType)
     const existingDevice = await prisma.device.findUnique({
       where: {
         userId: userId,
