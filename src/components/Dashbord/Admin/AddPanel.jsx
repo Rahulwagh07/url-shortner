@@ -60,7 +60,7 @@ function AddPanel() {
   return (
     <div className="flex flex-col bg-white border border-gray-300 shadow-sm rounded-md p-6 xs:p-2">
       <h2 className="text-2xl text-sky-400 font-semibold mb-4">Add Panel Option</h2>
-      <form onSubmit={handleSubmit} className="flex gap-2 xs:flex-col ">
+      <form onSubmit={handleSubmit} className="flex gap-2 lg:flex-row flex-col">
         <div>
         <label className="block text-sm font-medium leading-6 text-gray-900 mt-2">Name</label>
         <input
@@ -68,7 +68,7 @@ function AddPanel() {
           value={newOptionName}
           onChange={(e) => setNewOptionName(e.target.value)}
           placeholder="Option Name"
-          className="block w-[200px] xs:w-[80vw] rounded-md border-0 py-1.5 text-gray-900
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900
             shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
             focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
           required
@@ -81,7 +81,7 @@ function AddPanel() {
           value={newRedirectionUrl}
           onChange={(e) => setNewRedirectionUrl(e.target.value)}
           placeholder="Redirection URL"
-          className="block w-[200px] xs:w-[80vw] rounded-md border-0 py-1.5 text-gray-900
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900
             shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
             focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
           required
@@ -89,13 +89,13 @@ function AddPanel() {
         </div>
         <div>
         <label className="block text-sm font-medium leading-6 text-gray-900 mt-2">Icon</label>
-        <div className="flex  xs:w-[80vw] items-center px-4 py-1 rounded-md border ring-1 ring-inset ring-gray-300 font-semibold">
+        <div className="flex w-full items-center px-4 py-1 rounded-md border ring-1 ring-inset ring-gray-300 font-semibold">
           <div className="flex items-center gap-x-2">
             {previewSource && (
               <img src={previewSource} alt="img" className="aspect-square w-[78px] rounded-full object-cover" />
             )}
           <div className="flex gap-1 items-center">
-              <div className="flex flex-row gap-3 w-[200px]">
+              <div className="flex flex-row gap-3 w-full">
                 <input
                   type="file"
                   onChange={handleFileChange}

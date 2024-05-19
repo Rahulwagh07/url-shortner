@@ -1,8 +1,8 @@
 const prisma = require("../config/prismaClient");
 const geoip = require('geoip-lite');
 const iso3311a2 = require('iso-3166-1-alpha-2');
-const useragent = require('useragent');
 var countries = require("i18n-iso-countries");
+const UAParser = require('ua-parser-js');
 
 exports.trackVisitorData = async (req, res) => {
   const { url, uniqueVisitorId } = req.body;
@@ -16,8 +16,9 @@ exports.trackVisitorData = async (req, res) => {
     }
 
     const userId = urlRecord.creatorId;
-    const country = await getCountry(req)
-    await handleDeviceType(req, userId)
+    const country = await getCountry(req);
+    const userAgentString = req.headers['user-agent'];
+    await handleDeviceType(userAgentString, userId)
     const existingVisit = await prisma.visit.findFirst({
       where: {
         urlId: urlRecord.id,
@@ -187,23 +188,23 @@ const handleExistingVisitor = async (existingVisit, urlRecord, country, returnin
   }
 };
 
-const handleDeviceType = async (req, userId) => {
+const handleDeviceType = async (userAgentString, userId) => {
   try {
-    const userAgentString = req.headers['user-agent'];
-    const agent = useragent.parse(userAgentString);
-    let deviceType;
-    if (userAgentString.includes('kindle') || userAgentString.includes('nook') || userAgentString.includes('kobo')) {
+    let deviceType = 'unknown';
+    const parser = new UAParser(userAgentString);
+    const result = parser.getResult();
+    if (result.device.type === 'ebook') {
       deviceType = 'eReader';
-    } else if (agent.isMobile) {
-      deviceType = 'mobile';
-    } else if (agent.isDesktop) {
-      deviceType = 'desktop';
-    } else if (agent.isTablet) {
-      deviceType = 'tablet';
+    } else if (result.device.type === 'mobile') {
+      deviceType =  'mobile';
+    } else if (result.device.type === 'tablet') {
+      deviceType =  'tablet';
+    } else if (result.device.type === 'smarttv' || result.device.type === 'wearable') {
+      deviceType =  'unknown';
     } else {
-      deviceType = 'unknown';
+      deviceType = 'desktop';
     }
-
+    
     const existingDevice = await prisma.device.findUnique({
       where: {
         userId: userId,
@@ -246,11 +247,11 @@ const handleDeviceType = async (req, userId) => {
 const getCountry = async (req) => {
   const ipAddress = req.socket.remoteAddress;
   const geo = geoip.lookup(ipAddress);
-  let country = "Us";
+  let country = "Unknown";
   if (geo) {
     country = iso3311a2.getCountry(geo.country);
   }
-  
+  console.log("country", country)
   return country;
 }
 

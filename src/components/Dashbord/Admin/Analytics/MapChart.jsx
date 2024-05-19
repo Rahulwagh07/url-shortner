@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { analyticsEndpoints } from '../../../../services/apis';
 import { useSelector } from "react-redux";
 import { apiConnector } from "../../../../services/apiConnector";
-import './MapChart.css';  
 
 const { GET_TOTAL_COUNTRY_ANALYTICS_ADMIN_API } = analyticsEndpoints;
 
@@ -33,7 +32,7 @@ function MapChart() {
 
   return (
     <>
-      {!loading && 
+    {!loading && 
       <div className="flex items-center justify-center shadow-md bg-white border border-gray-300 p-4">
         <div className="border rounded-lg" style={{ margin: "auto", width: "600px", height: "400px" }}>
           <VectorMap
@@ -42,7 +41,7 @@ function MapChart() {
               width: "700px",
               height: "600px",
             }}
-            backgroundColor="#f3f4f6" 
+            backgroundColor="#e2e8f0"
             markerStyle={{
               initial: {
                 fill: "red",
@@ -59,24 +58,17 @@ function MapChart() {
               ],
             }}
             onRegionTipShow={(event, label, code) => {
-              const countryData = countries[code];
-              if (countryData !== null) {
-                const tooltipContent = `
-                  <div class="custom-tooltip">
-                    <p><b>${label.html()}</b></p>
-                    <p>${countryData}</p>
-                  </div>
-                `;
-                label.html(tooltipContent);
-              } else {
-                event.preventDefault();  
-              }
+              label.html(`
+                <div style="padding: 8px; border: 1px solid #d1d5db; background-color: #ffffff; border-radius: 5px; margin: -10px; color: #0f172a;">
+                  <p style="color: #334155;"><b>${label.html()}</b></p>
+                  <p>${countries[code] ? countries[code] : 0}</p>
+                </div>`);
             }}
           />
         </div>
       </div>
-      }
-    </>
+    }
+  </>
   );
 }
 

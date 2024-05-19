@@ -221,7 +221,7 @@ const Reports = () => {
                   </td>
                 )}
                 <td className="px-4 py-2 border">{formatDate(url.createdAt)}</td>
-                <td className="px-4 py-2 cursor-pointer border" onClick={() => handleShowCountryViews(url.id, url.visits[0]?.country || [])}>
+                <td className="px-4 py-2 border">
                   {url.visits.length > 0 ? url.visits[0].totalClicks : 0}
                 </td>
                 <td className="px-4 py-2 border">

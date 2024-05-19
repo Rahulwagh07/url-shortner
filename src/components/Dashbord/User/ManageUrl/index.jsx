@@ -54,7 +54,7 @@ function ManageUrl() {
             <button
               onClick={openModal}
               className='text-white bg-gradient-to-r flex gap-2 items-center justify-center from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300
-               dark:focus:ring-blue-800 font-semibold rounded-lg text-lg px-5 py-2.5'
+               dark:focus:ring-blue-800 font-semibold rounded-md text-lg px-4 py-2'
             >
             <span> Create New</span> <FaLink/>
             </button>
@@ -69,7 +69,8 @@ function ManageUrl() {
           />
         )}
         {isOpen && (
-          <div className="fixed inset-0  hs-overlay flex items-center justify-center z-50">
+          <div className="fixed inset-0  hs-overlay flex items-center justify-center z-50
+          bg-black  bg-opacity-60 backdrop-blur-sm transition-opacity duration-300">
             <div className='md:w-5/12 xs:w-11/12'>
               <CreateUrlForm
                 setIsOpen={setIsOpen}

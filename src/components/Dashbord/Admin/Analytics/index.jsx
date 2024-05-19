@@ -4,7 +4,7 @@ import MapChart from './MapChart'
 
 function AnalyticsAdmin() {
   return (
-    <div className='flex items-center xs:flex-col justify-center gap-2'>
+    <div className='flex lg:flex-row items-center flex-col justify-center gap-2'>
       <PieChart/>
       <MapChart/>
     </div>
