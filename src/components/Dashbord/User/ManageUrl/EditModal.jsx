@@ -81,6 +81,7 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
         className='absolute cursor-pointer right-2 top-1'/>
       </h2>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+      <label className="block text-xs font-medium text-black -mb-3">Long Link</label>
         <input
           type="text"
           placeholder="Enter a long link here"
@@ -92,6 +93,7 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
           onChange={(e) => setBaseUrl(e.target.value)}
         />
        <div className='w-full relative'>
+       <label className="block text-xs font-medium text-black  mb-1">Url Name</label>
         <input
           type="text"
           placeholder="url name (optional)"
@@ -108,6 +110,7 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
       </div>
 
       <div className='w-full relative'>
+       <label className="block text-xs font-medium text-black  mb-1">Custom Character</label>
         <input
           type="text"
           placeholder="custom characters (optional)"
@@ -125,6 +128,7 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
       </div>
 
         <div className='w-full relative'>
+        <label className="block text-xs font-medium text-black mb-1">Description</label>
         <input
           type="text"
           placeholder="description (optional)"
@@ -139,6 +143,8 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
           <span className="absolute top-0 right-1 text-xs"> {description.length}/250</span>
         )}
         </div>
+        <div>
+        <label className="block text-xs font-medium text-black mb-1">Tier</label>
         <select
             value={tier}
             onChange={(e) => setTier(e.target.value)}
@@ -153,6 +159,7 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
             <option value="gold">Gold: Link active for {goldUrlActiveDays} days</option>
             <option value="platinum">Platinum: Link active for {platinumUrlActiveDays} days</option>
         </select>
+        </div>
         <button
           type="submit"
           className="flex w-full justify-center rounded-md bg-blue-600 px-3 

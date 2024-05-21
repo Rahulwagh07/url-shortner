@@ -20,6 +20,7 @@ exports.trackVisitorData = async (req, res) => {
     const country = await getCountry(ipAddress);
     const userAgentString = req.headers['user-agent'];
     await handleDeviceType(userAgentString, userId)
+    await handleStats();
     const existingVisit = await prisma.visit.findFirst({
       where: {
         urlId: urlRecord.id,
@@ -45,7 +46,7 @@ exports.trackVisitorData = async (req, res) => {
       })
 
       if(existingVisitor){
-        const updatedVisit = await handleExistingVisitor(existingVisit, urlRecord, country, returningVisitor, uniqueVisitorId)
+        const updatedVisit = await handleExistingVisitor(existingVisit, existingCountry, urlRecord, country, returningVisitor, uniqueVisitorId)
         return res.status(200).json({ 
           success: true, 
           message: "existing visitor", 
@@ -76,7 +77,18 @@ exports.trackVisitorData = async (req, res) => {
   }
 };
 
-
+const handleStats = async () => {
+  try{
+    await prisma.stats.update({
+      where: { id: 1 }, 
+      data: {
+        totalLinksVisited: { increment: 1} 
+      },
+    });
+  } catch(err){
+    console.error(err)
+  }
+}
 const handleFirstVisit = async (urlRecord, country, uniqueVisitorId) => {
   try {
     const newVisit = await prisma.visit.create({
@@ -85,11 +97,12 @@ const handleFirstVisit = async (urlRecord, country, uniqueVisitorId) => {
         returningVisitor: 0,
         urlId: urlRecord.id,
       }
-    });
+  });
     await prisma.country.create({
       data: {
         name: country,
         count: 1,
+        clicks: 1,
         visit: { connect: { id: newVisit.id } },
       },
     })
@@ -113,13 +126,14 @@ const handleNewVisitor = async (existingCountry, existingVisit, urlRecord, count
     if (existingCountry) {
       await prisma.country.update({
         where: { id: existingCountry.id },
-        data: { count: { increment: 1 } }
+        data: { count: { increment: 1 }, clicks: { increment: 1 } }
       });
     } else {
       const newCountry = await prisma.country.create({
         data: {
           name: country,
           count: 1,
+          clicks: 1,
           visit: { connect: { id: existingVisit.id } },
         }
       });
@@ -155,8 +169,24 @@ const handleNewVisitor = async (existingCountry, existingVisit, urlRecord, count
   }
 };
 
-const handleExistingVisitor = async (existingVisit, urlRecord, country, returningVisitor, uniqueVisitorId) => {
+const handleExistingVisitor = async (existingVisit, existingCountry, urlRecord, country, returningVisitor, uniqueVisitorId) => {
   try {
+    if (existingCountry) {
+      await prisma.country.update({
+        where: { id: existingCountry.id },
+        data: { clicks: { increment: 1 } }
+      });
+    } else {
+      const newCountry = await prisma.country.create({
+        data: {
+          name: country,
+          count: 1,
+          clicks: 1 ,
+          visit: { connect: { id: existingVisit.id } },
+        }
+      });
+      existingVisit.country.push(newCountry);
+    }
     const visitor = await prisma.visitor.findFirst({
       where:{
         uniqueVisitorId: uniqueVisitorId

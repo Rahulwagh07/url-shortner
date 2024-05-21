@@ -11,6 +11,7 @@ import { formatDate } from '../../../../utils/FormatDate';
 import { ACCOUNT_TYPE } from '../../../../utils/constants';
 import ShowCounts from './ShowCounts';
 import toast from 'react-hot-toast';
+import { GoArrowDown } from "react-icons/go";
 
 const BASE_URL = FRONTEND_URL;
 
@@ -35,12 +36,27 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
   const [showCountryViews, setShowCountryViews] = useState(null);
   const [countryViewsData, setCountryViewsData] = useState([]);
   const [selectedUrlId, setSelectedUrlId] = useState();
+  const [arrowPositionName, setArrowPositionName] = useState(false)
+  const [arrowPositionCreatedDate, setArrowPositionCreatedDate] = useState(false)
+  const [arrowPositionVisit, setArrowPositionVisit] = useState(false)
+  const [arrowPositionExpiryDate, setArrowPositionExpiryDate] = useState(false)
+  const [arrowPositionVisitors, setArrowPositionVisitors] = useState(false)
+  const [showCountModalState, setShowCountModalState] = useState(false);
 
+  const [sortCriteria, setSortCriteria] = useState('urlName');
   useEffect(() => {
     fetchUrls();
   }, []);
 
   const handleShowCountryViews = (urlId, countryViewsData) => {
+    setShowCountModalState(true)
+    setCountryViewsData(countryViewsData || []);
+    setShowCountryViews(urlId === showCountryViews ? null : urlId);
+    setSelectedUrlId(urlId)
+  };
+
+  const handleShowVisitors = (urlId, countryViewsData) => {
+    setShowCountModalState(false)
     setCountryViewsData(countryViewsData || []);
     setShowCountryViews(urlId === showCountryViews ? null : urlId);
     setSelectedUrlId(urlId)
@@ -73,7 +89,32 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
   };
 
   const handleSortChange = () => {
+    setArrowPositionName(!arrowPositionName);
     setSortOrder((prevSortOrder) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+    setSortCriteria('urlName');
+  };
+  
+  const handleCreatedDateSort = () => {
+    setArrowPositionCreatedDate(!arrowPositionCreatedDate);
+    setSortOrder((prevSortOrder) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+    setSortCriteria('createdAt');
+  };
+
+  const handleExpiryDateSort = () => {
+    setArrowPositionExpiryDate(!arrowPositionExpiryDate);
+    setSortOrder((prevSortOrder) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+    setSortCriteria('expirationDate');
+  };
+
+  const handleClicksSort = () => {
+    setArrowPositionVisit(!arrowPositionVisit);
+    setSortOrder((prevSortOrder) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+    setSortCriteria('totalClicks');
+  };
+  const handleVisitorsSort = () => {
+    setArrowPositionVisitors(!arrowPositionVisitors);
+    setSortOrder((prevSortOrder) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+    setSortCriteria('visitors');
   };
 
   const handleFilterChange = (event) => {
@@ -86,18 +127,19 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
     
   };
 
-  const handleSuspend = async (urlId) => {
+  const handleSuspend = async () => {
     try {
-    const res =   await apiConnector("PUT", `${SUSPEND_URL_API}/${urlId}`, null, {
+    const res =   await apiConnector("PUT", `${SUSPEND_URL_API}`, { urlIds: selectedUrls }, {
         Authorization: `Bearer ${token}`,
     });
     if(res.data.success){
       toast.success("Url suspended");
-      setUrls((prevUrls) =>
+      setUrls((prevUrls) => 
         prevUrls.map((url) =>
-          url.id === urlId ? { ...url, status: 'suspended' } : url
+          selectedUrls.includes(url.id) ? { ...url, status: 'suspended' } : url
         )
-      );
+        );
+        setSelectedUrls([]); 
     }
     } catch (error) {
       toast.error("Failed to suspend url")
@@ -105,18 +147,19 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
     }
   };
 
-  const handleActivate = async (urlId) => {
+  const handleActivate = async () => {
     try {
-    const res = await apiConnector("PUT", `${ACTIVATE_URL_API}/${urlId}`, null, {
+    const res = await apiConnector("PUT", `${ACTIVATE_URL_API}`, { urlIds: selectedUrls }, {
         Authorization: `Bearer ${token}`,
     });
       if(res.data.success){
         toast.success("Url Activated");
-        setUrls((prevUrls) =>
+        setUrls((prevUrls) => 
           prevUrls.map((url) =>
-            url.id === urlId ? { ...url, status: 'active' } : url
+            selectedUrls.includes(url.id) ? { ...url, status: 'active' } : url
           )
-        );
+          );
+          setSelectedUrls([]); 
       }
     } catch (error) {
       toast.error("Failed to activate url")
@@ -124,20 +167,20 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
     }
   };
 
-  const handleDelete = async (urlId) => {
-    try {
-      const res = await apiConnector("DELETE", `${DELETE_URL_API}/${urlId}`, null, {
-        Authorization: `Bearer ${token}`,
-    });
-    if(res.data.success){
-      toast.success("Url Deleted");
-      setUrls((prevUrls) => prevUrls.filter((url) => url.id !== urlId));
-    }
-    } catch (error) {
-      toast.error("Failed to delete url")
-      console.error('Error deleting URL:', error);
-    }
-  };
+  // const handleDelete = async (urlId) => {
+  //   try {
+  //     const res = await apiConnector("DELETE", `${DELETE_URL_API}/${urlId}`, null, {
+  //       Authorization: `Bearer ${token}`,
+  //   });
+  //   if(res.data.success){
+  //     toast.success("Url Deleted");
+  //     setUrls((prevUrls) => prevUrls.filter((url) => url.id !== urlId));
+  //   }
+  //   } catch (error) {
+  //     toast.error("Failed to delete url")
+  //     console.error('Error deleting URL:', error);
+  //   }
+  // };
 
   const handleBulkDelete = async () => {
     try {
@@ -160,10 +203,39 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
   );
 
   const sortedUrls = filteredUrls.sort((a, b) => {
-    const nameA = a.urlName.toLowerCase();
-    const nameB = b.urlName.toLowerCase();
-    if (nameA < nameB) return sortOrder === 'asc' ? -1 : 1;
-    if (nameA > nameB) return sortOrder === 'asc' ? 1 : -1;
+    if (sortCriteria === 'urlName') {
+      const nameA = a.urlName.toLowerCase();
+      const nameB = b.urlName.toLowerCase();
+      if (nameA < nameB) return sortOrder === 'asc' ? -1 : 1;
+      if (nameA > nameB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    } else if (sortCriteria === 'createdAt') {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      if (dateA < dateB) return sortOrder === 'asc' ? -1 : 1;
+      if (dateA > dateB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    } else if (sortCriteria === 'expirationDate') {
+      const dateA = new Date(a.expirationDate);
+      const dateB = new Date(b.expirationDate);
+      if (dateA < dateB) return sortOrder === 'asc' ? -1 : 1;
+      if (dateA > dateB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    }
+    else if (sortCriteria === 'totalClicks') {
+      const clicksA = a.visits.length > 0 ? a.visits[0].totalClicks : 0;
+      const clicksB = b.visits.length > 0 ? b.visits[0].totalClicks : 0;
+      if (clicksA < clicksB) return sortOrder === 'asc' ? -1 : 1;
+      if (clicksA > clicksB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    }
+    else if (sortCriteria === 'visitors') {
+      const clicksA = a.visits.length > 0 ? a.visits[0].visitor.length : 0;
+      const clicksB = b.visits.length > 0 ? b.visits[0].visitor.length : 0;
+      if (clicksA < clicksB) return sortOrder === 'asc' ? -1 : 1;
+      if (clicksA > clicksB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    }
     return 0;
   });
  
@@ -171,85 +243,139 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
     <div className="mx-auto py-8 overflow-x-hidden">
     { loading ? <div className='flex items-center justify-center mt-4'><Spinner/></div> :
       <>
-      <div className="mb-4 flex xs:flex-col xs:items-start gap-2 mx-4 justify-between items-center">
+      <div className="mb-4 flex xs:flex-col xs:items-start gap-2  justify-between items-center">
         <input
           type="text"
           placeholder="Filter by name"
           value={filterText}
           onChange={handleFilterChange}
-          className="shadow appearance-none border rounded xs:w-[80vw] lg:w-[450px] py-2 px-3
-           text-gray-700 leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none z-10 border rounded xs:w-[80vw] lg:w-[450px] py-1.5 px-3 ml-1
+           text-black leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
         />
-        <div className="flex items-start gap-3">
-        <button
-          onClick={handleSortChange}
-          className="bg-blue-500 hover:bg-blue-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-        >
-          Sort by Name
-        </button>
+        <div className="flex items-start gap-3 font-[475]">
         <button
           onClick={handleSelectAll}
-          className="bg-slate-500 hover:bg-slate-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-slate-700 hover:border-slate-500 rounded"
+          className="border border-gray-300 bg-white flex gap-2
+               py-1.5 px-4 rounded-md hover:bg-gray-200"
         >
           {selectedUrls.length === urls.length ? 'Deselect All' : 'Select All'}
         </button>
         <button
           onClick={handleBulkDelete}
           disabled={selectedUrls.length === 0}
-          className={`bg-red-500 hover:bg-red-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-red-700 hover:border-red-500 rounded
-            ${ selectedUrls.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
+          className={`border border-red-300 flex gap-2 bg-gray-100
+              py-1.5 px-4 rounded-md
+            ${ selectedUrls.length === 0 ? 'cursor-not-allowed' : 'bg-white hover:bg-gray-200'
           }`}
          >
-          Delete Selected
+          Delete
+        </button>
+        <button
+          onClick={handleSuspend}
+          disabled={selectedUrls.length === 0}
+          className={`border border-slate-300 flex gap-2 bg-gray-100
+              py-1.5 px-4 rounded-md
+            ${ selectedUrls.length === 0 ? 'cursor-not-allowed' : 'bg-white hover:bg-gray-200'
+          }`}
+         >
+          Suspend
+        </button>
+        <button
+          onClick={handleActivate}
+          disabled={selectedUrls.length === 0}
+          className={`border border-green-300 flex gap-2 bg-gray-100
+              py-1.5 px-4 rounded-md
+            ${ selectedUrls.length === 0 ? 'cursor-not-allowed' : 'bg-white hover:bg-gray-200'
+          }`}
+         >
+          Acitivate
         </button>
         </div>
       </div>
       {
         sortedUrls.length > 0 ? 
-        <table className="table-auto">
-        <thead className='text-sky-400 rounded-lg'>
-          <tr className="bg-gray-200">
-            <th className="pl-1 py-2">Select</th>
-            <th className="px-2 py-2">Name</th>
-            <th className="px-2 py-2">Base URL</th>
-            <th className="px-2 py-2">Shortened URL</th>
+        <table className="table-auto bg-white text-sm">
+        <thead className='text-slate-800 rounded-md border border-gray-300'>
+          <tr className="bg-gray-50">
+            <th className="pl-1 py-1.5">Select</th>
+            <th className="px-4 py-1.5 cursor-pointer"
+               onClick={handleSortChange}> 
+              <div className='flex gap-1 items-center justify-center '>
+                <span>Name</span>
+              {
+                arrowPositionName ?  <GoArrowDown className='rotate-180'/> : <GoArrowDown/>
+              }
+              </div>
+            </th>
+            <th className="px-2  py-1.5">Base URL</th>
+            <th className="px-2  py-1.5">Shortened URL</th>
             {
               user?.accountType === ACCOUNT_TYPE.ADMIN ? (
-                <th className="px-3 py-2">Creator</th>
+                <th className="px-3  py-1.5">Creator</th>
               ) : (
-                <th className="px-3 py-2">Description</th>
+                <th className="px-3 py-1.5">Description</th>
               )
             }
-            <th className="px-2 py-2">Created Date</th>
-            <th className="px-2 py-2">Expiray Date</th>
-            <th className="px-2 py-2">Visits</th>
-            <th className="px-2 py-2">Status</th>
-            <th className="px-2 py-2">Actions</th>
+            <th className="px-4 py-1.5 cursor-pointer"
+               onClick={handleCreatedDateSort}> 
+              <div className='flex gap-1 items-center justify-center '>
+                <span>Created</span>
+              {
+                arrowPositionCreatedDate ?  <GoArrowDown className='rotate-180'/> : <GoArrowDown/>
+              }
+              </div>
+            </th>
+            <th className="px-4 py-1.5 cursor-pointer"
+               onClick={handleExpiryDateSort}> 
+              <div className='flex gap-1 items-center justify-center '>
+                <span>Expiry</span>
+              {
+                arrowPositionExpiryDate ?  <GoArrowDown className='rotate-180'/> : <GoArrowDown/>
+              }
+              </div>
+            </th>
+            <th className="px-4 py-1.5 cursor-pointer"
+               onClick={handleClicksSort}> 
+              <div className='flex gap-1 items-center justify-center '>
+                <span>Visits</span>
+              {
+                arrowPositionVisit ?  <GoArrowDown className='rotate-180'/> : <GoArrowDown/>
+              }
+              </div>
+            </th>
+            <th className="px-4 py-1.5 cursor-pointer"
+               onClick={handleVisitorsSort}> 
+              <div className='flex gap-1 items-center justify-center '>
+                <span>Visitors</span>
+              {
+                arrowPositionVisitors ?  <GoArrowDown className='rotate-180'/> : <GoArrowDown/>
+              }
+              </div>
+            </th>
+            <th className="px-2 py-1.5">Status</th>
+            <th className="px-2 py-1.5">Edit</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='rounded-md border border-gray-300'>
          <>
          {sortedUrls.map((url) => (
             <tr key={url.id}>
-              <td className="pl-4 py-2 border">
+              <td className="pl-4 py-1.5 border">
                 <input
                   type="checkbox"
                   checked={selectedUrls.includes(url.id)}
                   onChange={() => handleSelect(url.id)}
-                  className="form-checkbox h-4 w-4 text-blue-500"
+                  className="form-checkbox h-3 w-3 cursor-pointer text-blue-500"
                 />
               </td>
-              <td className="px-2 py-2 border">{url.urlName}</td>
-              <td className="px-2 py-2 border">{url.baseUrl}</td>
-              <td className="px-2 py-2 border">{BASE_URL + "/" + url.shortUrl}</td>
+              <td className="px-2 py-1.5 border">{url.urlName}</td>
+              <td className="px-2 py-1.5 border">{url.baseUrl}</td>
+              <td className="px-2 py-1.5 border">{BASE_URL + "/" + url.shortUrl}</td>
               {
               user?.accountType === ACCOUNT_TYPE.ADMIN ? (
-                <td className="px-2 py-2 border">{url.creator.firstName} {url.creator.lastName}</td>
+                <td className="px-2 py-1.5 border">{url.creator.firstName} {url.creator.lastName}</td>
               ) : (
-                <td className="px-2 py-2 max-w-xs border">
+                <td className="px-2 py-1.5 max-w-xs border">
                 <div
                   className="truncate overflow-hidden hover:overflow-visible 
                   hover:whitespace-normal relative"
@@ -257,7 +383,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
                 >
                   {url.description.slice(0, 8)}...
                   <div className="absolute left-0 top-full mt-2 bg-red-400 
-                  text-white-25 px-4 py-2 rounded-md opacity-0 invisible 
+                  text-white-25 px-4 py-1.5 rounded-md opacity-0 invisible 
                   group-hover:visible group-hover:opacity-100 transition duration-100 z-10">
                     {url.description}
                   </div>
@@ -265,38 +391,23 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
               </td>
               )
              }
-              <td className="px-2 py-2 border">{formatDate(url.createdAt)}</td>
-              <td className="px-2 py-2 border">{formatDate(url.expirationDate)}</td>
-              <td className="px-2 py-2 cursor-pointer border" onClick={() => handleShowCountryViews(url.id, url.visits[0]?.country || [])}>
+              <td className="px-2 py-1.5 border">{formatDate(url.createdAt)}</td>
+              <td className="px-2 py-1.5 border">{formatDate(url.expirationDate)}</td>
+              <td className="px-2 py-1.5 cursor-pointer border text-center" onClick={() => handleShowCountryViews(url.id, url.visits[0]?.country || [])}>
                 {url.visits.length > 0 ? url.visits[0].totalClicks : 0}
               </td>
-              <td className="px-2 py-2 border">
-                <span
-                  className={`px-2 py-1 text-white rounded-full text-xs font-semibold ${
-                    url.status === 'active'
-                      ? 'bg-green-400'
-                      : 'bg-red-400'
-                  }`}
-                >
-                  {url.status}
+              <td className="px-2 py-1.5 cursor-pointer border text-center" onClick={() => handleShowVisitors(url.id, url.visits[0]?.country || [])}>
+                {url.visits.length > 0 ? url.visits[0].visitor.length : 0}
+              </td>
+              <td className="px-4 py-1.5 border">
+                <span className="px-2 py-1 rounded-md text-xs flex items-center justify-center bg-white border border-gray-300">
+                  <span className={`rounded-full w-[5px] mt-1 h-[5px] mr-1 ${url.status === 'active' ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                   <span>{url.status}</span>
                 </span>
               </td>
-              <td className="px-2 py-2 border">
-                <div className=' flex items-center justify-center gap-2'>
-                <button
-                    onClick={() => url.status === 'suspended' ? handleActivate(url.id) : handleSuspend(url.id)}
-                    className={`px-2 py-1 text-white rounded-md ${
-                        url.status === 'suspended'
-                        ? 'bg-green-500 hover:bg-green-600'
-                        : 'bg-gray-400'
-                    }`}
-                    >
-                    {url.status === 'suspended' ? 'Activate' : 'Suspend'}
-                </button>
-                <RiDeleteBin6Line className='text-red-400 cursor-pointer' 
-                size={20} onClick={() => handleDelete(url.id)}/>
-                <MdEdit size={20} className="text-blue-400 cursor-pointer" 
-                onClick={() => handleEdit(url)}/></div>
+              <td className="px-2 py-1.5 border">
+              <MdEdit size={16} className="text-blue-500 cursor-pointer" 
+                onClick={() => handleEdit(url)}/>
             </td>
             </tr>
             ))}
@@ -304,8 +415,8 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
         </tbody>
       </table> : 
       <div className='flex items-center justify-center bg-white shadow-md rounded-md p-6 
-       border border-gray-400'>
-        <h3 className='font-semibold text-gray-600 text-lg'>No Urls found</h3>
+       border border-gray-300'>
+        <h3 className='font-semibold text-black text-lg'>No Urls found</h3>
       </div>
       }
       </>
@@ -328,6 +439,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
 
       {showCountryViews === selectedUrlId && (
         <ShowCounts
+        modalState={showCountModalState}
         countryViewsData={countryViewsData} 
         setShowCountryViews={setShowCountryViews} />
       )}

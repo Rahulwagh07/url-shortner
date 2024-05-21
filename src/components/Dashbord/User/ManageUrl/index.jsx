@@ -28,7 +28,6 @@ function ManageUrl() {
         Authorization: `Bearer ${token}`,
       });
       const data = response.data.data;
-      console.log("GLOBAL VAR api res", response);
       setGlobalVariables(data);
     } catch (error) {
       console.error('Error fetching global variables:', error);
@@ -54,7 +53,7 @@ function ManageUrl() {
             <button
               onClick={openModal}
               className='text-white bg-gradient-to-r flex gap-2 items-center justify-center from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300
-               dark:focus:ring-blue-800 font-semibold rounded-md text-lg px-4 py-2'
+               dark:focus:ring-blue-800 font-normal rounded-md text-lg px-3 py-1.5'
             >
             <span> Create New</span> <FaLink/>
             </button>

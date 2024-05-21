@@ -53,7 +53,15 @@ exports.shortUrl = async (req, res) => {
           baseUrl: baseUrl,
         }
       });
-
+      await prisma.stats.upsert({
+        where: { id: 1 }, 
+        update: {
+          totalLinksCreated: { increment: 1 } 
+        },
+        create: {
+          totalLinksCreated: 1,
+        }
+      });
       return res.status(200).json({
         success: true,
         message: "Short URL created successfully",
@@ -227,7 +235,15 @@ exports.createShortenedUrl = async (req, res) => {
           expirationDate,
         }
       });
-
+      await prisma.stats.upsert({
+        where: { id: 1 }, 
+        update: {
+          totalLinksCreated: { increment: 1 } 
+        },
+        create: {
+          totalLinksCreated: 1,
+        }
+      });
       return res.status(201).json({
         success: true,
         message: "Short URL created successfully",

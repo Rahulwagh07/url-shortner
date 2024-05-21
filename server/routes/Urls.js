@@ -15,10 +15,10 @@ const {
 } = require("../controllers/Manage-url")
 
 router.get("/urls", auth, getAllUrlOfUser);
-router.put("/suspend/:urlId", auth, suspendUrl);
+router.put("/suspend", auth, suspendUrl);
 router.delete("/delete/:urlId", auth, deleteUrl);
 router.delete("/bulk-delete", auth, deleteBulkUrls);
-router.put("/activate/:urlId", auth, activateUrl);
+router.put("/activate", auth, activateUrl);
 router.put("/edit/:urlId", auth, updateShortenedUrl);
 
 module.exports = router

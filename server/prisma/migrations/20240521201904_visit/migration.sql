@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Country` ADD COLUMN `clicks` INTEGER NULL DEFAULT 0;

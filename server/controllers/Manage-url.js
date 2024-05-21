@@ -92,23 +92,24 @@ const getAllUrls = async (req, res) => {
 
 exports.suspendUrl = async (req, res) => {
   try {
-    const { urlId } = req.params;
-    const url = await prisma.url.findFirst({
-      where:{
-        id: parseInt(urlId),
+    const { urlIds } = req.body;
+    const updatedUrls = await prisma.url.updateMany({
+      where: {
+        id: {
+          in: urlIds
+        }
+      },
+      data: {
+        status: 'suspended'
       }
     });
 
-    if (!url) {
+    if (!updatedUrls) {
       return res.status(404).json({
         success: false,
         message: 'URL not found' 
       });
     }
-    await prisma.url.update({ 
-      where: { id: Number(urlId) },
-      data: { status: 'suspended' }
-    });
 
     return res.status(200).json({
       success: true,
@@ -125,25 +126,24 @@ exports.suspendUrl = async (req, res) => {
 
 exports.activateUrl = async (req, res) => {
   try {
-    const { urlId } = req.params;
-    const url = await prisma.url.findFirst({
-      where:{
-        id: parseInt(urlId),
+    const { urlIds } = req.body;
+    const updatedUrls = await prisma.url.updateMany({
+      where: {
+        id: {
+          in: urlIds
+        }
+      },
+      data: {
+        status: 'active'
       }
     });
 
-    if (!url) {
+    if (!updatedUrls) {
       return res.status(404).json({
         success: false,
         message: 'URL not found' 
       });
     }
-
-    await prisma.url.update({ 
-      where: { id: Number(urlId) },
-      data: { status: 'active' }
-    });
-
     return res.status(200).json({
       success: true,
       message: 'URL activated successfully' 

@@ -22,7 +22,6 @@ import OpenRoute from "./components/auth/OpenRoute"
 import PrivateRoute from "./components/auth/PrivateRoute"
 import ShortUrlRedirect from "./components/HomePage/ShortenUrlRedirect"
 import GlobalVariables from "./components/Dashbord/Admin/GlobalVariables.jsx"
-import Reports from "./components/Dashbord/User/Reports/index.jsx"
 import URLManagement from "./components/Dashbord/Admin/URLManagement.jsx"
 import PanelOptions from "./components/Dashbord/Admin/PanelOptions.jsx"
 import Settings from "./components/Dashbord/Settings/Settings"
@@ -122,10 +121,6 @@ const router = createBrowserRouter([
             element: <Settings/>,
           },
           {
-            path: "/dashboard/reports",
-            element: <Reports/>,
-          },
-          {
             path: "/dashboard/analytics",
             element: <Analytics/>,
           },
@@ -139,11 +134,11 @@ const router = createBrowserRouter([
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <Toaster/>
       <RouterProvider router={router}>
       </RouterProvider>
     </Provider>
-  </React.StrictMode>
+  // {/* </React.StrictMode> */}
 );

@@ -9,13 +9,6 @@ export const sidebarLinks = [
     icon: "VscLink",
   }, 
   {
-    id: 2,
-    name: "Reports",
-    path: "/dashboard/reports",
-    type: ACCOUNT_TYPE.USER,
-    icon: "VscReport",
-  },
-  {
     id: 3,
     name: "Analytics",
     path: "/dashboard/analytics",

@@ -1,11 +1,14 @@
 import * as Icons from "react-icons/vsc"
 import { NavLink, matchPath, useLocation } from "react-router-dom"
 
-export default function SidebarLink({ link, iconName }) {
+export default function SidebarLink({ link, iconName , setShowDropdown}) {
   const Icon = Icons[iconName]
   const location = useLocation()
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname)
+  }
+  const handleOnclik = async () => {
+    setShowDropdown(false)
   }
 
   return (
@@ -16,6 +19,7 @@ export default function SidebarLink({ link, iconName }) {
           ? "bg-black text-white"
           : "bg-opacity-0 text-black"
       } transition-all duration-200`}
+      onClick={handleOnclik}
     >
       <div className="flex items-center gap-x-2">
         <Icon className={` text-lg ${

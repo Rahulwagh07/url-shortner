@@ -114,6 +114,7 @@ model Country {
  visitId     Int
  name        String?
  count       Int?
+ clicks      Int?      @default(0)
 }
 
 model Visitor {
@@ -141,4 +142,10 @@ model Report {
   reportGenerated Boolean @default(false)
   createdAt   DateTime  @default(now())
   expiryDate  DateTime?
+}
+
+model Stats {
+  id                  Int       @id @default(autoincrement()) 
+  totalLinksCreated   Int?      @default(0)
+  totalLinksVisited   Int?      @default(0)
 }

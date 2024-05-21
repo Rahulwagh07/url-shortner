@@ -8,7 +8,8 @@ import Spinner from '../../../common/Spinner';
 
 const { GET_TOTAL_ANALYTICES_USER_API } = analyticsEndpoints;
 
-const PieChart = () => {
+const PieChart = ({ selectedRecords }) => {
+  console.log("SelectedRecord", selectedRecords)
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [analytics, setAnalytics] = useState(null);
@@ -40,6 +41,7 @@ const PieChart = () => {
 
   useEffect(() => {
     if (analytics) {
+      console.log("analytics", analytics)
       const filteredAnalytics = Object.fromEntries(
         Object.entries(analytics).filter(([key, value]) => key !== 'id' && key !== 'userId')
       );
@@ -88,8 +90,8 @@ const PieChart = () => {
               enabled: false,
             },
             showInLegend: true,
-            size: '90%',
-            innerSize: '75%',
+            size: '75%',
+            innerSize: '73%',
             events: {
               legendItemClick: () => false,
             },
@@ -198,7 +200,7 @@ const PieChart = () => {
 
       setChartOptions(options);
     }
-  }, [analytics, totalClicks]);
+  }, [analytics, totalClicks, selectedRecords]);
 
   const getLegend = (point) => {
     if (point) {
@@ -215,7 +217,7 @@ const PieChart = () => {
       {loading ? (
          <div className='flex items-center justify-center'><Spinner /></div>
       ) : (
-        <div className='flex items-center justify-center shadow-md  bg-white border border-gray-300 p-4'>
+        <div className='flex items-center justify-center'>
           {chartOptions && <HighchartsReact highcharts={Highcharts} options={chartOptions} />}
         </div>
       )}
