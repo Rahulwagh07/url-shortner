@@ -50,7 +50,7 @@ function PanelOptions() {
         {panelOptions.map(option => (
           <li key={option.id} className="flex xs:flex-col xs:items-start justify-between border-b py-2">
             <span className='mr-4'>{option.optionName}</span>
-            <span className='mr-16 text-blue-150 font-semibold'>{option.redirectionUrl}</span>
+            <span className='mr-16 text-black font-semibold'>{option.redirectionUrl}</span>
             <a href={`${BASE_URL}${option.optionIcon}`} className='text-blue-500'>See image</a>
             <button onClick={() => handleDeletePanelOption(option.id)} className="text-red-500 hover:text-red-600">
               <FaTrash />

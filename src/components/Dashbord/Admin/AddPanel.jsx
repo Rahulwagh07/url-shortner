@@ -117,8 +117,8 @@ function AddPanel() {
         </div>
         <div className="flex items-center justify-center">
           <button type="submit" disabled={loading}
-           className="bg-blue-500 mt-8 hover:bg-blue-400 text-white 
-              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+           className="bg-blue-500 mt-8 hover:bg-blue-600 text-white 
+              font-bold py-1 px-4 rounded">
             {loading ? <Spinner /> : 'Add Panel'}
           </button>
         </div>

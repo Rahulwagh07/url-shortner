@@ -134,7 +134,7 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
     <div className="space-y-6 mt-4">
       <div className='bg-white border border-gray-300 shadow-sm rounded-md p-6'>
         <h2 className="text-lg font-semibold mb-2 text-sky-400">Blocked Domains</h2>
-        <div className="flex items-center xs:flex-col xs:items-start my-2 gap-2">
+        <div className="flex items-center lg:flex-row flex-col xs:items-start my-2 gap-2">
           <input
             type="text"
             value={newBlockedDomain}
@@ -143,24 +143,26 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
             className="shadow appearance-none border rounded xs:w-[80vw] lg:w-[450px] py-2 px-3
            text-gray-700 leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
           />
-          <button onClick={handleAddBlockedDomain} 
+        <div className='flex gap-2'>
+        <button onClick={handleAddBlockedDomain} 
              className="bg-blue-500 hover:bg-blue-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+              font-bold py-1 px-4 rounded">
             {addDomainloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Add"}
           </button>
           <button onClick={handleSelectAllDomains} 
             className="bg-gray-500 hover:bg-gray-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded">
+              font-bold py-1 px-4 rounded">
             {selectedBlockedDomains.length === filteredDomains.length ? 'Deselect All' : 'Select All'}
           </button>
           <button
             onClick={handleDeleteBlockedDomains}
-            className="bg-red-500 hover:bg-red-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-red-700 hover:border-red-500 rounded"
+            className="bg-red-500 hover:bg-red-600 flex gap-2 text-white 
+              font-bold py-1 px-4 rounded"
             disabled={selectedBlockedDomains.length === 0}
           >
-            {delDomainloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Delete selected"}
+            {delDomainloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Delete"}
           </button>
+        </div>
         </div>
         <ul className="grid grid-cols-4 xs:grid-cols-2 gap-2">
           {filteredDomains.map((domain, index) => (
@@ -179,7 +181,7 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
 
       <div className='bg-white border border-gray-300 shadow-sm rounded-md p-6'>
         <h2 className="text-lg font-semibold mb-2 text-sky-400">Blocked Words</h2>
-        <div className="flex items-center my-2 gap-2 xs:flex-col xs:items-start">
+        <div className="flex  flex-col lg:flex-row items-center my-2 gap-2 xs:items-start">
           <input
             type="text"
             value={newBlockedWord}
@@ -188,24 +190,26 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
             className="shadow appearance-none border rounded xs:w-[80vw] lg:w-[450px] py-2 px-3
            text-gray-700 leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
           />
+          <div className='flex gap-2'>
           <button onClick={handleAddBlockedWord} 
-            className="bg-blue-500 hover:bg-blue-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+            className="bg-blue-500 hover:bg-blue-600 flex gap-2 text-white 
+              font-bold py-1 px-4 rounded">
             {addWordloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Add"}
           </button>
           <button onClick={handleSelectAllWords} 
-            className="bg-gray-500 hover:bg-gray-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded">
+            className="bg-gray-500 hover:bg-gray-600 flex gap-2 text-white 
+              font-bold py-1 px-4 rounded">
             {selectedBlockedWords.length === filteredWords.length ? 'Deselect All' : 'Select All'}
           </button>
           <button
             onClick={handleDeleteBlockedWords}
-            className="bg-red-500 hover:bg-red-400 flex gap-2 text-white 
-              font-bold py-1 px-4 border-b-4 border-red-700 hover:border-red-500 rounded"
+            className="bg-red-500 hover:bg-red-600 flex gap-2 text-white 
+              font-bold py-1 px-4 rounded"
             disabled={selectedBlockedWords.length === 0}
           >
-            {delWordloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Delete selected"}
+            {delWordloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Delete"}
           </button>
+          </div>
         </div>
         <ul className="grid grid-cols-4 xs:grid-cols-2 gap-2">
           {filteredWords.map((word, index) => (

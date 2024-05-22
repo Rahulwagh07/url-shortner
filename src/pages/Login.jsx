@@ -31,7 +31,7 @@ function Login() {
         return;
       }
       if (accountType === ACCOUNT_TYPE.ADMIN) {
-        navigate("/admin/dashboard");
+        navigate("/admin/dashboard/users");
       } else {
         navigate("/dashboard/manage-urls");
       }

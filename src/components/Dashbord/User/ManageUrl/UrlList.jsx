@@ -292,9 +292,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
         </button>
         </div>
       </div>
-      {
-        sortedUrls.length > 0 ? 
-        <table className="table-auto bg-white text-sm">
+      <table className="table-auto bg-white text-sm">
         <thead className='text-slate-800 rounded-md border border-gray-300'>
           <tr className="bg-gray-50">
             <th className="pl-1 py-1.5">Select</th>
@@ -413,12 +411,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
             ))}
          </>
         </tbody>
-      </table> : 
-      <div className='flex items-center justify-center bg-white shadow-md rounded-md p-6 
-       border border-gray-300'>
-        <h3 className='font-semibold text-black text-lg'>No Urls found</h3>
-      </div>
-      }
+      </table>
       </>
     }
         {editModal && (
