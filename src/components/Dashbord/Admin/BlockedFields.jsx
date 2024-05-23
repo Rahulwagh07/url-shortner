@@ -140,24 +140,24 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
             value={newBlockedDomain}
             onChange={(e) => setNewBlockedDomain(e.target.value)}
             placeholder="Enter domain"
-            className="shadow appearance-none border rounded xs:w-[80vw] lg:w-[450px] py-2 px-3
+            className="shadow appearance-none border rounded xs:w-[80vw] sm:w-[80vw] lg:w-[450px] py-2 px-3
            text-gray-700 leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
           />
-        <div className='flex gap-2'>
+        <div className='flex gap-2 text-sm'>
         <button onClick={handleAddBlockedDomain} 
              className="bg-blue-500 hover:bg-blue-400 flex gap-2 text-white 
-              font-bold py-1 px-4 rounded">
+              font-semibold py-1 px-4 rounded">
             {addDomainloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Add"}
           </button>
           <button onClick={handleSelectAllDomains} 
             className="bg-gray-500 hover:bg-gray-400 flex gap-2 text-white 
-              font-bold py-1 px-4 rounded">
+            font-semibold py-1 px-4 rounded">
             {selectedBlockedDomains.length === filteredDomains.length ? 'Deselect All' : 'Select All'}
           </button>
           <button
             onClick={handleDeleteBlockedDomains}
             className="bg-red-500 hover:bg-red-600 flex gap-2 text-white 
-              font-bold py-1 px-4 rounded"
+            font-semibold py-1 px-4 rounded"
             disabled={selectedBlockedDomains.length === 0}
           >
             {delDomainloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Delete"}
@@ -190,21 +190,21 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
             className="shadow appearance-none border rounded xs:w-[80vw] lg:w-[450px] py-2 px-3
            text-gray-700 leading-tight border-gray-300 focus:outline-none focus:shadow-outline"
           />
-          <div className='flex gap-2'>
+          <div className='flex gap-2 text-sm'>
           <button onClick={handleAddBlockedWord} 
             className="bg-blue-500 hover:bg-blue-600 flex gap-2 text-white 
-              font-bold py-1 px-4 rounded">
+            font-semibold py-1 px-4 rounded">
             {addWordloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Add"}
           </button>
           <button onClick={handleSelectAllWords} 
             className="bg-gray-500 hover:bg-gray-600 flex gap-2 text-white 
-              font-bold py-1 px-4 rounded">
+            font-semibold py-1 px-4 rounded">
             {selectedBlockedWords.length === filteredWords.length ? 'Deselect All' : 'Select All'}
           </button>
           <button
             onClick={handleDeleteBlockedWords}
             className="bg-red-500 hover:bg-red-600 flex gap-2 text-white 
-              font-bold py-1 px-4 rounded"
+            font-semibold py-1 px-4 rounded"
             disabled={selectedBlockedWords.length === 0}
           >
             {delWordloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Delete"}

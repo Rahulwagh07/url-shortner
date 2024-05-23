@@ -22,14 +22,11 @@ import OpenRoute from "./components/auth/OpenRoute"
 import PrivateRoute from "./components/auth/PrivateRoute"
 import ShortUrlRedirect from "./components/HomePage/ShortenUrlRedirect"
 import GlobalVariables from "./components/Dashbord/Admin/GlobalVariables.jsx"
-import URLManagement from "./components/Dashbord/Admin/URLManagement.jsx"
 import PanelOptions from "./components/Dashbord/Admin/PanelOptions.jsx"
 import Settings from "./components/Dashbord/Settings/Settings"
 import ManageUrl from "./components/Dashbord/User/ManageUrl/index.jsx"
-import Demo from "./pages/Demo"
 import ForgotPassword from "./pages/ForgotPassword.jsx"
 import UpdatePassword from "./pages/UpdatePassword.jsx"
-import AdminReports from "./components/Dashbord/Admin/AdminReports.jsx"
 import ManageUsers from "./components/Dashbord/Admin/ManageUsers.jsx"
 import Analytics from "./components/Dashbord/User/Analytics/index.jsx"
 import AnalyticsAdmin from "./components/Dashbord/Admin/Analytics/index.jsx"
@@ -47,10 +44,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home/>,
-      },
-      {
-        path: "/demo",
-        element: <Demo/>,
       },
       {
         path: "/login",
@@ -84,10 +77,6 @@ const router = createBrowserRouter([
           {
             path: "/admin/dashboard/users",
             element: <ManageUsers/>,
-          },
-          {
-            path: "/admin/dashboard/reports",
-            element: <AdminReports/>,
           },
           {
             path: "/admin/dashboard/urls",

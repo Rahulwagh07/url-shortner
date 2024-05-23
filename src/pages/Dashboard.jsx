@@ -35,7 +35,7 @@ function Dashboard() {
       </div>
       <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto"
         onClick={closeDropdown}>
-        <div className="mx-auto w-11/12 h-full p-16 py-10 bg-gray-100 border-gray-200 rounded-md">
+        <div className="mx-auto min-h-screen h-auto">
           <Outlet />
         </div>
       </div>

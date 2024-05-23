@@ -30,7 +30,7 @@ export default function ProfileDropdown() {
           className="absolute top-[118%] right-0 z-[1000] overflow-hidden section_bg rounded-md shadow-lg  text-gray-600"
           ref={ref}
         > 
-        <Link to={`${ user?.accountType === "User" ? "/dashboard/manage-urls" : "/admin/dashboard"}`} onClick={() => setOpen(false)}>
+        <Link to={`${ user?.accountType === "User" ? "/dashboard/manage-urls" : "/admin/dashboard/users"}`} onClick={() => setOpen(false)}>
             <div className="flex w-full items-center gap-x-1 py-[10px] px-[18px] text-sm hover:text-sky-500">
             <MdOutlineNewLabel className="text-2xl text-sky-500" />
             Dashboard

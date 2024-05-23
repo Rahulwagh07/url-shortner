@@ -74,7 +74,7 @@ function GlobalVariables() {
 
  
   return (
-    <div className='flex flex-col'>
+    <div className='w-11/12 xs:w-full flex flex-col bg-gray-100 mx-auto px-4 lg:px-16 py-10 overflow-x-auto min-h-screen h-auto border-gray-200'>
     {
       loading ? <div className='flex items-center justify-center'><Spinner/></div> :
       (
@@ -219,7 +219,7 @@ function GlobalVariables() {
             <button
               onClick={handleUpdateGlobalVariables}
               className="bg-blue-500 hover:bg-blue-400 text-white 
-                font-bold w-full py-1.5 px-4 border-blue-700 hover:border-blue-500 rounded"
+                font-semibold w-full py-1.5 px-4 border-blue-700 hover:border-blue-500 rounded"
             >
               {upLoading ? <div className='flex items-center justify-center'><Spinner/></div> : "Update"}
             </button>

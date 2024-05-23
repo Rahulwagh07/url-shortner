@@ -47,7 +47,8 @@ function ManageUrl() {
         <Spinner />
       </div>
     ) : (
-      <div className='flex flex-col'>
+      <div className='w-11/12 bg-gray-100 mx-auto px-4 lg:px-16 py-10 overflow-x-auto min-h-screen h-auto border-gray-200'>
+      <div className='flex flex-col  w-full'>
         {user?.accountType === ACCOUNT_TYPE.USER && (
           <div className='text-start'>
             <button
@@ -81,6 +82,7 @@ function ManageUrl() {
             </div>
           </div>
         )}
+      </div>
       </div>
     )}
   </>

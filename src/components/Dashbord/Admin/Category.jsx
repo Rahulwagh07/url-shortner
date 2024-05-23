@@ -46,7 +46,7 @@ function Category() {
             placeholder='Enter category name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="block w-[200px] xs:w-[80vw] rounded-md border-0 py-1.5 text-gray-900
+            className="block w-[200px] xs:w-[78vw] rounded-md border-0 py-1.5 text-gray-900
             shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
             focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
             required
@@ -62,7 +62,7 @@ function Category() {
             placeholder='Enter shortcode'
             value={shortCode}
             onChange={(e) => setShortCode(e.target.value)}
-            className="block w-[200px] xs:w-[80vw] rounded-md border-0 py-1.5 text-gray-900
+            className="block w-[200px] xs:w-[78vw] rounded-md border-0 py-1.5 text-gray-900
             shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
             focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
             required
@@ -72,8 +72,8 @@ function Category() {
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 text-white 
-              font-bold py-1 px-4 rounded">
-          {loading ? <Spinner /> : "Create Category"}
+              font-semibold py-1 px-4 rounded">
+          {loading ? <Spinner /> : "Create"}
         </button>
         </div>
       </form>

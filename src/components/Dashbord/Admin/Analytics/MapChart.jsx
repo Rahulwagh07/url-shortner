@@ -34,7 +34,7 @@ function MapChart() {
     <>
     {!loading && 
       <div className="flex items-center justify-center shadow-md bg-white border border-gray-300 p-4">
-        <div className="border rounded-lg" style={{ margin: "auto", width: "600px", height: "400px" }}>
+        <div className="border rounded-lg mx-auto w-[600px] h-[400px]">
           <VectorMap
             map={worldMill}
             containerStyle={{

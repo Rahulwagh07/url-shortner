@@ -163,7 +163,7 @@ function Reports({ onSelectedRecordsChange }) {
   });
 
   return (
-    <div>
+    <div className="px-14 xs:px-4">
     {loading ? (
       <div className="flex items-center justify-center mt-4">
         <Spinner />
@@ -212,7 +212,7 @@ function Reports({ onSelectedRecordsChange }) {
               </div>
           </div>
         </div>
-        <table className="table-auto text-sm bg-white">
+        <table className="table-auto w-full text-sm bg-white">
           <thead className="text-slate-800">
             <tr className="bg-gray-gray-50">
               <th className="pl-4 py-0.5">Select</th>

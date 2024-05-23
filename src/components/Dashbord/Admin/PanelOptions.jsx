@@ -42,7 +42,7 @@ function PanelOptions() {
   };
 
   return (
-    <div className="container mx-auto p-4 ">
+    <div className="container  w-11/12 bg-gray-100 mx-auto px-4 py-10 overflow-x-auto min-h-screen h-auto border-gray-200 ">
     <AddPanel />
     <div className='bg-white  mt-8 border border-gray-300 shadow-sm rounded-md p-6'>
     <h2 className="text-2xl text-sky-400 font-semibold mt-2 mb-2">Panel Options</h2>

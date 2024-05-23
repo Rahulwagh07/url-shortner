@@ -110,7 +110,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-11/12 bg-gray-100 mx-auto px-4 lg:px-16 py-10 overflow-x-auto min-h-screen h-auto border-gray-200">
       <div className="mb-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
         <input
           type="text"

@@ -240,7 +240,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
   });
  
   return (
-    <div className="mx-auto py-8 overflow-x-hidden">
+    <div className="mx-auto py-8 w-full">
     { loading ? <div className='flex items-center justify-center mt-4'><Spinner/></div> :
       <>
       <div className="mb-4 flex xs:flex-col xs:items-start gap-2  justify-between items-center">
@@ -292,7 +292,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
         </button>
         </div>
       </div>
-      <table className="table-auto bg-white text-sm">
+      <table className="table-auto mx-auto w-full bg-white text-sm">
         <thead className='text-slate-800 rounded-md border border-gray-300'>
           <tr className="bg-gray-50">
             <th className="pl-1 py-1.5">Select</th>
