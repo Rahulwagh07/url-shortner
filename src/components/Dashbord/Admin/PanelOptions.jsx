@@ -42,7 +42,8 @@ function PanelOptions() {
   };
 
   return (
-    <div className="container  w-11/12 bg-gray-100 mx-auto px-4 py-10 overflow-x-auto min-h-screen h-auto border-gray-200 ">
+    <div className="container w-11/12 xs:w-full bg-gray-100 mx-auto px-4 py-10 overflow-x-auto min-h-screen h-auto border-gray-200 ">
+    <div className='px-14 xs:px-1'>
     <AddPanel />
     <div className='bg-white  mt-8 border border-gray-300 shadow-sm rounded-md p-6'>
     <h2 className="text-2xl text-sky-400 font-semibold mt-2 mb-2">Panel Options</h2>
@@ -60,6 +61,7 @@ function PanelOptions() {
       </ul>
     </div>
       <Category />
+    </div>
     </div>
   );
 }
