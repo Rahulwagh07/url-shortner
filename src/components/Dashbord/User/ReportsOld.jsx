@@ -1,3 +1,5 @@
+//This code is for the report geneartion- 
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiConnector } from '../../../services/apiConnector';
@@ -32,8 +34,6 @@ const Reports = () => {
       {
         Authorization: `Bearer ${token}`,
       });
-
-      console.log("Response", response);
       const url = window.URL.createObjectURL(new Blob([response.data]));
       setReportUrl(url);
 

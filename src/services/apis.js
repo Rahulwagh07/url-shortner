@@ -74,4 +74,5 @@ export const analyticsEndpoints = {
   GET_TOTAL_ANALYTICES_USER_API: BASE_URL + "/getDeviceAnalyticsForUser",
   GET_TOTAL_COUNTRY_ANALYTICS_USER_API: BASE_URL + "/getCountryAnalyticsForUser",
   GET_TOTAL_COUNTRY_ANALYTICS_ADMIN_API: BASE_URL + "/getCountryAnalyticsForAdmin",
+  GET_STATS_API: BASE_URL + "/getStats",
 }

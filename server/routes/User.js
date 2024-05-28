@@ -33,12 +33,10 @@ const {
 router.post("/initiateReportGeneration", auth, initiateReportGeneration);
 router.get("/getReport", auth, getReport);
 
-//Routes for Authrized user
-router.post("/create-shortened-url", auth, createShortenedUrl);
 
+router.post("/create-shortened-url", auth, createShortenedUrl);
 router.post("/reset-password-token", resetPasswordToken)
 router.post("/reset-password", resetPassword)
-
 router.get("/generate-report", auth, generateReport)
 
 module.exports = router

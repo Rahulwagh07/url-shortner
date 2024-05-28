@@ -50,7 +50,6 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
         setNewBlockedDomain('');
       } catch (error) {
         toast.error('Error adding domain');
-        console.log('Error in adding domain');
       }
     } else {
       toast.error('Please enter a domain');
@@ -71,7 +70,6 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
         setNewBlockedWord('');
       } catch (error) {
         toast.error('Error adding word');
-        console.log('Error in adding blocked words');
       }
     } else {
       toast.error('Please enter a word');
@@ -109,7 +107,7 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
         setBlockedWords(prevWords => prevWords.filter(word => !selectedBlockedWords.includes(word)));
         setSelectedBlockedWords([]);
       } catch (error) {
-        console.log('Error in deleting blocked words');
+        console.log('Error in deleting blocked words', error);
       }
     } else {
       toast.error('Select at least 1 blocked word to delete');

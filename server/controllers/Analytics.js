@@ -237,7 +237,6 @@ const handleDeviceType = async (userAgentString, userId) => {
     const parser = new UAParser(userAgentString);
     const result = parser.getResult();
     let deviceType = await getDeviceType(result);
-    console.log("DeviceType", deviceType)
     const existingDevice = await prisma.device.findUnique({
       where: {
         userId: userId,
@@ -258,7 +257,6 @@ const handleDeviceType = async (userAgentString, userId) => {
         [deviceType]: 1
       };
     }
-    console.log("dataToUpdateOrCreate", dataToUpdateOrCreate)
     if (existingDevice) {
       const  res = await prisma.device.update({
         where: {
@@ -266,12 +264,10 @@ const handleDeviceType = async (userAgentString, userId) => {
         },
         data: dataToUpdateOrCreate,
       });
-      console.log("ExistingDevi", res)
     } else {
       const res = await prisma.device.create({
         data: dataToUpdateOrCreate,
       });
-      console.log("new", res)
     }
   } catch (error) {
     console.error('Error handling device type:', error);
@@ -281,12 +277,10 @@ const handleDeviceType = async (userAgentString, userId) => {
 
 const getCountry = async (ipAddress) => {
   const geo = geoip.lookup(ipAddress);
-  console.log("ip", ipAddress)
   let country = "Unknown";
   if (geo) {
     country = iso3311a2.getCountry(geo.country);
   }
-  console.log("country", country)
   return country;
 }
 
@@ -457,6 +451,31 @@ exports.getCountryAnalyticsForAdmin = async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+exports.getTotalStats = async (req, res) => {
+  try {
+    const activeLinkCount = await prisma.url.count();
+    const activeTempLinkCount = await prisma.tempUrl.count();
+
+    const totalActiveLinkCount = activeLinkCount + activeTempLinkCount;
+
+    const stats = await prisma.stats.findFirst();
+    return res.status(200).json({
+      success: true,
+      message: "Stats fetched",
+      data: stats,
+      activeLinkCount: totalActiveLinkCount,
+    });
+
+  } catch (err) {
+    console.log('Error in getting TotalStats', err);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
