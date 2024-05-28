@@ -37,7 +37,6 @@ const CreateUrlForm = ({ setIsOpen, tempUrlActiveDays, goldUrlActiveDays, silver
         Authorization: `Bearer ${token}`,
       });
       const { isBlockedWord, isDomainBlocked, customCharAlreadyExist, isValidUrl } = response.data;
-      console.log(isBlockedWord, isDomainBlocked, customCharAlreadyExist, isValidUrl);
       if (response.data.success) {
         setShortUrl(response.data.shortUrl);
         setBaseUrl("");

@@ -5,6 +5,7 @@ import { guestEndPoints } from '../../services/apis';
 import { toast } from "react-hot-toast";
 import Spinner from '../common/Spinner';
 import Cookies from 'js-cookie';
+import Panel from './Panel';
 
 const { GET_TEMP_SHORT_URL_API,TRACK_VISITOR_DATA_API } = guestEndPoints;
 
@@ -86,7 +87,7 @@ export default function ShortUrlRedirect() {
 
   return (
     <>
-      <nav className='h-[40px] bg-blue-500'>Panel</nav>
+      <Panel/>
       {loading ? (
         <div className='flex items-center justify-center mt-20'>
           <Spinner />

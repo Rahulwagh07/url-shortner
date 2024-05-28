@@ -38,7 +38,6 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
         }
       );
       const { isBlockedWord, isDomainBlocked, customCharAlreadyExist, isValidUrl } = response.data;
-      console.log( isBlockedWord, isDomainBlocked, customCharAlreadyExist, isValidUrl )
       if (response.data.success) {
         toast.success("Url Updated")
         setEditModal(false);

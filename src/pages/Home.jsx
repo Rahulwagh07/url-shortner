@@ -1,5 +1,4 @@
 import React from 'react'
-import ShortenUrlForm from '../components/HomePage/ShortUrlForm'
 import HeroSection from '../components/HomePage/HeroSection'
 import Stats from '../components/HomePage/Stats'
 import Footer from '../components/HomePage/Footer'

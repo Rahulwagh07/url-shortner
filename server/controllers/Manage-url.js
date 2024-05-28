@@ -226,13 +226,6 @@ exports.updateShortenedUrl = async (req, res) => {
           message: "Custom characters contain blocked words.",
         });
       }
-      // if (url.shortUrl === customCharacters) {
-      //   return res.status(200).json({
-      //     success: false,
-      //     customCharAlreadyExist: true,
-      //     message: "Custom characters are already taken.",
-      //   });
-      // }
     }
 
     const isValidUrl = isUrl(baseUrl);

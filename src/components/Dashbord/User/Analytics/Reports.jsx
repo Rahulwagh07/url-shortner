@@ -56,7 +56,6 @@ function Reports({ onSelectedRecordsChange }) {
         Authorization: `Bearer ${token}`,
       });
       if(res.data.success){
-        console.log("Report api res", res)
         setGlobalVariables(res.data.globalVariables);
         if(res.data.report?.reportGenerated){
           setReportGenerated(true)

@@ -167,20 +167,6 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
     }
   };
 
-  // const handleDelete = async (urlId) => {
-  //   try {
-  //     const res = await apiConnector("DELETE", `${DELETE_URL_API}/${urlId}`, null, {
-  //       Authorization: `Bearer ${token}`,
-  //   });
-  //   if(res.data.success){
-  //     toast.success("Url Deleted");
-  //     setUrls((prevUrls) => prevUrls.filter((url) => url.id !== urlId));
-  //   }
-  //   } catch (error) {
-  //     toast.error("Failed to delete url")
-  //     console.error('Error deleting URL:', error);
-  //   }
-  // };
 
   const handleBulkDelete = async () => {
     try {
@@ -241,7 +227,7 @@ const UrlList = ({tempUrlActiveDays, goldUrlActiveDays, silverUrlActiveDays, pla
  
   return (
     <div className="mx-auto py-8 w-full">
-    { loading ? <div className='flex items-center justify-center mt-4'><Spinner/></div> :
+    { loading ? <></>:
       <>
       <div className="mb-4 flex xs:flex-col xs:items-start gap-2  justify-between items-center">
         <input

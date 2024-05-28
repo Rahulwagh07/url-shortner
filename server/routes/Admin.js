@@ -26,7 +26,7 @@ const {
 } = require("../controllers/Panel")
 
 router.post("/add-panel-options", auth, isAdmin, addPanelOption)
-router.get("/get-panel-options", auth, isAdmin, getAllPanelOptions)  
+router.get("/get-panel-options", getAllPanelOptions)  
 router.delete("/delete-panel-options/:id", auth, isAdmin, deletePanelOption);
 
 //Crete Category

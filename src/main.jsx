@@ -1,6 +1,6 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom/client"
-import { createBrowserRouter, RouterProvider, Routes, Route } from "react-router-dom"
+import { createBrowserRouter, RouterProvider} from "react-router-dom"
 import { Provider} from 'react-redux'
 import App from "./App"
 import { configureStore } from "@reduxjs/toolkit"
@@ -15,8 +15,9 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import VerifyEmail from "./pages/VerifyEmail"
 import Dashboard from "./pages/Dashboard"
+import ForgotPassword from "./pages/ForgotPassword.jsx"
+import UpdatePassword from "./pages/UpdatePassword.jsx"
  
-
 //Components
 import OpenRoute from "./components/auth/OpenRoute"
 import PrivateRoute from "./components/auth/PrivateRoute"
@@ -25,8 +26,6 @@ import GlobalVariables from "./components/Dashbord/Admin/GlobalVariables.jsx"
 import PanelOptions from "./components/Dashbord/Admin/PanelOptions.jsx"
 import Settings from "./components/Dashbord/Settings/Settings"
 import ManageUrl from "./components/Dashbord/User/ManageUrl/index.jsx"
-import ForgotPassword from "./pages/ForgotPassword.jsx"
-import UpdatePassword from "./pages/UpdatePassword.jsx"
 import ManageUsers from "./components/Dashbord/Admin/ManageUsers.jsx"
 import Analytics from "./components/Dashbord/User/Analytics/index.jsx"
 import AnalyticsAdmin from "./components/Dashbord/Admin/Analytics/index.jsx"
@@ -72,27 +71,27 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/admin/dashboard/global-variables",
-            element: <GlobalVariables/>,
+            element: <PrivateRoute><GlobalVariables/></PrivateRoute>,
           },
           {
             path: "/admin/dashboard/users",
-            element: <ManageUsers/>,
+            element: <PrivateRoute><ManageUsers/></PrivateRoute>,
           },
           {
             path: "/admin/dashboard/urls",
-            element: <ManageUrl/>,
+            element: <PrivateRoute><ManageUrl/></PrivateRoute>,
           },
           {
             path: "/admin/dashboard/panel-options",
-            element: <PanelOptions/>,
+            element: <PrivateRoute><PanelOptions/></PrivateRoute>,
           },
           {
             path: "/admin/dashboard/settings",
-            element: <Settings/>,
+            element: <PrivateRoute><Settings/></PrivateRoute>,
           },
           {
             path: "/admin/dashboard/analytics",
-            element: <AnalyticsAdmin/>,
+            element: <PrivateRoute><AnalyticsAdmin/></PrivateRoute>,
           },
         ]
       },
@@ -103,15 +102,15 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/dashboard/manage-urls",
-            element: <ManageUrl/>,
+            element: <PrivateRoute><ManageUrl/></PrivateRoute>,
           },
           {
             path: "/dashboard/settings",
-            element: <Settings/>,
+            element: <PrivateRoute><Settings/></PrivateRoute>,
           },
           {
             path: "/dashboard/analytics",
-            element: <Analytics/>,
+            element: <PrivateRoute><Analytics/></PrivateRoute>,
           },
         ]
       },

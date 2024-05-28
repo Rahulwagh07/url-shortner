@@ -9,7 +9,6 @@ import Spinner from '../../../common/Spinner';
 const { GET_TOTAL_ANALYTICES_USER_API } = analyticsEndpoints;
 
 const PieChart = ({ selectedRecords }) => {
-  console.log("SelectedRecord", selectedRecords)
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [analytics, setAnalytics] = useState(null);
@@ -41,7 +40,6 @@ const PieChart = ({ selectedRecords }) => {
 
   useEffect(() => {
     if (analytics) {
-      console.log("analytics", analytics)
       const filteredAnalytics = Object.fromEntries(
         Object.entries(analytics).filter(([key, value]) => key !== 'id' && key !== 'userId')
       );
@@ -165,7 +163,7 @@ const PieChart = ({ selectedRecords }) => {
                 ...prevOptions,
                 subtitle: {
                   useHTML: true,
-                  text: getLegend(this), // Passing 'this' to getLegend function
+                  text: getLegend(this),  
                   floating: true,
                   align: 'center',
                   verticalAlign: 'middle',
@@ -215,7 +213,7 @@ const PieChart = ({ selectedRecords }) => {
   return (
     <>
       {loading ? (
-         <div className='flex items-center justify-center'><Spinner /></div>
+         <></>
       ) : (
         <div className='flex items-center justify-center'>
           {chartOptions && <HighchartsReact highcharts={Highcharts} options={chartOptions} />}
