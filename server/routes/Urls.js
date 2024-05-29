@@ -6,13 +6,13 @@ const router = express.Router()
 const { auth, isAdmin } = require("../middlewares/auth")
 
 const {
-    getAllUrlOfUser,
-    suspendUrl,
-    deleteUrl,
-    deleteBulkUrls,
-    activateUrl,
-    updateShortenedUrl,
-} = require("../controllers/Manage-url")
+  getAllUrlOfUser,
+  suspendUrl,
+  deleteUrl,
+  deleteBulkUrls,
+  activateUrl,
+  updateShortenedUrl,
+} = require("../controllers/ManageUrl")
 
 router.get("/urls", auth, getAllUrlOfUser);
 router.put("/suspend", auth, suspendUrl);

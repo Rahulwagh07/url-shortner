@@ -1,3 +1,10 @@
+//This generate a report by getting data from database, convert
+//it to csv and send that in res
+//here we don't save csv file
+
+//Note- This functionality is changed 
+// That code is in NewReports file
+
 const prisma = require("../config/prismaClient");
 const json2csv = require('json2csv').Parser;
 

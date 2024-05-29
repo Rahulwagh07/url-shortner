@@ -155,7 +155,7 @@ exports.sendotp = async (req, res) => {
 
         await mailSender(
             email,
-            "OTP || URL-Shortner",
+            "OTP || Linkshort",
             `Your OTP ${otp} for email verification.`
         );
 

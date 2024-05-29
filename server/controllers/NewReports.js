@@ -84,8 +84,6 @@ const worker = new Worker("myqueue", async (job) => {
   }
 }, { connection: redis });
 
-
-
 exports.initiateReportGeneration = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -107,7 +105,7 @@ exports.initiateReportGeneration = async (req, res) => {
       error: 'Internal server error' 
     });
   }
-}
+};
 
 exports.getReport = async (req, res) => {
   try {
@@ -138,4 +136,4 @@ exports.getReport = async (req, res) => {
       error: 'Internal server error' 
     });
   }
-}
+};

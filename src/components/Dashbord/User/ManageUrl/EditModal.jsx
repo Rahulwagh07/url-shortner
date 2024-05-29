@@ -153,10 +153,10 @@ const EditModal = ({url, setEditModal, tempUrlActiveDays, goldUrlActiveDays, sil
             required
             >
             <option value="" disabled hidden>Select Tier</option>
-            <option value="temp">Temporary: Link active for {tempUrlActiveDays} days</option>
-            <option value="silver">Silver: Link active for {silverUrlActiveDays} days</option>
-            <option value="gold">Gold: Link active for {goldUrlActiveDays} days</option>
-            <option value="platinum">Platinum: Link active for {platinumUrlActiveDays} days</option>
+            <option value="temp">Temporary: {tempUrlActiveDays} days</option>
+            <option value="silver">Silver:  {silverUrlActiveDays} days</option>
+            <option value="gold">Gold:  {goldUrlActiveDays} days</option>
+            <option value="platinum">Platinum:  {platinumUrlActiveDays} days</option>
         </select>
         </div>
         <button

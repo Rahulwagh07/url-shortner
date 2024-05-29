@@ -3,7 +3,7 @@ const router = express.Router()
 
 const  {
     shortUrl,
-    getShortUrl,
+    getBaseUrl,
 } = require("../controllers/Url")
  
 const {
@@ -11,7 +11,7 @@ const {
 } = require("../controllers/Analytics")
 
 router.post("/tempShortUrl", shortUrl)
-router.get("/:shortUrl", getShortUrl)
+router.get("/:shortUrl", getBaseUrl)
 router.post("/visit", trackVisitorData)
 
 module.exports = router
