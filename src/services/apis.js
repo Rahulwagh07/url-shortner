@@ -11,12 +11,6 @@ export const endpoints = {
     RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
   }
 
-  //Profile endpoints
-export const profileEndpoints = {
-GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
-}
-
-//Guest Endpoints
 export const guestEndPoints = {
     CREATE_TEMP_SHORT_URL_API: BASE_URL + "/guest/tempShortUrl",
     GET_TEMP_SHORT_URL_API: BASE_URL + "/guest",

@@ -27,7 +27,6 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-
 exports.suspendUsers = async (req, res) => {
   try {
     const { userIds } = req.body;

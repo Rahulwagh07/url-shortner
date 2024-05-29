@@ -1,4 +1,5 @@
 // This will prevent non-authenticated users from accessing this route
+
 import { useSelector } from "react-redux"
 import { Navigate, useLocation} from "react-router-dom"
 import { ACCOUNT_TYPE } from "../../utils/constants";

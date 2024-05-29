@@ -77,6 +77,7 @@ exports.trackVisitorData = async (req, res) => {
   }
 };
 
+//update data for the total stats- req to show on Home page
 const handleStats = async () => {
   try{
     await prisma.stats.update({
@@ -88,7 +89,8 @@ const handleStats = async () => {
   } catch(err){
     console.error(err)
   }
-}
+};
+
 const handleFirstVisit = async (urlRecord, country, uniqueVisitorId) => {
   try {
     const newVisit = await prisma.visit.create({
@@ -231,7 +233,8 @@ const getDeviceType = async(result) => {
   } else {
     return  'desktop';
   }
-}
+};
+
 const handleDeviceType = async (userAgentString, userId) => {
   try {
     const parser = new UAParser(userAgentString);
@@ -282,7 +285,7 @@ const getCountry = async (ipAddress) => {
     country = iso3311a2.getCountry(geo.country);
   }
   return country;
-}
+};
 
 const getClientIp = (req) => {
   const forwardedForIp = req.headers['x-forwarded-for'];
@@ -291,8 +294,6 @@ const getClientIp = (req) => {
   }
   return req.connection.remoteAddress;
 };
-
-
 
 exports.getDeviceAnalyticsForUser = async (req, res) => {
   try {
@@ -325,7 +326,6 @@ exports.getDeviceAnalyticsForUser = async (req, res) => {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 exports.getTotalDeviceAnalytics = async (req, res) => {
   try {
@@ -369,7 +369,6 @@ exports.getTotalDeviceAnalytics = async (req, res) => {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 exports.getCountryAnalyticsForUser = async (req, res) => {
   try {
@@ -453,7 +452,6 @@ exports.getCountryAnalyticsForAdmin = async (req, res) => {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 exports.getTotalStats = async (req, res) => {
   try {

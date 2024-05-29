@@ -5,10 +5,8 @@ const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 
-
 //Routes
 const userRoutes = require("./routes/User");
-const profileRoutes = require("./routes/Profile");
 const guestRoutes = require("./routes/Guest");
 const adminRoutes = require("./routes/Admin");
 const manageUrlRoutes = require("./routes/Urls");
@@ -38,7 +36,6 @@ app.use(
 );
 
 app.use("/api/auth", userRoutes);
-app.use("/api/profile", profileRoutes);
 app.use("/api/guest", guestRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api", manageUrlRoutes);
@@ -51,7 +48,7 @@ app.get("/", (req, res) => {
     });
   });
   
-  app.listen(PORT, () => {
-    console.log(`App is running at ${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`App is running at ${PORT}`);
+});
   

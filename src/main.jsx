@@ -24,7 +24,6 @@ import PrivateRoute from "./components/auth/PrivateRoute"
 import ShortUrlRedirect from "./components/HomePage/ShortenUrlRedirect"
 import GlobalVariables from "./components/Dashbord/Admin/GlobalVariables.jsx"
 import PanelOptions from "./components/Dashbord/Admin/PanelOptions.jsx"
-import Settings from "./components/Dashbord/Settings/Settings"
 import ManageUrl from "./components/Dashbord/User/ManageUrl/index.jsx"
 import ManageUsers from "./components/Dashbord/Admin/ManageUsers.jsx"
 import Analytics from "./components/Dashbord/User/Analytics/index.jsx"
@@ -86,10 +85,6 @@ const router = createBrowserRouter([
             element: <PrivateRoute><PanelOptions/></PrivateRoute>,
           },
           {
-            path: "/admin/dashboard/settings",
-            element: <PrivateRoute><Settings/></PrivateRoute>,
-          },
-          {
             path: "/admin/dashboard/analytics",
             element: <PrivateRoute><AnalyticsAdmin/></PrivateRoute>,
           },
@@ -105,10 +100,6 @@ const router = createBrowserRouter([
             element: <PrivateRoute><ManageUrl/></PrivateRoute>,
           },
           {
-            path: "/dashboard/settings",
-            element: <PrivateRoute><Settings/></PrivateRoute>,
-          },
-          {
             path: "/dashboard/analytics",
             element: <PrivateRoute><Analytics/></PrivateRoute>,
           },
@@ -122,11 +113,11 @@ const router = createBrowserRouter([
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
       <Toaster/>
       <RouterProvider router={router}>
       </RouterProvider>
     </Provider>
-  // {/* </React.StrictMode> */}
+  </React.StrictMode>
 );

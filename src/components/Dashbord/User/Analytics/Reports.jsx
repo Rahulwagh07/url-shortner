@@ -23,7 +23,7 @@ const {
 } = reportsEndpoints;
 
 
-function Reports({ onSelectedRecordsChange }) {
+function Reports() {
   const [urls, setUrls] = useState([]);
   const [selectedUrls, setSelectedUrls] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
@@ -97,13 +97,7 @@ function Reports({ onSelectedRecordsChange }) {
     setShowCountryViews(urlId === showCountryViews ? null : urlId);
     setSelectedUrlId(urlId)
   };
-  // const handleSelect = (urlId) => {
-  //   setSelectedUrls((prevSelectedUrls) =>
-  //     prevSelectedUrls.includes(urlId)
-  //       ? prevSelectedUrls.filter((id) => id !== urlId)
-  //       : [...prevSelectedUrls, urlId]
-  //   );
-  // };
+  
   const handleSelect = (urlId) => {
     const updatedSelectedUrls = selectedUrls.includes(urlId)
       ? selectedUrls.filter((id) => id !== urlId)

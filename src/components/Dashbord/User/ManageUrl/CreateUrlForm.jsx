@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { apiConnector } from '../../services/apiConnector';
-import { urlEndPoints } from '../../services/apis';
+import { apiConnector } from '../../../../services/apiConnector';
+import { urlEndPoints } from '../../../../services/apis';
 import { toast } from 'react-hot-toast';
 import { MdContentCopy } from "react-icons/md";
 import { FaLink } from "react-icons/fa6";
-import Spinner from '../common/Spinner';
+import Spinner from '../../../common/Spinner';
 import { useSelector } from 'react-redux';
 import { IoMdClose } from "react-icons/io";
 import { SiTplink } from "react-icons/si";

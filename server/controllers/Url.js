@@ -7,6 +7,8 @@ const prisma = require('../config/prismaClient');
 
 const BaseUrl = process.env.FRONTEND_BASE_URL;
 
+//Short a url- and store in Temp Urls
+//This is for guest user 
 exports.shortUrl = async (req, res) => {
   const { baseUrl } = req.body;
   try {
@@ -80,7 +82,8 @@ exports.shortUrl = async (req, res) => {
   }
 };
 
-exports.getShortUrl = async (req, res) => {
+//Get the BaseUrl from a short code
+exports.getBaseUrl = async (req, res) => {
   try {
     const shortUrl = req.params.shortUrl;
     const urlEntry = await prisma.tempUrl.findFirst({
@@ -114,6 +117,7 @@ exports.getShortUrl = async (req, res) => {
   }
 };
 
+//Function to short url, only for the authorized user
 exports.createShortenedUrl = async (req, res) => {
   try {
     const { baseUrl, urlName, description, customCharacters, tier, category } = req.body;
@@ -222,12 +226,13 @@ exports.createShortenedUrl = async (req, res) => {
       const shortUrl = await prisma.url.create({
         data: {
           baseUrl,
-          urlName: urlName || 'tiny2',
+          urlName: urlName || 'Linkshort',
           description: description || '',
           shortUrl: shortId,
           tier,
           category: {
-            connect: { id: category || 1 } //default short url category
+            connect: { id: category || 1 } // By default store the url in  short url category
+                                           //here 1 is the Id of short Url Category
           },
           creator: {
             connect: { id: req.user.id }

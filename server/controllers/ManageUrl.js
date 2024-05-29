@@ -3,11 +3,10 @@ dotenv.config();
 const prisma = require("../config/prismaClient");
 const { isUrl } = require('check-valid-url');
 
-const BaseUrl = process.env.FRONTEND_BASE_URL;
-
 exports.getAllUrlOfUser = async (req, res) => {
   try {
     const userId = req.user.id;
+    //If the User is Admin then return all Urls
     if(req.user.accountType === "Admin"){
       return await getAllUrls(req, res);
     }
@@ -88,7 +87,6 @@ const getAllUrls = async (req, res) => {
     });
   }
 };
-
 
 exports.suspendUrl = async (req, res) => {
   try {

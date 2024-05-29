@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CreateUrlForm from '../../../HomePage/CreateUrlForm';
+import CreateUrlForm from './CreateUrlForm';
 import { apiConnector } from '../../../../services/apiConnector';
 import { globalVariablesEndpoints } from '../../../../services/apis';
 import { useSelector } from 'react-redux';

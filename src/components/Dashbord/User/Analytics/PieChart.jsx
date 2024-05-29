@@ -4,11 +4,10 @@ import HighchartsReact from 'highcharts-react-official';
 import { apiConnector } from '../../../../services/apiConnector';
 import { analyticsEndpoints } from '../../../../services/apis';
 import { useSelector } from 'react-redux';
-import Spinner from '../../../common/Spinner';
 
 const { GET_TOTAL_ANALYTICES_USER_API } = analyticsEndpoints;
 
-const PieChart = ({ selectedRecords }) => {
+const PieChart = () => {
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [analytics, setAnalytics] = useState(null);
@@ -198,7 +197,7 @@ const PieChart = ({ selectedRecords }) => {
 
       setChartOptions(options);
     }
-  }, [analytics, totalClicks, selectedRecords]);
+  }, [analytics, totalClicks]);
 
   const getLegend = (point) => {
     if (point) {

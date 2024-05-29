@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { apiConnector } from '../../../../services/apiConnector';
 import { manageUrlEndpoints } from '../../../../services/apis';
 import { useSelector } from 'react-redux';
-import Spinner from '../../../common/Spinner';
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import EditModal from './EditModal';
 import { FRONTEND_URL } from '../../../../utils/helper';
 import { formatDate } from '../../../../utils/FormatDate';
@@ -12,6 +9,7 @@ import { ACCOUNT_TYPE } from '../../../../utils/constants';
 import ShowCounts from './ShowCounts';
 import toast from 'react-hot-toast';
 import { GoArrowDown } from "react-icons/go";
+import { MdEdit } from 'react-icons/md';
 
 const BASE_URL = FRONTEND_URL;
 

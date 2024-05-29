@@ -32,7 +32,6 @@ exports.addPanelOption = async (req, res) => {
   }
 };
 
-
 exports.deletePanelOption = async (req, res) => {
   try {
     const { id } = req.params;

@@ -29,6 +29,7 @@ model User {
   createdAt   DateTime @default(now())
 }
 
+//Store Url created by authorized user
 model Url {
   id                 Int        @id @default(autoincrement())
   baseUrl            String
@@ -48,6 +49,7 @@ model Url {
   @@index([status])
 }
 
+//Store Temp Url created 
 model TempUrl {
   id        Int      @id @default(autoincrement())
   baseUrl   String
@@ -70,6 +72,7 @@ model OTP {
   createdAt DateTime @default(now())
 }
 
+//Global Variable schema for Admin
 model Global {
   id                       Int      @id @default(autoincrement())
   tempUrlActiveDays        Int      @default(10)
@@ -96,6 +99,7 @@ model BlockedDomain {
   createdAt DateTime @default(now())
 }
 
+//schema for  all analytics related information for url
 model Visit {
   id                  Int       @id @default(autoincrement())
   country             Country[]
@@ -117,6 +121,8 @@ model Country {
  clicks      Int?      @default(0)
 }
 
+//schema to track is the user is returning visitor,
+//unique visitor
 model Visitor {
   id          Int       @id @default(autoincrement())   
   visit       Visit     @relation(fields: [visitId], references: [id])
@@ -144,6 +150,7 @@ model Report {
   expiryDate  DateTime?
 }
 
+//schema to track total stats
 model Stats {
   id                  Int       @id @default(autoincrement()) 
   totalLinksCreated   Int?      @default(0)
