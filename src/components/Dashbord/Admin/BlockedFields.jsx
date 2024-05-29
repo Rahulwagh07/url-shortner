@@ -125,8 +125,8 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
     setSelectedBlockedWords(selectedBlockedWords.length === allWords.length ? [] : allWords);
   };
 
-  const filteredDomains = blockedDomains.filter(domain => domain.toLowerCase().includes(newBlockedDomain.toLowerCase()));
-  const filteredWords = blockedWords.filter(word => word.toLowerCase().includes(newBlockedWord.toLowerCase()));
+  const filteredDomains = blockedDomains?.filter(domain => domain.toLowerCase().includes(newBlockedDomain.toLowerCase()));
+  const filteredWords = blockedWords?.filter(word => word.toLowerCase().includes(newBlockedWord.toLowerCase()));
 
   return (
     <div className="space-y-6 mt-4">
@@ -150,7 +150,7 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
           <button onClick={handleSelectAllDomains} 
             className="bg-gray-500 hover:bg-gray-400 flex gap-2 text-white 
             font-semibold py-1 px-4 rounded">
-            {selectedBlockedDomains.length === filteredDomains.length ? 'Deselect All' : 'Select All'}
+            {selectedBlockedDomains?.length === filteredDomains?.length ? 'Deselect All' : 'Select All'}
           </button>
           <button
             onClick={handleDeleteBlockedDomains}
@@ -163,11 +163,11 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
         </div>
         </div>
         <ul className="grid grid-cols-4 xs:grid-cols-2 gap-2">
-          {filteredDomains.map((domain, index) => (
+          {filteredDomains?.map((domain, index) => (
             <li key={index} className="flex items-center">
               <input
                 type="checkbox"
-                checked={selectedBlockedDomains.includes(domain)}
+                checked={selectedBlockedDomains?.includes(domain)}
                 onChange={(e) => handleCheckboxChange(e, 'blockedDomains', domain)}
                 className="form-checkbox mr-2"
               />
@@ -197,24 +197,24 @@ function BlockedFields({ blockedDomains, blockedWords, setBlockedDomains, setBlo
           <button onClick={handleSelectAllWords} 
             className="bg-gray-500 hover:bg-gray-600 flex gap-2 text-white 
             font-semibold py-1 px-4 rounded">
-            {selectedBlockedWords.length === filteredWords.length ? 'Deselect All' : 'Select All'}
+            {selectedBlockedWords?.length === filteredWords?.length ? 'Deselect All' : 'Select All'}
           </button>
           <button
             onClick={handleDeleteBlockedWords}
             className="bg-red-500 hover:bg-red-600 flex gap-2 text-white 
             font-semibold py-1 px-4 rounded"
-            disabled={selectedBlockedWords.length === 0}
+            disabled={selectedBlockedWords?.length === 0}
           >
             {delWordloading ? <div className='flex items-center justify-center'><Spinner/></div> : "Delete"}
           </button>
           </div>
         </div>
         <ul className="grid grid-cols-4 xs:grid-cols-2 gap-2">
-          {filteredWords.map((word, index) => (
+          {filteredWords?.map((word, index) => (
             <li key={index} className="flex items-center">
               <input
                 type="checkbox"
-                checked={selectedBlockedWords.includes(word)}
+                checked={selectedBlockedWords?.includes(word)}
                 onChange={(e) => handleCheckboxChange(e, 'blockedWords', word)}
                 className="form-checkbox mr-2"
               />
