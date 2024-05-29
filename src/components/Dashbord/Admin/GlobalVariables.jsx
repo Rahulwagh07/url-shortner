@@ -55,6 +55,15 @@ function GlobalVariables() {
     setUpLoading(true);
     try {
       const updatedValuesArray = Object.values(globalVariables);
+      if(originalGlobalVariables === null){
+        await apiConnector("PUT", UPDATE_GLOBAL_VARIABLE_API, globalVariables, {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        });
+        toast.success("Global Variables updated");
+        setUpLoading(false);
+        return
+      }
       const originalValuesArray = Object.values(originalGlobalVariables);
       const valuesChanged = updatedValuesArray.some((value, index) => value !== originalValuesArray[index]);
       if (valuesChanged) {

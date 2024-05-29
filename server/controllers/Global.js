@@ -47,9 +47,22 @@ exports.updateGlobalVariables = async (req, res) => {
 
     const globalDocument = await prisma.global.findFirst();
     if (!globalDocument) {
-      return res.status(404).json({
+      await prisma.global.create({
+        data: {
+          tempUrlActiveDays: parsedTempUrlActiveDays,
+          silverUrlActiveDays: parsedSilverUrlActiveDays,
+          goldUrlActiveDays: parsedGoldUrlActiveDays,
+          platinumUrlActiveDays: parsedPlatinumUrlActiveDays,
+          reportExpirationDays: parsedReportExpirationDays,
+          maxReportRecords: parsedMaxReportRecords,
+          generateReportDisabled,
+          generatedReportDisabled,
+          pauseGeneratedReportDisabled,
+        },
+      })
+      return res.status(200).json({
         success: false,
-        message: "Global document not found",
+        message: "Global document Created",
       });
     }
 

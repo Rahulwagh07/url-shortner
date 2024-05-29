@@ -45,12 +45,6 @@ exports.deletePanelOption = async (req, res) => {
       return res.status(404).json({ error: 'Panel option not found' });
     }
 
-    const filename = path.basename(deletedOption.optionIcon);
-
-    // Delete file from server dir
-    const filePath = path.join(__dirname, 'uploads', filename);
-    fs.unlinkSync(filePath);
-
     await prisma.panel.delete({
       where: {
         id: parseInt(id)
